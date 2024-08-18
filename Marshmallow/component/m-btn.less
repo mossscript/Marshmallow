@@ -1,0 +1,143 @@
+m-btn {
+   &::part(button) {
+      all: unset;
+      position: relative;
+      background: @primary;
+      color: @on-primary;
+      display: inline-flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      padding: 0 16px;
+      height: 40px;
+      #radius(4px);
+      #font-size(2px);
+      font-weight: 700;
+      box-sizing: border-box;
+      user-select: none;
+      transition: 0.3s;
+      &:active {
+         scale: 0.9;
+         #radius(0px);
+      }
+   }
+   &::part(icon){
+      padding: 0 4px;
+   }
+   &::part(badge) {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      box-sizing: border-box;
+      min-height: 16px;
+      background: @primary-container;
+      color: @on-primary-container;
+      padding: 4px 8px;
+      #radius(4px);
+      #font-size(-4px);
+   }
+   &[icon-align="right"]::part(button) {
+      flex-flow: row-reverse nowrap;
+   }
+   
+   &[color="error"] {
+      &::part(button) {
+         background: @error;
+         color: @on-error;
+      }
+      &::part(badge) {
+         background: @error-container;
+         color: @on-error-container;
+      }
+   }
+   &[color="primary"] {
+      &::part(button) {
+         background: @primary;
+         color: @on-primary;
+      }
+      &::part(badge) {
+         background: @primary-container;
+         color: @on-primary-container;
+      }
+   }
+   &[color="secondary"] {
+      &::part(button) {
+         background: @secondary;
+         color: @on-secondary;
+      }
+      &::part(badge) {
+         background: @secondary-container;
+         color: @on-secondary-container;
+      }
+   }
+   &[color="tertiary"] {
+      &::part(button) {
+         background: @tertiary;
+         color: @on-tertiary;
+      }
+      &::part(badge) {
+         background: @tertiary-container;
+         color: @on-tertiary-container;
+      }
+   }
+   &[color="quaternary"] {
+      &::part(button) {
+         background: @quaternary;
+         color: @on-quaternary;
+      }
+      &::part(badge) {
+         background: @quaternary-container;
+         color: @on-quaternary-container;
+      }
+   }
+   &[color="error-container"] {
+      &::part(button) {
+         background: @error-container;
+         color: @on-error-container;
+      }
+      &::part(badge) {
+         background: @error;
+         color: @on-error;
+      }
+   }
+   &[color="primary-container"] {
+      &::part(button) {
+         background: @primary-container;
+         color: @on-primary-container;
+      }
+      &::part(badge) {
+         background: @primary;
+         color: @on-primary;
+      }
+   }
+   &[color="secondary-container"] {
+      &::part(button) {
+         background: @secondary-container;
+         color: @on-secondary-container;
+      }
+      &::part(badge) {
+         background: @secondary;
+         color: @on-secondary;
+      }
+   }
+   &[color="tertiary-container"] {
+      &::part(button) {
+         background: @tertiary-container;
+         color: @on-tertiary-container;
+      }
+      &::part(badge) {
+         background: @tertiary;
+         color: @on-tertiary;
+      }
+   }
+   &[color="quaternary-container"] {
+      &::part(button) {
+         background: @quaternary-container;
+         color: @on-quaternary-container;
+      }
+      &::part(badge) {
+         background: @quaternary;
+         color: @on-quaternary;
+      }
+   }
+}
