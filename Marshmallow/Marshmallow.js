@@ -125,33 +125,34 @@ class MBtn extends HTMLElement {
    constructor() {
       super();
       this.attachShadow({ mode: 'open' });
-      this.render();
    }
    static get observedAttributes() {
-      return ['label', 'disabled', 'icon'];
+      return ['color','size','shadow','badge','icon','disabled'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       this.render();
    }
+   connectedCallback() {
+      this.render();
+   }
    render() {
-      let disable = this.hasAttribute('disabled');
-      const icon = this.getAttribute('icon') || '';
-      const label = this.textContent.trim() || this.getAttribute('label') || 'Button';
-      this.shadowRoot.innerHTML = `.
-      <button ${disable?'disabled':''}>
-        <span class="icon">${icon}</span>
-        <span class="label">${label}</span>
-      </button>
-    `;
-
-      const button = this.shadowRoot.querySelector('button');
+      this.shadowRoot.innerHTML = `
+         <button part="button" ${this.hasAttribute('disabled')?'disabled':''}>
+            ${this.getAttribute('badge') ? `<span part="badge">${this.getAttribute('badge')}</span>`:''}
+            ${this.getAttribute('icon') ? `<span part="icon">${this.getAttribute('icon')}</span>`:''}
+            <slot part="text"></slot>
+         </button>
+      `;
+    
+      let button = this.shadowRoot.querySelector('button');
+      let arr = ['color','size','shadow','badge','icon'];
       Array.from(this.attributes).forEach(attr => {
-         if (attr.name !== 'icon') {
-            button.setAttribute(attr.name, attr.value);
+         if (!arr.includes(attr.name)) {
+            button.setAttribute(attr.nane, attr.value);
          }
       });
    }
 }
-customElements.define('m-btn',MBtn)
+customElements.define('m-btn', MBtn);
 
 // Add-On (...)
