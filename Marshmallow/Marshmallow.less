@@ -6,11 +6,22 @@
 @import "style/font-size";
 
 // component
+@import "component/m-app";
+@import "component/m-appbar";
 @import "component/m-btn";
 
 // default 
+::selection{
+   background: @glass-variant;
+   color: @on-glass-variant;
+}
+
 body{
+   padding: 0;
+   margin: 0;
    background: @background;
    color: @on-background;
    transition: 0.3s;
+   width: 100vw;
+   height: 100vh;
 }
