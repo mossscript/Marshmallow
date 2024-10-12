@@ -1,5 +1,5 @@
 # Marshmallow
 
-- [×] Mushroom
-- [×] <m-app>
+- [x] Mushroom
+- [x] <m-app>
 - [ ] <m-button>
