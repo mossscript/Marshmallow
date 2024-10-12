@@ -5,6 +5,7 @@ import Mushroom from './Mushroom.js';
 
 // import components
 import MApp from './components/m-app.js';
+import MButton from './components/m-button.js';
 
 // Marshmallow class
 export default class Marshmallow {
@@ -41,6 +42,7 @@ export default class Marshmallow {
    }
    #defineElements(){
       customElements.define('m-app', MApp);
+      customElements.define('m-button', MButton);
    }
    #setUpMushroom(){
       this.mushroom = new Mushroom({
