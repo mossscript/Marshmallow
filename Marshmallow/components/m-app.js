@@ -27,21 +27,18 @@ export default class MApp extends HTMLElement {
       }
    }
    #render() {
-      this.shadow.innerHTML = `
-         <div part="bg"></div>
-         <div part="inner"><slot></slot></div>
-      `;
+      this.shadow.innerHTML = `<slot></slot>`;
       this.#setBackground(this.background);
       this.#setColor(this.color);
    }
    #setBackground(param) {
-      let bg = this.shadow.querySelector('[part="bg"]');
+      let host = this.shadow.host;
       if (param) {
          let TC = new TestColor();
          let testColor = TC.test(param);
          let color = param;
          if (/^@/.test(param)) {
-            let val = getComputedStyle(this.shadow.host).getPropertyValue(color.replace('@', '--m-'));
+            let val = getComputedStyle(host).getPropertyValue(color.replace('@', '--m-'));
             color = val ? val : color;
             testColor = !!val;
          } else if (/^var\((--[a-zA-Z0-9-]+)\)$/.test(param)) {
@@ -49,7 +46,7 @@ export default class MApp extends HTMLElement {
             color = val ? val : color;
             testColor = !!val;
          }
-         bg.style.background = testColor ? color : 'var(--m-background)';
+         host.style.background = testColor ? color : 'var(--m-background)';
          if (!this.color && testColor) {
             let innerColor = TC.inner(color);
             if (/^@/.test(param)) {
@@ -60,21 +57,21 @@ export default class MApp extends HTMLElement {
             this.#setColor(color);
          }
       } else {
-         bg.style.background = 'var(--m-background)';
+         host.style.background = 'var(--m-background)';
       }
    }
    #setColor(param) {
       let TC = new TestColor();
-      let inner = this.shadow.querySelector('[part="inner"]');
+      let host = this.shadow.host;
       if (param) {
          let color = param;
          if (/^var\((--[a-zA-Z0-9-]+)\)$/.test(color)) {
             let val = getComputedStyle(this.shadow.host).getPropertyValue(color.match(/^var\((--[a-zA-Z0-9-]+)\)$/)[1]);
             color = val;
          }
-         inner.style.color = TC.test(color) ? color : 'var(--m-on-background)';
+         host.style.color = TC.test(color) ? color : 'var(--m-on-background)';
       } else {
-         inner.style.color = 'var(--m-on-background)';
+         host.style.color = 'var(--m-on-background)';
       }
    }
 }
