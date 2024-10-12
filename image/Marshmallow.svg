@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000.0 1000.0">
+   <defs>
+      <linearGradient id="fillGrad1" gradientTransform="rotate(135)">
+         <stop offset="0%" stop-color="hsl(320,100%,70%)" />
+         <stop offset="50%" stop-color="hsl(320,100%,50%)" />
+         <stop offset="100%" stop-color="hsl(320,100%,30%)" />
+      </linearGradient>
+      <linearGradient id="fillGrad2" gradientTransform="rotate(135)">
+         <stop offset="0%" stop-color="hsl(320,100%,90%)" />
+         <stop offset="50%" stop-color="hsl(320,100%,70%)" />
+         <stop offset="100%" stop-color="hsl(320,100%,50%)" />
+      </linearGradient>
+   </defs>
+   <path fill="#000" d="M 500,0 C 850,0 1000,150 1000,500 C 1000,850 850,1000 500,1000 C 150,1000 0,850 0,500 C 0,150 150,0 500,0z" />
+   <path fill="url(#fillGrad1)" d="M 420,260 C 420,220 420,180 500,180 C 580,180 760,180 760,320 C 760,360 720,400 680,400 C 640,400 420,300 420,260" />
+   <path fill="url(#fillGrad1)" d="M 240,680 C 240,640 280,600 320,600 C 360,600 580,700 580,740 C 580,780 580,820 500,820 C 420,820 240,820 240,680z" />
+   <path fill="url(#fillGrad2)" d="M 240,540 C 240,500 280,460 340,460 C 460,460 760,640 760,740 C 760,780 720,820 660,820 C 540,820 240,640 240,540z" />
+   <path fill="url(#fillGrad2)" d="M 240,260 C 240,220 280,180 340,180 C 460,180 760,360 760,460 C 760,500 720,540 660,540 C 540,540 240,360 240,260z" />
+   <path fill="url(#fillGrad1)" d="M 240,400 C 240,360 280,320 340,320 C 460,320 760,500 760,600 C 760,640 720,680 660,680 C 540,680 240,500 240,400z" />
+</svg>

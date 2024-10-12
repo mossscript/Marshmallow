@@ -1,25 +1,44 @@
-/*** Mushroom Colors V4.05 ***/
-// Main Palette 
+/* Mushroom v4.06 */
 @primary: var(--m-primary);
 @on-primary: var(--m-on-primary);
 @primary-container: var(--m-primary-container);
 @on-primary-container: var(--m-on-primary-container);
+@light-primary: var(--m-light-primary);
+@on-light-primary: var(--m-on-light-primary);
+@dark-primary: var(--m-dark-primary);
+@on-dark-primary: var(--m-on-dark-primary);
 @secondary: var(--m-secondary,var(--m-primary));
 @on-secondary: var(--m-on-secondary,var(--m-on-primary));
 @secondary-container: var(--m-secondary-container,var(--m-primary-container));
 @on-secondary-container: var(--m-on-secondary-container,var(--m-on-primary-container));
+@light-secondary: var(--m-light-secondary,var(--m-light-primary));
+@on-light-secondary: var(--m-on-light-secondary,var(--m-on-light-primary));
+@dark-secondary: var(--m-dark-secondary,var(--m-dark-primary));
+@on-dark-secondary: var(--m-on-dark-secondary,var(--m-on-dark-primary));
 @tertiary: var(--m-tertiary,var(--m-primary));
 @on-tertiary: var(--m-on-tertiary,var(--m-on-primary));
 @tertiary-container: var(--m-tertiary-container,var(--m-primary-container));
 @on-tertiary-container: var(--m-on-tertiary-container,var(--m-on-primary-container));
+@light-tertiary: var(--m-light-tertiary,var(--m-light-primary));
+@on-light-tertiary: var(--m-on-light-tertiary,var(--m-on-light-primary));
+@dark-tertiary: var(--m-dark-tertiary,var(--m-dark-primary));
+@on-dark-tertiary: var(--m-on-dark-tertiary,var(--m-on-dark-primary));
 @quaternary: var(--m-quaternary,var(--m-secondary,var(--m-primary)));
 @on-quaternary: var(--m-on-quaternary,var(--m-on-secondary,var(--m-on-primary)));
 @quaternary-container: var(--m-quaternary-container,var(--m-secondary-container,var(--m-primary-container)));
 @on-quaternary-container: var(--m-on-quaternary-container,var(--m-on-secondary-container,var(--m-on-primary-container)));
+@light-quaternary: var(--m-light-quaternary,var(--m-light-secondary,var(--m-light-primary)));
+@on-light-quaternary: var(--m-on-light-quaternary,var(--m-on-light-secondary,var(--m-on-light-primary)));
+@dark-quaternary: var(--m-dark-quaternary,var(--m-dark-secondary,var(--m-dark-primary)));
+@on-dark-quaternary: var(--m-on-dark-quaternary,var(--m-on-dark-secondary,var(--m-on-dark-primary)));
 @error: var(--m-error);
 @on-error: var(--m-on-error);
 @error-container: var(--m-error-container);
 @on-error-container: var(--m-on-error-container);
+@light-error: var(--m-light-error);
+@on-light-error: var(--m-on-light-error);
+@dark-error: var(--m-dark-error);
+@on-dark-error: var(--m-on-dark-error);
 @inverse-primary: var(--m-inverse-primary);
 @on-inverse-primary: var(--m-on-inverse-primary);
 @inverse-secondary: var(--m-inverse-secondary,var(--m-inverse-primary));
@@ -32,26 +51,6 @@
 @on-inverse-error: var(--m-on-inverse-error);
 @inverse-surface: var(--m-inverse-surface);
 @on-inverse-surface: var(--m-on-inverse-surface);
-@primary-fixed: var(--m-primary-fixed);
-@on-primary-fixed: var(--m-on-primary-fixed);
-@primary-fixed-dim: var(--m-primary-fixed-dim);
-@on-primary-fixed-dim: var(--m-on-primary-fixed-dim);
-@secondary-fixed: var(--m-secondary-fixed,var(--m-primary-fixed));
-@on-secondary-fixed: var(--m-on-secondary-fixed,var(--m-on-primary-fixed));
-@secondary-fixed-dim: var(--m-secondary-fixed-dim,var(--m-primary-fixed-dim));
-@on-secondary-fixed-dim: var(--m-on-secondary-fixed-dim,var(--m-on-primary-fixed-dim));
-@tertiary-fixed: var(--m-tertiary-fixed,var(--m-primary-fixed));
-@on-tertiary-fixed: var(--m-on-tertiary-fixed,var(--m-on-primary-fixed));
-@tertiary-fixed-dim: var(--m-tertiary-fixed-dim,var(--m-primary-fixed-dim));
-@on-tertiary-fixed-dim: var(--m-on-tertiary-fixed-dim,var(--m-on-primary-fixed-dim));
-@quaternary-fixed: var(--m-quaternary-fixed,var(--m-secondary-fixed,var(--m-primary-fixed)));
-@on-quaternary-fixed: var(--m-on-quaternary-fixed,var(--m-on-secondary-fixed,var(--m-on-primary-fixed)));
-@quaternary-fixed-dim: var(--m-quaternary-fixed-dim,var(--m-secondary-fixed-dim,var(--m-primary-fixed-dim)));
-@on-quaternary-fixed-dim: var(--m-on-quaternary-fixed-dim,var(--m-on-secondary-fixed-dim,var(--m-on-primary-fixed-dim)));
-@error-fixed: var(--m-error-fixed);
-@on-error-fixed: var(--m-on-error-fixed);
-@error-fixed-dim: var(--m-error-fixed-dim);
-@on-error-fixed-dim: var(--m-on-error-fixed-dim);
 @surface: var(--m-surface);
 @on-surface: var(--m-on-surface);
 @surface-container-low: var(--m-surface-container-low);
@@ -72,8 +71,6 @@
 @on-glass-variant: var(--m-on-glass-variant);
 @outline: var(--m-outline);
 @outline-variant: var(--m-outline-variant);
-
-// Sub Palette 
 @primary-0: var(--m-primary-0);
 @primary-5: var(--m-primary-5);
 @primary-10: var(--m-primary-10);
