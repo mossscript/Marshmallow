@@ -7,9 +7,11 @@ export default class MApp extends HTMLElement {
    constructor() {
       super();
       this.shadow = this.attachShadow({mode:'open'});
+      this.background = undefined;
+      this.color = undefined;
    }
    static get observedAttributes() {
-      return ['color'];
+      return ['background'];
    }
    connectedCallback() {
       this.#render();
@@ -21,8 +23,22 @@ export default class MApp extends HTMLElement {
       }
    }
    #render() {
-      this.shadow.innerHTML = `<slot></slot>`;
-      this.#setBackground(this.background);
+      this.shadow.innerHTML = `
+      <style>
+         :host {
+            display: block;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden auto;
+            box-sizing: border-box;
+            background:${this.background?this.background:'var(--m-background)'};
+            color: ${this.color?this.color:'var(--m-on-background)'};
+         }
+      </style>
+      <slot></slot>
+      `;
+      this.#setBackground();
    }
    #setBackground(param) {
       let host = this.shadow.host;
@@ -39,16 +55,13 @@ export default class MApp extends HTMLElement {
             color = val ? val : color;
             testColor = !!val;
          }
-         host.style.background = testColor ? color : 'var(--m-background)';
+         this.background = testColor ? color : 'var(--m-background)';
          let innerColor = TC.inner(color);
          if (/^@/.test(param)) {
             let val = getComputedStyle(host).getPropertyValue(param.replace('@', '--m-on-'));
             innerColor = val ? val : inner
          }
-         host.style.color = innerColor;
-      } else {
-         host.style.background = 'var(--m-background)';
-         host.style.color = 'var(--m-on-background)';
+         this.color = innerColor;
       }
    }
 }
