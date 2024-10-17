@@ -175,7 +175,7 @@ export default class TestColor {
          }
          return a;
       }
-      if (color) {
+      if (this.test(color)) {
          let {h,s,l} = this.#getHsl(color);
          return this.#toHex(h,s,l2(l));
       } else {

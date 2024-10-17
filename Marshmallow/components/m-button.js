@@ -32,10 +32,7 @@ export default class MButton extends HTMLElement {
                   cursor: pointer;
                   box-sizing: border-box;
                   -webkit-tap-highlight-color: transparent;
-               }
-               :host::part(btn) {
                   position: relative;
-                  display: block;
                   overflow: hidden;
                   color:${this.color?this.color:'var(--m-on-primary)'};
                   border-radius: calc(var(--m-radius) + 8px);
@@ -52,24 +49,23 @@ export default class MButton extends HTMLElement {
                   width: 100%;
                   height: 100%;
                   transition: 0.3s;
+                  
                }
                :host::part(inner) {
                   position: relative;
-                  z-index: 1;
+                  z-index: 2;
                   display: block;
                   padding: 12px 24px;
-                  font-size: calc(var(--m-font-size)+0px);
+                  font-size: calc(var(--m-font-size) + 0px);
                   user-select: none;
                }
-               :host::part(btn):active{
+               :host(:active){
                   scale: 0.9;
                   border-radius: calc(var(--m-radius) + 4px);
                }
             </style>
-            <div part="btn">
-               <div part="bg"></div>
-               <slot part="inner"></slot>
-            </div>
+            <div part="bg"></div>
+            <slot part="inner"></slot>
         `;
    }
    #setColor(param) {
@@ -79,20 +75,17 @@ export default class MButton extends HTMLElement {
          let testColor = TC.test(param);
          let color = param;
          if (/^@/.test(param)) {
-            let val = getComputedStyle(host).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
-            color = val ? val : color;
-            testColor = !!val;
-         } else if (/^var\((--[a-zA-Z0-9-]+)\)$/.test(param)) {
-            let val = getComputedStyle(host).getPropertyValue(color.match(/^var\((--[a-zA-Z0-9-]+)\)$/)[1]);
-            color = val ? val : color;
+            let val = getComputedStyle(host).getPropertyValue(param.toLowerCase().replace('@', '--m-'));
+            color = val ? `var(${param.toLowerCase().replace('@', '--m-')})` : color;
             testColor = !!val;
          }
          this.background = testColor ? color : 'var(--m-primary)';
          let innerColor = TC.inner(color);
          if (/^@/.test(param)) {
             let val = getComputedStyle(host).getPropertyValue(param.toLowerCase().replace('@', '--m-on-'));
-            innerColor = val ? val : inner
-         }
+            let innerColor = val ? `var(${param.toLowerCase().replace('@', '--m-on-')})` : innerColor;
+            console.log(innerColor)
+         } 
          this.color = innerColor;
          this.#render();
       }

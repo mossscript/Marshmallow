@@ -40,6 +40,11 @@ export default class Marshmallow {
       // defineElements
       this.#defineElements();
    }
+   setColor(color){
+      this.mushroom.setColor(color);
+      this.color = this.mushroom.color;
+      this.#grow();
+   }
    #defineElements() {
       customElements.define('m-app', MApp);
       customElements.define('m-button', MButton);
@@ -69,7 +74,7 @@ export default class Marshmallow {
       if (!style) {
          style = document.createElement('style');
          document.head.appendChild(style)
-         style.id = 'MUSHROOM-VARIABLE';
+         style.id = 'MUSHROOM';
       }
       code += `
 /*** Marshmallow ${this.version} ***/
