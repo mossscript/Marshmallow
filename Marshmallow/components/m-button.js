@@ -12,7 +12,7 @@ export default class MButton extends HTMLElement {
       this.active = false;
    }
    static get observedAttributes() {
-      return ['color'];
+      return ['color','badge'];
    }
    connectedCallback() {
       this.#render();
@@ -20,9 +20,17 @@ export default class MButton extends HTMLElement {
    }
    attributeChangedCallback(name, oldValue, newValue) {
       if (name == 'color') {
-         this.color = newValue;
-         this.#render();
+         
       }
+      switch (name) {
+         case 'color':
+            this.color = newValue;
+            break;
+         case 'badge':
+            this.badge = newValue;
+            break;
+      }
+      this.#render();
    }
    #render() {
       this.shadow.innerHTML = `
@@ -33,7 +41,6 @@ export default class MButton extends HTMLElement {
                   box-sizing: border-box;
                   -webkit-tap-highlight-color: transparent;
                   position: relative;
-                  overflow: hidden;
                   color:${this.color?this.color:'var(--m-on-primary)'};
                   border-radius: calc(var(--m-radius) + 8px);
                   font-weight: 600;
@@ -49,7 +56,7 @@ export default class MButton extends HTMLElement {
                   width: 100%;
                   height: 100%;
                   transition: 0.3s;
-                  
+                  border-radius: calc(var(--m-radius) + 8px);
                }
                :host::part(inner) {
                   position: relative;
@@ -59,13 +66,36 @@ export default class MButton extends HTMLElement {
                   font-size: calc(var(--m-font-size) + 0px);
                   user-select: none;
                }
+               :host::part(badge) {
+                  position: absolute;
+                  top: -7px;
+                  right: -7px;
+                  z-index: 3;
+                  display: flex;
+                  flex-flow: row nowrap;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 4px;
+                  height: 20px;
+                  font-size: calc(var(--m-font-size) - 4px);
+                  font-weight: 400;
+                  user-select: none;
+                  background: var(--m-error);
+                  color: var(--m-on-error);
+                  border-radius: calc(var(--m-radius) + 4px);
+                  padding: 0 10px;
+               }
                :host(:active){
                   scale: 0.9;
+                  border-radius: calc(var(--m-radius) + 4px);
+               }
+               :host(:active)::part(bg){
                   border-radius: calc(var(--m-radius) + 4px);
                }
             </style>
             <div part="bg"></div>
             <slot part="inner"></slot>
+            ${this.badge != undefined ? '<slot part="badge">'+this.getAttribute('badge')+'</slot>':''}
         `;
    }
    #setColor(param) {
@@ -84,7 +114,6 @@ export default class MButton extends HTMLElement {
          if (/^@/.test(param)) {
             let val = getComputedStyle(host).getPropertyValue(param.toLowerCase().replace('@', '--m-on-'));
             let innerColor = val ? `var(${param.toLowerCase().replace('@', '--m-on-')})` : innerColor;
-            console.log(innerColor)
          } 
          this.color = innerColor;
          this.#render();
