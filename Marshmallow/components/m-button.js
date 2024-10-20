@@ -41,9 +41,7 @@ export default class MButton extends HTMLElement {
                   box-sizing: border-box;
                   -webkit-tap-highlight-color: transparent;
                   position: relative;
-                  color:${this.color?this.color:'var(--m-on-primary)'};
                   border-radius: calc(var(--m-radius) + 8px);
-                  font-weight: 600;
                   transition: 0.3s;
                }
                :host::part(bg) {
@@ -64,7 +62,10 @@ export default class MButton extends HTMLElement {
                   display: block;
                   padding: 12px 24px;
                   font-size: calc(var(--m-font-size) + 0px);
+                  color:${this.color?this.color:'var(--m-on-primary)'};
+                  font-weight: 600;
                   user-select: none;
+                  transition: 0.3s;
                }
                :host::part(badge) {
                   position: absolute;
