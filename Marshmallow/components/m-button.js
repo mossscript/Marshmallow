@@ -4,19 +4,19 @@ import TestColor from '../TestColor.js';
 
 // <m-button> 
 export default class MButton extends HTMLElement {
+   #tc;#color;#background;
    constructor() {
       super();
       this.shadow = this.attachShadow({ mode: 'open' });
-      this.background = undefined;
-      this.color = undefined;
-      this.active = false;
+      this.#tc = new TestColor();
+      this.#background = 'var(--m-primary)';
+      this.#color = 'var(--m-on-primary)';
    }
    static get observedAttributes() {
-      return ['color','badge'];
+      return ['color', 'badge'];
    }
    connectedCallback() {
       this.#render();
-      this.#setColor(this.color);
    }
    attributeChangedCallback(name, oldValue, newValue) {
       if (name == 'color') {
@@ -24,7 +24,7 @@ export default class MButton extends HTMLElement {
       }
       switch (name) {
          case 'color':
-            this.color = newValue;
+            this.#background = newValue;
             break;
          case 'badge':
             this.badge = newValue;
@@ -33,6 +33,12 @@ export default class MButton extends HTMLElement {
       this.#render();
    }
    #render() {
+      let background = this.#background;
+      let color = this.#color;
+      if (this.#tc.test(background)) {
+         background = this.#tc.bg(this.#background);
+         color = this.#tc.inner(this.#background);
+      }
       this.shadow.innerHTML = `
             <style>
                :host{
@@ -42,6 +48,7 @@ export default class MButton extends HTMLElement {
                   -webkit-tap-highlight-color: transparent;
                   position: relative;
                   border-radius: calc(var(--m-radius) + 8px);
+                  height: 40px;
                   transition: 0.3s;
                }
                :host::part(bg) {
@@ -50,7 +57,7 @@ export default class MButton extends HTMLElement {
                   left: 0;
                   z-index: 0;
                   display: block;
-                  background: ${this.background?this.background:'var(--m-primary)'};
+                  box-shadow: inset 0 0 0 20px ${background};
                   width: 100%;
                   height: 100%;
                   transition: 0.3s;
@@ -62,7 +69,7 @@ export default class MButton extends HTMLElement {
                   display: block;
                   padding: 12px 24px;
                   font-size: calc(var(--m-font-size) + 0px);
-                  color:${this.color?this.color:'var(--m-on-primary)'};
+                  color:${color};
                   font-weight: 600;
                   user-select: none;
                   transition: 0.3s;
@@ -98,26 +105,5 @@ export default class MButton extends HTMLElement {
             <slot part="inner"></slot>
             ${this.badge != undefined ? '<slot part="badge">'+this.getAttribute('badge')+'</slot>':''}
         `;
-   }
-   #setColor(param) {
-      let host = this.shadow.host;
-      if (param) {
-         let TC = new TestColor();
-         let testColor = TC.test(param);
-         let color = param;
-         if (/^@/.test(param)) {
-            let val = getComputedStyle(host).getPropertyValue(param.toLowerCase().replace('@', '--m-'));
-            color = val ? `var(${param.toLowerCase().replace('@', '--m-')})` : color;
-            testColor = !!val;
-         }
-         this.background = testColor ? color : 'var(--m-primary)';
-         let innerColor = TC.inner(color);
-         if (/^@/.test(param)) {
-            let val = getComputedStyle(host).getPropertyValue(param.toLowerCase().replace('@', '--m-on-'));
-            let innerColor = val ? `var(${param.toLowerCase().replace('@', '--m-on-')})` : innerColor;
-         } 
-         this.color = innerColor;
-         this.#render();
-      }
    }
 }

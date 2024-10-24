@@ -153,31 +153,70 @@ export default class TestColor {
    constructor() {
       this.version = 'alpha'
    }
-   test(color){
+   test(color) {
       if (color) {
-         return (!!this.#testColor(color))
+         if (/^@/.test(color)) {
+            let elm = document.querySelector('m-app');
+            let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@','--m-'));
+            if (val !== '' && !val.includes('outline')) {
+               return true
+            } else {
+               return false
+            }
+         } else {
+            return (!!this.#testColor(color))
+         }
       } else {
          return false;
       }
-   };
-   inner(color){
-      let l2 = (x)=> {
-         let a;
-         if (x >= 70) {
-            a = x - 70;
-         } else if (x <= 30) {
-            a = x + 70;
+   }
+   bg(color) {
+      if (color) {
+         if (/^@/.test(color)) {
+            let elm = document.querySelector('m-app');
+            let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@','--m-'));
+            if (val !== '' && !val.includes('outline')) {
+               return `var(${color.toLowerCase().replace('@','--m-')})`;
+            }
          } else {
-            a = x - 50;
-            if (a < 0) {
+            return color
+         }
+      }
+   }
+   inner(color) {
+      let l2 = (x) => {
+         let a;
+         if (x >= 60) {
+            a = x - 60;
+         } else if (x <= 40) {
+            a = x + 60;
+         } else if (x > 40 && x < 60) {
+            if (x <= 50) {
                a = x + 50;
+            } else {
+               a = x - 50;
             }
          }
          return a;
       }
-      if (this.test(color)) {
-         let {h,s,l} = this.#getHsl(color);
-         return this.#toHex(h,s,l2(l));
+      if (/^@[a-zA-Z0-9-]*-(\d{1,3})$/.test(color)) {
+         let elm = document.querySelector('m-app');
+         let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+         let name = color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[1].toLowerCase();
+         let num = Number(color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[2]);
+         if (val !== '') {
+            console.log(num,l2(num))
+            return `var(--m-${name}-${l2(num)})`;
+         }
+      } else if (/^@/.test(color)) {
+         let elm = document.querySelector('m-app');
+         let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+         if (val !== '' && !val.includes('outline')) {
+            return `var(${color.toLowerCase().replace('@','--m-on-')})`;
+         }
+      } else if (this.test(color)) {
+         let { h, s, l } = this.#getHsl(color);
+         return this.#toHex(h, s, l2(l));
       } else {
          return undefined;
       }
