@@ -205,7 +205,6 @@ export default class TestColor {
          let name = color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[1].toLowerCase();
          let num = Number(color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[2]);
          if (val !== '') {
-            console.log(num,l2(num))
             return `var(--m-${name}-${l2(num)})`;
          }
       } else if (/^@/.test(color)) {

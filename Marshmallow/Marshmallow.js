@@ -9,7 +9,7 @@ import MButton from './components/m-button.js';
 
 // Marshmallow class
 export default class Marshmallow {
-   #settings;
+   #settings;#PCS;
    constructor(primarySettings) {
       // Primary Settings 
       this.#settings = {
@@ -39,6 +39,14 @@ export default class Marshmallow {
 
       // defineElements
       this.#defineElements();
+      
+      // change theme
+      this.#PCS = window.matchMedia("(prefers-color-scheme:dark)");
+      this.#PCS.onchange = () => {
+         if (this.#settings.theme === 'auto') {
+            this.#grow();
+         }
+      }
    }
    setColor(color){
       this.mushroom.setColor(color);

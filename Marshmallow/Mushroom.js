@@ -182,14 +182,7 @@ export default class Mushroom {
       this.#PCS = window.matchMedia("(prefers-color-scheme:dark)");
       this.#PCS.onchange = () => {
          if (this.#settings.theme === 'auto') {
-            this.#getDarkmode();
             this.#grow();
-         }
-         for (let i in this.#customRootsSettings) {
-            if (this.#customRootsSettings[i].theme === 'auto') {
-               this.#getDarkmode(this.#customRootsSettings[i]);
-               this.#grow();
-            }
          }
       }
       this.#grow();
@@ -1422,6 +1415,9 @@ export default class Mushroom {
    }
    #grow() {
       this.#getDarkmode();
+      for (let i in this.#customRootsSettings) {
+         this.#getDarkmode(this.#customRootsSettings[i]);
+      }
       let palette = this.#settings.hasPalette ? this.#palette() : undefined;
       let subPalette = this.#settings.hasSubPalette ? this.#subPalette() : undefined;
       let code = '';
