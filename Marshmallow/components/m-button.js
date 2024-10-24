@@ -4,16 +4,22 @@ import TestColor from '../TestColor.js';
 
 // <m-button> 
 export default class MButton extends HTMLElement {
-   #tc;#color;#background;
+   #tc;#settings;
    constructor() {
       super();
       this.shadow = this.attachShadow({ mode: 'open' });
       this.#tc = new TestColor();
-      this.#background = 'var(--m-primary)';
-      this.#color = 'var(--m-on-primary)';
+      this.#settings = {
+         background: 'var(--m-primary)',
+         color: 'var(--m-on-primary)',
+         badgeBackground: 'var(--m-error)',
+         badgeColor: 'var(--m-on-error)',
+         badge: undefined,
+      }
+      Object.seal(this.#settings)
    }
    static get observedAttributes() {
-      return ['color', 'badge'];
+      return ['color', 'badge', 'badge-color'];
    }
    connectedCallback() {
       this.#render();
@@ -24,20 +30,29 @@ export default class MButton extends HTMLElement {
       }
       switch (name) {
          case 'color':
-            this.#background = newValue;
+            this.#settings.background = newValue;
             break;
          case 'badge':
-            this.badge = newValue;
+            this.#settings.badge = newValue;
+            break;
+         case 'badge-color':
+            this.#settings.badgeBackground = newValue;
             break;
       }
       this.#render();
    }
    #render() {
-      let background = this.#background;
-      let color = this.#color;
+      let background = this.#settings.background;
+      let color = this.#settings.color;
+      let badgeBackground = this.#settings.badgeBackground;
+      let badgeColor = this.#settings.badgeColor;
       if (this.#tc.test(background)) {
-         background = this.#tc.bg(this.#background);
-         color = this.#tc.inner(this.#background);
+         background = this.#tc.bg(this.#settings.background);
+         color = this.#tc.inner(this.#settings.background);
+      }
+      if (this.#tc.test(badgeBackground)) {
+         badgeBackground = this.#tc.bg(this.#settings.badgeBackground);
+         badgeColor = this.#tc.inner(this.#settings.badgeBackground);
       }
       this.shadow.innerHTML = `
             <style>
@@ -85,11 +100,11 @@ export default class MButton extends HTMLElement {
                   align-items: center;
                   gap: 4px;
                   height: 20px;
-                  font-size: calc(var(--m-font-size) - 4px);
-                  font-weight: 400;
+                  font-size: calc(var(--m-font-size) - 3px);
+                  font-weight: 600;
                   user-select: none;
-                  background: var(--m-error);
-                  color: var(--m-on-error);
+                  background: ${badgeBackground};
+                  color: ${badgeColor};
                   border-radius: calc(var(--m-radius) + 4px);
                   padding: 0 10px;
                }
@@ -103,7 +118,7 @@ export default class MButton extends HTMLElement {
             </style>
             <div part="bg"></div>
             <slot part="inner"></slot>
-            ${this.badge != undefined ? '<slot part="badge">'+this.getAttribute('badge')+'</slot>':''}
+            ${this.#settings.badge != undefined ? '<slot part="badge">'+this.getAttribute('badge')+'</slot>':''}
         `;
    }
 }
