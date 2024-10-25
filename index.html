@@ -9,7 +9,8 @@
    <!-- Marshmallow Alpha -->
    <script type="module">
       import Marshmallow from './Marshmallow/Marshmallow.js';
-      let M = new Marshmallow({color: 'blue'});
+      let M = new Marshmallow({color: '#300185'});
+      M.setTheme('dark')
    </script>
 </head>
 
@@ -22,12 +23,13 @@
          <pre>&lt;m-button></pre>
       </h2>
       
-      <m-button> Button </m-button> <br> <br>
-      <m-button color="@Primary"> @Primary Button </m-button> <br> <br>
-      <m-button color="@Secondary"> @Secondary Button </m-button> <br> <br>
-      <m-button color="@Tertiary"> @Tertiary Button </m-button> <br> <br>
-      <m-button badge="30"> Badge Button </m-button> <br> <br>
-      <m-button badge="30" badge-color="@primary-container"> Badge Button </m-button> <br> <br>
+      <m-button badge-color="@primary-container" badge="left" badge-align="left"> Button </m-button> <br> <br>
+      <m-button badge-color="@primary-container" badge="right" badge-align="right"> Button </m-button> <br> <br>
+      <m-button badge-color="@primary-container" badge="center" badge-align="center"> Button </m-button> <br> <br>
+      
+      <m-button badge badge-align="left"> Button </m-button> <br> <br>
+      <m-button badge badge-align="right"> Button </m-button> <br> <br>
+      <m-button badge badge-align="center"> Button </m-button> <br> <br>
       
    </m-app>
 </body>

@@ -14,12 +14,13 @@ export default class MButton extends HTMLElement {
          color: 'var(--m-on-primary)',
          badgeBackground: 'var(--m-error)',
          badgeColor: 'var(--m-on-error)',
+         badgeAlign: 'right',
          badge: undefined,
       }
       Object.seal(this.#settings)
    }
    static get observedAttributes() {
-      return ['color', 'badge', 'badge-color'];
+      return ['color', 'badge', 'badge-color', 'badge-align'];
    }
    connectedCallback() {
       this.#render();
@@ -38,6 +39,9 @@ export default class MButton extends HTMLElement {
          case 'badge-color':
             this.#settings.badgeBackground = newValue;
             break;
+         case 'badge-align':
+            this.#settings.badgeAlign = newValue;
+            break;
       }
       this.#render();
    }
@@ -46,6 +50,7 @@ export default class MButton extends HTMLElement {
       let color = this.#settings.color;
       let badgeBackground = this.#settings.badgeBackground;
       let badgeColor = this.#settings.badgeColor;
+      let badgeAlignStyle = '';
       if (this.#tc.test(background)) {
          background = this.#tc.bg(this.#settings.background);
          color = this.#tc.inner(this.#settings.background);
@@ -53,6 +58,19 @@ export default class MButton extends HTMLElement {
       if (this.#tc.test(badgeBackground)) {
          badgeBackground = this.#tc.bg(this.#settings.badgeBackground);
          badgeColor = this.#tc.inner(this.#settings.badgeBackground);
+      }
+      if (this.hasAttribute('badge-align')) {
+         switch (this.getAttribute('badge-align')) {
+            case 'right':
+               badgeAlignStyle = 'right: -6px';
+               break;
+            case 'left':
+               badgeAlignStyle = 'left: -6px';
+               break;
+            case 'center':
+               badgeAlignStyle = 'left: 50%;translate: -50% 0';
+               break;
+         }
       }
       this.shadow.innerHTML = `
             <style>
@@ -92,21 +110,21 @@ export default class MButton extends HTMLElement {
                :host::part(badge) {
                   position: absolute;
                   top: -7px;
-                  right: -7px;
+                  ${badgeAlignStyle};
                   z-index: 3;
                   display: flex;
                   flex-flow: row nowrap;
                   justify-content: center;
                   align-items: center;
                   gap: 4px;
-                  height: 20px;
+                  height: 18px;
                   font-size: calc(var(--m-font-size) - 3px);
                   font-weight: 600;
                   user-select: none;
                   background: ${badgeBackground};
                   color: ${badgeColor};
                   border-radius: calc(var(--m-radius) + 4px);
-                  padding: 0 10px;
+                  padding: 0 9px;
                }
                :host(:active){
                   scale: 0.9;
