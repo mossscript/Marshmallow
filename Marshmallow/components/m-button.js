@@ -4,74 +4,66 @@ import TestColor from '../TestColor.js';
 
 // <m-button> 
 export default class MButton extends HTMLElement {
-   #tc;#settings;
+   #tc;
    constructor() {
       super();
       this.shadow = this.attachShadow({ mode: 'open' });
       this.#tc = new TestColor();
-      this.#settings = {
-         background: 'var(--m-primary)',
-         color: 'var(--m-on-primary)',
-         badgeBackground: 'var(--m-error)',
-         badgeColor: 'var(--m-on-error)',
-         badgeAlign: 'right',
-         badge: undefined,
-      }
-      Object.seal(this.#settings)
+      this.background = 'var(--m-primary)';
+      this.color = 'var(--m-on-primary)';
+      this.badge = undefined;
+      this.badgeBackground = 'var(--m-error)';
+      this.badgeColor = 'var(--m-on-error)';
+      this.backgroundOpacity = 1;
+      this.badgeAlign = 'right';
+      this.badgeAlignStyle = 'right: -6px';
    }
    static get observedAttributes() {
-      return ['color', 'badge', 'badge-color', 'badge-align'];
+      return ['color', 'badge', 'badge-color', 'badge-align', 'background-opacity'];
+   }
+   attributeChangedCallback(name, oldValue, newValue) {
+      switch (name) {
+         case 'color':
+            this.background = newValue;
+            if (this.#tc.test(this.background)) {
+               this.color = this.#tc.inner(this.background);
+               this.background = this.#tc.bg(this.background);
+            }
+            break;
+         case 'badge':
+            this.badge = newValue;
+            break;
+         case 'badge-color':
+            this.badgeBackground = newValue;
+            if (this.#tc.test(this.badgeBackground)) {
+               this.badgeColor = this.#tc.inner(this.badgeBackground);
+               this.badgeBackground = this.#tc.bg(this.badgeBackground);
+            }
+            break;
+         case 'badge-align':
+            this.badgeAlign = newValue;
+            switch (newValue) {
+               case 'right':
+                  this.badgeAlignStyle = 'right: -6px';
+                  break;
+               case 'left':
+                  this.badgeAlignStyle = 'left: -6px';
+                  break;
+               case 'center':
+                  this.badgeAlignStyle = 'left: 50%;translate: -50% 0';
+                  break;
+            }
+            break;
+         case 'background-opacity':
+            this.backgroundOpacity = newValue;
+            break;
+      }
+      this.#render();
    }
    connectedCallback() {
       this.#render();
    }
-   attributeChangedCallback(name, oldValue, newValue) {
-      if (name == 'color') {
-         
-      }
-      switch (name) {
-         case 'color':
-            this.#settings.background = newValue;
-            break;
-         case 'badge':
-            this.#settings.badge = newValue;
-            break;
-         case 'badge-color':
-            this.#settings.badgeBackground = newValue;
-            break;
-         case 'badge-align':
-            this.#settings.badgeAlign = newValue;
-            break;
-      }
-      this.#render();
-   }
    #render() {
-      let background = this.#settings.background;
-      let color = this.#settings.color;
-      let badgeBackground = this.#settings.badgeBackground;
-      let badgeColor = this.#settings.badgeColor;
-      let badgeAlignStyle = '';
-      if (this.#tc.test(background)) {
-         background = this.#tc.bg(this.#settings.background);
-         color = this.#tc.inner(this.#settings.background);
-      }
-      if (this.#tc.test(badgeBackground)) {
-         badgeBackground = this.#tc.bg(this.#settings.badgeBackground);
-         badgeColor = this.#tc.inner(this.#settings.badgeBackground);
-      }
-      if (this.hasAttribute('badge-align')) {
-         switch (this.getAttribute('badge-align')) {
-            case 'right':
-               badgeAlignStyle = 'right: -6px';
-               break;
-            case 'left':
-               badgeAlignStyle = 'left: -6px';
-               break;
-            case 'center':
-               badgeAlignStyle = 'left: 50%;translate: -50% 0';
-               break;
-         }
-      }
       this.shadow.innerHTML = `
             <style>
                :host{
@@ -90,11 +82,12 @@ export default class MButton extends HTMLElement {
                   left: 0;
                   z-index: 0;
                   display: block;
-                  box-shadow: inset 0 0 0 20px ${background};
+                  background: ${this.background};
                   width: 100%;
                   height: 100%;
                   transition: 0.3s;
                   border-radius: calc(var(--m-radius) + 8px);
+                  opacity: ${this.backgroundOpacity};
                }
                :host::part(inner) {
                   position: relative;
@@ -102,7 +95,7 @@ export default class MButton extends HTMLElement {
                   display: block;
                   padding: 12px 24px;
                   font-size: calc(var(--m-font-size) + 0px);
-                  color:${color};
+                  color:${this.color};
                   font-weight: 600;
                   user-select: none;
                   transition: 0.3s;
@@ -110,7 +103,7 @@ export default class MButton extends HTMLElement {
                :host::part(badge) {
                   position: absolute;
                   top: -7px;
-                  ${badgeAlignStyle};
+                  ${this.badgeAlignStyle};
                   z-index: 3;
                   display: flex;
                   flex-flow: row nowrap;
@@ -121,8 +114,8 @@ export default class MButton extends HTMLElement {
                   font-size: calc(var(--m-font-size) - 3px);
                   font-weight: 600;
                   user-select: none;
-                  background: ${badgeBackground};
-                  color: ${badgeColor};
+                  background: ${this.badgeBackground};
+                  color: ${this.badgeColor};
                   border-radius: calc(var(--m-radius) + 4px);
                   padding: 0 9px;
                }
@@ -136,7 +129,7 @@ export default class MButton extends HTMLElement {
             </style>
             <div part="bg"></div>
             <slot part="inner"></slot>
-            ${this.#settings.badge != undefined ? '<slot part="badge">'+this.getAttribute('badge')+'</slot>':''}
+            ${this.badge != undefined ? '<slot part="badge">'+this.getAttribute('badge')+'</slot>':''}
         `;
    }
 }
