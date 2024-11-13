@@ -179,7 +179,7 @@ export default class TestColor {
                return `var(${color.toLowerCase().replace('@','--m-')})`;
             }
          } else {
-            return color
+            return color.replaceAll(' ','')
          }
       }
    }

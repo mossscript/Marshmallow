@@ -1,0 +1,26 @@
+<svg width="100%" height="50px" viewBox="0 0 1000 50">
+  <line x1="0" y1="25" x2="1000" y2="25" stroke="#DBDCEF" stroke-width="50" />
+  <line class="progress-linear" x1="0" y1="25" x2="1000" y2="25" stroke="#474BFF" stroke-width="50" stroke-dashoffset="0" />
+</svg>
+
+<style>
+  .progress-linear {
+     
+    animation: linearProgress 2s linear infinite;
+  }
+
+  @keyframes linearProgress {
+    0% {
+       stroke-dasharray: 100, 900;
+      stroke-dashoffset: 1000;
+    }
+    66% {
+       stroke-dasharray: 500, 1000;
+      stroke-dashoffset: 500;
+    }
+    100% {
+       stroke-dasharray: 100, 900;
+       stroke-dashoffset: -1000;
+    }
+  }
+</style>

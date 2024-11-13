@@ -5,7 +5,9 @@ import Mushroom from './Mushroom.js';
 
 // import components
 import MApp from './components/m-app.js';
-import MButton from './components/m-button.js';
+import MBadge from './components/m-badge.js'; 
+import MSymbol from './components/m-symbol.js';
+import MLinearProgress from './components/m-linear-progress.js';
 
 // Marshmallow class
 export default class Marshmallow {
@@ -18,6 +20,12 @@ export default class Marshmallow {
          contrast: 0,
          fontSize: 14,
          radius: 8,
+         symbolType: 'rounded',
+         symbolsPath: {
+            rounded: 'Marshmallow/symbol/symbols-rounded.woff2',
+            outlined: 'Marshmallow/symbol/symbols-outlined.woff2',
+            sharp: 'Marshmallow/symbol/symbols-sharp.woff2',
+         },
       }
       Object.seal(this.#settings);
       Object.assign(this.#settings, primarySettings);
@@ -30,6 +38,8 @@ export default class Marshmallow {
       this.contrast = this.#settings.contrast;
       this.fontSize = this.#settings.fontSize;
       this.radius = this.#settings.radius;
+      this.symbolType = this.#settings.symbolType;
+      this.symbolsPath = this.#settings.symbolsPath;
 
       // mushroom 
       this.#setUpMushroom();
@@ -55,7 +65,9 @@ export default class Marshmallow {
    }
    #defineElements() {
       customElements.define('m-app', MApp);
-      customElements.define('m-button', MButton);
+      customElements.define('m-badge', MBadge);
+      customElements.define('m-symbol', MSymbol);
+      customElements.define('m-linear-progress', MLinearProgress);
    }
    #setUpMushroom() {
       this.mushroom = new Mushroom({
@@ -78,28 +90,41 @@ export default class Marshmallow {
    }
    #grow() {
       let code = '';
+      let symbolsPath = '';
       let style = document.querySelector('#MUSHROOM-VARIABLE');
       if (!style) {
          style = document.createElement('style');
          document.head.appendChild(style)
          style.id = 'MUSHROOM';
       }
+      for (let i in this.symbolsPath) {
+         symbolsPath += `
+         @font-face {
+            font-family: 'm-symbol-${i}';
+            font-style: normal;
+            font-weight: 100 700;
+            src: url(${this.symbolsPath[i]}) format(woff2);
+         }`
+      }
       code += `
-/*** Marshmallow ${this.version} ***/
-/* Variable */
-:root{
-   --m-font-size: ${this.fontSize}px;
-   --m-radius: ${this.radius}px;
-}
-/* Mushroom v${this.mushroom.version} */
-${this.mushroom.code}
-/* body */
-body{
-   padding: 0;
-   margin: 0;
-   width: 100vw;
-   height: 100vh;
-}`;
+      /*** Marshmallow ${this.version} ***/
+      /* Fonts */
+      ${symbolsPath}
+      /* Variable */
+      :root{
+         --m-font-size: ${this.fontSize}px;
+         --m-radius: ${this.radius}px;
+         --m-symbol-font: 'm-symbol-${this.symbolType}';
+      }
+      /* Mushroom v${this.mushroom.version} */
+      ${this.mushroom.code}
+      /* body */
+      body{
+         padding: 0;
+         margin: 0;
+         width: 100vw;
+         height: 100vh;
+      }`;
       style.innerHTML = code;
    }
 }

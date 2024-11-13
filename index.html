@@ -9,20 +9,42 @@
    <!-- Marshmallow Alpha -->
    <script type="module">
       import Marshmallow from './Marshmallow/Marshmallow.js';
-      let M = new Marshmallow({color: '#300185'});
+      let M = new Marshmallow({
+         color: 'royalblue',
+         theme: 'dark',
+         fontSize: 14,
+      });
    </script>
 </head>
 
 <body>
    <m-app style="padding: 16px">
       <h1> Hello Marshmallow </h1>
-      <h2>
-         <pre>&lt;m-button></pre>
-      </h2>
+      <h2><pre>&lt;m-symbol></pre></h2>
       
-      <m-button> Button </m-button>
+      <m-symbol>settings</m-symbol>
+      <m-symbol>home</m-symbol>
+      <m-symbol>delete</m-symbol>
+      <m-symbol>menu</m-symbol>
+      <m-symbol>web</m-symbol>
+      <m-symbol>face</m-symbol>
+      <m-symbol>star</m-symbol>
+      <m-symbol>favorite</m-symbol>
+      <m-symbol>person</m-symbol>
+      
+      <h2><pre>&lt;m-badge></pre></h2>
+      
+      <m-badge></m-badge>
+      <m-badge>2</m-badge>
+      <m-badge>+999</m-badge>
+      <m-badge color="lightgreen"><m-symbol>done</m-symbol></m-badge>
+      <m-badge color="@error"><m-symbol fill>warning</m-symbol></m-badge>
+      <m-badge color="@error"><m-symbol fill>error</m-symbol> <m-symbol>person</m-symbol></m-badge>
+      
+      <h2><pre>&lt;m-linear-progress></pre></h2>
+      
+      <m-linear-progress></m-linear-progress>
       
    </m-app>
 </body>
-
 </html>

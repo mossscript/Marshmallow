@@ -93,7 +93,7 @@ export default class MButton extends HTMLElement {
                   position: relative;
                   z-index: 2;
                   display: block;
-                  padding: 12px 24px;
+                  padding: 0;
                   font-size: calc(var(--m-font-size) + 0px);
                   color:${this.color};
                   font-weight: 600;
@@ -125,6 +125,9 @@ export default class MButton extends HTMLElement {
                }
                :host(:active)::part(bg){
                   border-radius: calc(var(--m-radius) + 4px);
+               }
+               m-symbol{
+                  
                }
             </style>
             <div part="bg"></div>
