@@ -38,17 +38,17 @@ export default class MBadge extends HTMLElement {
                flex-flow: row nowrap;
                justify-content: center;
                align-items: center;
-               font-size: 16px;
+               font-size: 14px;
                font-weight: 600;
                --m-symbol-wght: 600;
                user-select: none;
                min-width: 24px;
-               min-height: 24px;
+               height: 24px;
                padding: 2px;
                line-height: 0;
                background: var(--m-badge-background,${this.#background});
                color: var(--m-badge-color,${this.#color});
-               border-radius: calc(var(--m-radius) + 4px);
+               border-radius: calc(var(--m-radius) + 8px);
                vertical-align: middle;
                box-sizing: border-box;
             }

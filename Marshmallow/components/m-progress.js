@@ -11,7 +11,6 @@ export default class MProgress extends HTMLElement {
       this.#tc = new TestColor();
       this.color = 'var(--m-primary)';
       this.value = undefined;
-      this.type = 'circular';
       this.min = 0;
       this.max = 100;
       this.label = null;
