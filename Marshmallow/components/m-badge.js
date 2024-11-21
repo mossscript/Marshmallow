@@ -4,10 +4,10 @@ import TestColor from '../TestColor.js';
 
 // <m-badge> 
 export default class MBadge extends HTMLElement {
-   #background;#color;#tc;
+   #shadow;#background;#color;#tc;
    constructor() {
       super();
-      this.shadow = this.attachShadow({mode: 'open'});
+      this.#shadow = this.attachShadow({mode: 'open'});
       this.#tc = new TestColor();
       this.#background = 'var(--m-primary)';
       this.#color = 'var(--m-on-primary)';
@@ -31,7 +31,7 @@ export default class MBadge extends HTMLElement {
       this.#render();
    }
    #render() {
-      this.shadow.innerHTML = `
+      this.#shadow.innerHTML = `
          <style>
             :host{
                display: inline-flex;

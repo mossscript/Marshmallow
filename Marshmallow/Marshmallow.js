@@ -8,6 +8,7 @@ import MApp from './components/m-app.js';
 import MBadge from './components/m-badge.js'; 
 import MSymbol from './components/m-symbol.js';
 import MLinearProgress from './components/m-linear-progress.js';
+import MCircularProgress from './components/m-circular-progress.js';
 
 // Marshmallow class
 export default class Marshmallow {
@@ -68,6 +69,7 @@ export default class Marshmallow {
       customElements.define('m-badge', MBadge);
       customElements.define('m-symbol', MSymbol);
       customElements.define('m-linear-progress', MLinearProgress);
+      customElements.define('m-circular-progress', MCircularProgress);
    }
    #setUpMushroom() {
       this.mushroom = new Mushroom({

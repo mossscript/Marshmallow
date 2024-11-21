@@ -2,16 +2,16 @@
 
 // <m-linear-progress> 
 export default class MLinearProgress extends HTMLElement {
-   #value;#min;#max;
+   #shadow;#value;#min;#max;
    constructor() {
       super();
-      this.shadow = this.attachShadow({mode: 'open'});
+      this.#shadow = this.attachShadow({mode: 'open'});
       this.#value = undefined;
       this.#min = 0;
       this.#max = 100;
    }
    static get observedAttributes() {
-      return ['value','min','max'];
+      return ['value','min','max','label'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -41,15 +41,15 @@ export default class MLinearProgress extends HTMLElement {
       let min = this.#min || 0;
       let max = this.#max || 100;
       let progress = clamp(min, max, this.#value) || 0;
-      let h = 10;
-      {this.shadow.innerHTML = `
+      let h = 5;
+      this.#shadow.innerHTML = `
          <style>
             :host{
                display: block;
                margin: 8px 0;
                width: 100%;
                position: relative;
-               height: var(--m-linear-progress-height,${h}px);
+               height: var(--m-linear-progress-height,var(--m-progress-height,${h}px));
                box-sizing: border-box;
                overflow: hidden;
                border-radius: var(--m-radius);
@@ -86,10 +86,10 @@ export default class MLinearProgress extends HTMLElement {
                   width: 20%;
                   left: 100%;
                }
-            }
+           nn }
          </style>
          <div part="progress-background"></div>
          <div part="progress"></div>
-      `;}
+      `;
    }
 }

@@ -1,10 +1,10 @@
 /*** m-symbol.js alpha 0.00 ***/
 // <m-symbol> 
 export default class MSymbol extends HTMLElement {
-   #fill;#wght;#grad;#opsz;
+   #shadow;#fill;#wght;#grad;#opsz;
    constructor() {
       super();
-      this.shadow = this.attachShadow({mode: 'open'});
+      this.#shadow = this.attachShadow({mode: 'open'});
       this.#fill = 0;
       this.#wght = 300;
       this.#grad = 0;
@@ -43,7 +43,7 @@ export default class MSymbol extends HTMLElement {
    get opsz(){this.getAttribute('opsz')}
    #render() {
       if (this.hasAttribute('fill') && this.getAttribute('fill') == '') this.#fill = 1;
-      this.shadow.innerHTML = `
+      this.#shadow.innerHTML = `
          <style>
             :host{
                display: inline-flex;
