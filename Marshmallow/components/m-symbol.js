@@ -37,10 +37,10 @@ export default class MSymbol extends HTMLElement {
    set wght(x){this.setAttribute('wght',x)}
    set grad(x){this.setAttribute('grad',x)}
    set opsz(x){this.setAttribute('opsz',x)}
-   get fill(){this.getAttribute('fill')}
-   get wght(){this.getAttribute('wght')}
-   get grad(){this.getAttribute('grad')}
-   get opsz(){this.getAttribute('opsz')}
+   get fill(){return this.getAttribute('fill')}
+   get wght(){return this.getAttribute('wght')}
+   get grad(){return this.getAttribute('grad')}
+   get opsz(){return this.getAttribute('opsz')}
    #render() {
       if (this.hasAttribute('fill') && this.getAttribute('fill') == '') this.#fill = 1;
       this.#shadow.innerHTML = `

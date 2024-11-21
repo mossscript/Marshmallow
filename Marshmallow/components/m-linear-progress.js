@@ -30,12 +30,12 @@ export default class MLinearProgress extends HTMLElement {
    connectedCallback() {
       this.#render();
    }
-   set value(x) {this.setAttribute('value', x)}
-   set min(x) {this.setAttribute('min', x)}
-   set max(x) {this.setAttribute('max', x)}
-   get value() {this.getAttribute('value')}
-   get min() {this.getAttribute('min')}
-   get max() {this.getAttribute('max')}
+   set value(x){this.setAttribute('value', x)}
+   set min(x)  {this.setAttribute('min', x)}
+   set max(x)  {this.setAttribute('max', x)}
+   get value(){return this.getAttribute('value')}
+   get min()  {return this.getAttribute('min')}
+   get max()  {return this.getAttribute('max')}
    #render() {
       let clamp = (min, max, num) => Math.max(min,Math.min(max,num));
       let min = this.#min || 0;

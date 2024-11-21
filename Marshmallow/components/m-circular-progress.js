@@ -88,7 +88,7 @@ export default class MCircularProgress extends HTMLElement{
                font-weight: 900;
                width: ${size}px;
                height: ${size}px;
-               font-size: ${size/4}px;
+               font-size: ${(size-size.length)/4}px;
                text-overflow: ellipsis;
                overflow: hidden;
                white-space: nowrap;
@@ -133,7 +133,7 @@ export default class MCircularProgress extends HTMLElement{
                }
             }
          </style>
-         <div part="label">${label}</div>
+         <slot part="label">${label}</slot>
          <svg part="svg" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
             <circle part="progress-background" cx="${size/2}" cy="${size/2}" r="${radius}" />
             <circle part="progress" cx="${size/2}" cy="${size/2}" r="${radius}" />
