@@ -2,16 +2,21 @@
 
 // <m-linear-progress> 
 export default class MLinearProgress extends HTMLElement {
-   #shadow;#value;#min;#max;
+   #shadow;
+   #value;
+   #min;
+   #max;
+   #sharp;
    constructor() {
       super();
-      this.#shadow = this.attachShadow({mode: 'open'});
+      this.#shadow = this.attachShadow({ mode: 'open' });
       this.#value = undefined;
       this.#min = 0;
       this.#max = 100;
+      this.#sharp = false;
    }
    static get observedAttributes() {
-      return ['value','min','max','label'];
+      return ['value', 'min', 'max', 'sharp'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -24,20 +29,25 @@ export default class MLinearProgress extends HTMLElement {
          case 'max':
             this.#max = newValue;
             break;
+         case 'sharp':
+            this.#sharp = this.hasAttribute('sharp');
+            break;
       }
       this.#render();
    }
    connectedCallback() {
       this.#render();
    }
-   set value(x){this.setAttribute('value', x)}
-   set min(x)  {this.setAttribute('min', x)}
-   set max(x)  {this.setAttribute('max', x)}
-   get value(){return this.getAttribute('value')}
-   get min()  {return this.getAttribute('min')}
-   get max()  {return this.getAttribute('max')}
+   set value(x) { this.setAttribute('value', x) }
+   set min(x) { this.setAttribute('min', x) }
+   set max(x) { this.setAttribute('max', x) }
+   set sharp(x) { x == true ? this.setAttribute('sharp', '') : this.removeAttribute('sharp') }
+   get value() { return this.hasAttribute('value') }
+   get min() { return this.hasAttribute('min') }
+   get max() { return this.hasAttribute('max') }
+   get sharp() { return this.hasAttribute('sharp') }
    #render() {
-      let clamp = (min, max, num) => Math.max(min,Math.min(max,num));
+      let clamp = (min, max, num) => Math.max(min, Math.min(max, num));
       let min = this.#min || 0;
       let max = this.#max || 100;
       let progress = clamp(min, max, this.#value) || 0;
@@ -69,7 +79,7 @@ export default class MLinearProgress extends HTMLElement {
                height: 100%;
                background: var(--m-linear-progress-color,var(--m-progress-color,var(--m-primary)));
                width: calc(${progress}% + ${h}px);
-               border-radius: var(--m-radius);
+               border-radius: ${this.#sharp?'0':'var(--m-radius)'};
                z-index: 1;
                ${this.#value?'':'animation: loop 1s linear infinite;'}
             }

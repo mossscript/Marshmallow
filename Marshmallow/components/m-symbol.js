@@ -1,7 +1,7 @@
 /*** m-symbol.js alpha 0.00 ***/
 // <m-symbol> 
 export default class MSymbol extends HTMLElement {
-   #shadow;#fill;#wght;#grad;#opsz;
+   #shadow;#fill;#wght;#grad;#opsz;#size;
    constructor() {
       super();
       this.#shadow = this.attachShadow({mode: 'open'});
@@ -9,9 +9,10 @@ export default class MSymbol extends HTMLElement {
       this.#wght = 300;
       this.#grad = 0;
       this.#opsz = 24;
+      this.#size = 1.4;
    }
    static get observedAttributes() {
-      return ['fill','wght','grad','opsz'];
+      return ['fill','wght','grad','opsz', 'size'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -26,6 +27,9 @@ export default class MSymbol extends HTMLElement {
             break;
          case 'opsz':
             this.#opsz = newValue;
+            break;
+         case 'size':
+            this.#size = newValue;
             break;
       }
       this.#render();
@@ -53,7 +57,7 @@ export default class MSymbol extends HTMLElement {
                font-family: var(--m-symbol-font);
                font-weight: normal;
                font-style: normal;
-               font-size: 1.4em;
+               font-size: ${this.#size}em;
                vertical-align: bottom;
                letter-spacing: normal;
                text-transform: none;

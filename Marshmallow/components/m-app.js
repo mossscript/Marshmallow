@@ -4,10 +4,11 @@ import TestColor from '../TestColor.js';
 
 // <m-app> 
 export default class MApp extends HTMLElement {
-   #shadow;#tc;
+   #shadow;
+   #tc;
    constructor() {
       super();
-      this.#shadow = this.attachShadow({mode:'open'});
+      this.#shadow = this.attachShadow({ mode: 'open' });
       this.#tc = new TestColor();
       this.background = 'var(--m-background)';
       this.color = 'var(--m-on-background)';
