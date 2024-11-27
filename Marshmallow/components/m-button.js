@@ -15,6 +15,14 @@ export default class MButton extends HTMLElement {
    #progress;
    #progressMin;
    #progressMax;
+   #symbol;
+   #symbolFill;
+   #symbolWght;
+   #symbolGrad;
+   #symbolOpsz;
+   #symbolAlign;
+   #outline;
+   #full;
    constructor() {
       super();
       this.#shadow = this.attachShadow({ mode: 'open' });
@@ -28,15 +36,38 @@ export default class MButton extends HTMLElement {
       this.#progress = undefined;
       this.#progressMin = undefined;
       this.#progressMax = undefined;
+      this.#symbol = undefined;
+      this.#symbolFill = undefined;
+      this.#symbolWght = undefined;
+      this.#symbolGrad = undefined;
+      this.#symbolOpsz = undefined;
+      this.#symbolAlign = 'end';
+      this.#outline = undefined;
+      this.#full = false;
    }
    static get observedAttributes() {
-      return ['color', 'badge', 'badgecolor', 'badgesize', 'badgeposition', 'progress'];
+      return [
+         'color',
+         'badge', 
+         'badgecolor', 
+         'badgesize', 
+         'badgeposition', 
+         'progress', 
+         'outline', 
+         'full', 
+         'symbol', 
+         'symbolfill',
+         'symbolwght',
+         'symbolgrad',
+         'symbolopsz',
+         'symbolalign',
+       ];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
          case 'color':
             this.#background = newValue;
-            if (this.#tc.test(this.#background)) {
+            if (this.#tc.test(newValue)) {
                this.#color = this.#tc.inner(this.#background);
                this.#background = this.#tc.bg(this.#background);
             }
@@ -56,7 +87,24 @@ export default class MButton extends HTMLElement {
          case 'progress':
             this.#progress = newValue;
             break;
-
+         case 'symbol':
+            this.#symbol = newValue;
+            break;
+         case 'symbolfill':
+            this.#symbolFill = newValue;
+            break;
+         case 'symbolwght':
+            this.#symbolWght = newValue;
+            break;
+         case 'symbolgrad':
+            this.#symbolGrad = newValue;
+            break;
+         case 'symbolopsz':
+            this.#symbolOpsz = newValue;
+            break;
+            case 'symbolalign':
+            this.#symbolAlign = newValue;
+         break;
       }
       this.#render();
    }
@@ -64,6 +112,8 @@ export default class MButton extends HTMLElement {
       this.#render();
    }
    #render() {
+      let outlin = this.hasAttribute('outline');
+      let full = this.hasAttribute('full');
       let x, y, dx, dy;
       switch (this.#badgePosition.toLocaleLowerCase().replaceAll(' ', '')) {
          case 'topright':
@@ -96,16 +146,19 @@ export default class MButton extends HTMLElement {
       this.#shadow.innerHTML = `
          <style>
             :host{
-               display: inline-flex;
+               display: ${full?'flex':'inline-flex'};
                cursor: pointer;
                box-sizing: border-box;
                -webkit-tap-highlight-color: transparent;
                position: relative;
                height: 40px;
                vertical-align: middle;
+               font-weight: ${outlin?600:400};
                user-select: none;
                transition-property: scale;
                transition-duration: 0.3s;
+               color: var(--m-button-color,${outlin?this.#background:this.#color});
+               
             }
             :host::part(background) {
                position: absolute;
@@ -113,7 +166,8 @@ export default class MButton extends HTMLElement {
                left: 0;
                z-index: 0;
                display: block;
-               background: var(--m-button-background,${this.#background});
+               ${outlin?'border: 2px solid var(--m-button-background,'+this.#background+')':'background: var(--m-button-background,'+this.#background+')'};
+               box-sizing: border-box;
                width: 100%;
                height: 100%;
                border-radius: var(--m-button-radius,calc(var(--m-radius) + 10px));
@@ -132,9 +186,8 @@ export default class MButton extends HTMLElement {
                padding: 0 16px;
                gap: 8px;
                z-index: 3;
-               color: var(--m-button-color,${this.#color});
             }
-            ::slotted(m-symbol){
+            ::slotted(m-symbol),m-symbol{
                vertical-align: middle;
             }
             ::slotted(m-badge),m-badge{
@@ -151,7 +204,7 @@ export default class MButton extends HTMLElement {
                height: 100%;
                z-index: 2;
                --m-progress-background: transparent;
-               --m-progress-color: var(--m-button-color,${this.#color});
+               --m-progress-color: currentColor;
                opacity: 0.2;
             }
             :host(:active){
@@ -183,10 +236,32 @@ export default class MButton extends HTMLElement {
             this.#shadow.querySelector('div[part="background"]').appendChild(progress);
          }
          progress.sharp = true;
-         progress.min = this.#progressMin || 0;
-         progress.max = this.#progressMax || 100;
+         if (this.#progressMin) progress.min = this.#progressMin;
+         if (this.#progressMax) progress.max = this.#progressMax;
          progress.value = this.#progress;
-         console.log(progress)
       }
+      if (this.#symbol) {
+         let symbol = this.#shadow.querySelector('m-symbol');
+         if (symbol == null) {
+            symbol = document.createElement('m-symbol');
+            switch (this.#symbolAlign) {
+               case 'start':
+                  this.#shadow.querySelector('div[part="inner"]').prepend(symbol);
+                  break;
+               case 'end':
+                  this.#shadow.querySelector('div[part="inner"]').appendChild(symbol);
+                  break;
+               default:
+                  this.#shadow.querySelector('div[part="inner"]').appendChild(symbol);
+            }
+         }
+         symbol.innerText = this.#symbol;
+         if (this.#symbolFill) symbol.fill = this.#symbolFill;
+         if (this.#symbolWght) symbol.wght = this.#symbolWght;
+         if (this.#symbolGrad) symbol.graf = this.#symbolGrad;
+         if (this.#symbolOpsz) symbol.opsz = this.#symbolOpsz;
+         console.log(this)
+      }
+      console.log(this.#symbol)
    }
 }
