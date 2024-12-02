@@ -7,6 +7,11 @@ export default class MLinearProgress extends HTMLElement {
    #min;
    #max;
    #sharp;
+   #color;
+   #background;
+   #progressOpacity;
+   #backgroundOpacity;
+   #opacity;
    constructor() {
       super();
       this.#shadow = this.attachShadow({ mode: 'open' });
@@ -14,9 +19,14 @@ export default class MLinearProgress extends HTMLElement {
       this.#min = 0;
       this.#max = 100;
       this.#sharp = false;
+      this.#color = 'var(--m-primary)';
+      this.#background = 'var(--m-surface-container-high)';
+      this.#progressOpacity = 1;
+      this.#backgroundOpacity = 1;
+      this.#opacity = 1;
    }
    static get observedAttributes() {
-      return ['value', 'min', 'max', 'sharp'];
+      return ['value', 'min', 'max', 'sharp', 'color', 'background', 'progressopacity', 'backgroundopacity', 'opacity'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -31,6 +41,21 @@ export default class MLinearProgress extends HTMLElement {
             break;
          case 'sharp':
             this.#sharp = this.hasAttribute('sharp');
+            break;
+         case 'color':
+            this.#color = newValue;
+            break;
+         case 'background':
+            this.#background = newValue;
+            break;
+         case 'progressopacity':
+            this.#progressOpacity = newValue;
+            break;
+         case 'backgroundopacity':
+            this.#backgroundOpacity = newValue;
+            break;
+         case 'opacity':
+            this.#opacity = newValue;
             break;
       }
       this.#render();

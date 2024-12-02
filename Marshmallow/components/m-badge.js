@@ -42,25 +42,22 @@ export default class MBadge extends HTMLElement {
    set size(x) { this.setAttribute('size', x) }
    get size() { return this.getAttribute('size') }
    #render() {
-      let w, fs, fw, sw;
+      let [w, fs, sw] = [24, 14, 16];
       switch (this.#size.toLocaleLowerCase()) {
          case 'small':
             w = 20;
             sw = 12;
             fs = 10;
-            fw = 600;
             break;
          case 'medium':
             w = 24;
             sw = 16;
             fs = 14;
-            fw = 600;
             break;
          case 'large':
             w = 28;
             sw = 20;
             fs = 18;
-            fw = 600;
             break;
       }
       this.#shadow.innerHTML = `
@@ -71,7 +68,7 @@ export default class MBadge extends HTMLElement {
                justify-content: center;
                align-items: center;
                font-size: ${fs}px;
-               font-weight: ${fw};
+               font-weight: 600;
                user-select: none;
                min-width: ${w}px;
                height: ${w}px;
