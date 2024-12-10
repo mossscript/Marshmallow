@@ -7,22 +7,16 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <!-- Marshmallow Alpha -->
-   <script type="module">
-      import Marshmallow from './Marshmallow/Marshmallow.js';
-      let M = new Marshmallow({
-         color: 'royal blue',
-         theme: 'dark',
-         fontSize: 14,
-      });
+   <script src="Marshmallow.bundle.js"></script>
+   <script>
+      let M = new Marshmallow({theme:'light'});
    </script>
 </head>
 
 <body>
    <m-app style="padding: 16px">
       
-      <m-button>
-         leafweb.io@gmail.com
-      </m-button>
+      <m-button full symbol="dark_mode" onclick="M.toggleTheme(); this.symbol = M.theme == 'dark' ? 'light_mode' : 'dark_mode'"> Toggle Darkmode </m-button><br>
       
    </m-app>
 </body>
