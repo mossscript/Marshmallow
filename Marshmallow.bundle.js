@@ -2124,10 +2124,19 @@ class Marshmallow {
       attributeChangedCallback(name, oldValue, newValue) {
          switch (name) {
             case 'color':
-               this.#background = newValue;
+               this.#background = newValue.replaceAll(' ','');
+               if (this.#ct.test(newValue)) {
+                  this.#background = this.#ct.bg(newValue);
+                  if (this.#color === undefined) {
+                     this.#color = this.#ct.inner(newValue);
+                  }
+               }
                break;
             case 'textcolor':
                this.#color = newValue;
+               if (this.#ct.test(newValue)) {
+                  this.#color = this.#ct.bg(newValue);
+               }
                break;
             case 'badge':
                this.#badge = newValue;
@@ -2251,6 +2260,7 @@ class Marshmallow {
             [x, y, dx, dy] = ['left', 'bottom', -25, 25];
                break;
          }
+         
          // if (this.#background && this.#ct.test(this.#background)) {
          //    this.#color = this.#ct.inner(this.#background);
          //    this.#background = this.#ct.bg(this.#background);
@@ -2260,9 +2270,8 @@ class Marshmallow {
          //    this.#background = 'var(--m-primary)';
          //    this.#color = 'var(--m-on-primary)';
          // }
-
-
-
+         
+         
          this.#background = this.#background ?? 'var(--m-primary)';
          this.#color = this.#color ?? 'var(--m-on-primary)';
 
