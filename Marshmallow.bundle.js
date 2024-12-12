@@ -25,7 +25,7 @@ class Marshmallow {
             sharp: 'Marshmallow/symbol/symbols-sharp.woff2',
          },
       }
-         //Object.seal(this.#settings);
+      //Object.seal(this.#settings);
       Object.assign(this.#settings, primarySettings);
       // return 
       this.version = 'Alpha';
@@ -1554,23 +1554,76 @@ class Marshmallow {
    #MApp = class extends HTMLElement {
       #shadow;
       #ct;
+      #background;
+      #color;
+      #ColorTools = class {
+         constructor(elm) {
+            this.version = 'v0.00 Alpha'
+            this.elm = elm;
+         }
+         test(color) {
+            if (color) {
+               if (/^@/.test(color)) {
+                  return true
+               } else {
+                  return undefined;
+               }
+            }
+         }
+         bg(color) {
+            if (color) {
+               if (/^@/.test(color)) {
+                  return `var(${color.toLowerCase().replace('@','--m-')})`;
+               } else {
+                  return color.replaceAll(' ', '')
+               }
+            }
+         }
+         inner(color) {
+            let l2 = (x) => {
+               let a;
+               if (x >= 70) {
+                  a = x - 70;
+               } else if (x <= 30) {
+                  a = x + 70;
+               } else if (x > 30 && x < 70) {
+                  if (x <= 50) {
+                     a = x + 50;
+                  } else {
+                     a = x - 50;
+                  }
+               }
+               return a;
+            }
+            if (/^@[a-zA-Z0-9-]*-(\d{1,3})$/.test(color)) {
+               return `var(--m-${name}-${l2(num)})`;
+            } else if (/^@/.test(color)) {
+               return `var(${color.toLowerCase().replace('@','--m-on-')})`;
+            } else {
+               return undefined;
+            }
+         }
+      }
       constructor() {
          super();
          this.#shadow = this.attachShadow({ mode: 'open' });
-         this.#ct = new ColorTools();
-         this.background = 'var(--m-background)';
-         this.color = 'var(--m-on-background)';
+         this.#ct = new this.#ColorTools();
+         this.#background = 'var(--m-background)';
+         this.#color = 'var(--m-on-background)';
       }
       static get observedAttributes() {
          return ['background'];
       }
       attributeChangedCallback(name, oldValue, newValue) {
          if (name == 'background') {
-            // this.background = newValue;
-            // if (this.#ct.test(this.background)) {
-            //    this.color = this.#ct.inner(this.background);
-            //    this.background = this.#ct.bg(this.background);
-            // }
+            this.#background = newValue.replaceAll(' ', '');
+            console.log(this.#ct.test(newValue))
+            if (this.#ct.test(newValue)) {
+               this.#background = this.#ct.bg(newValue);
+               if (this.#color === undefined) {
+                  this.#color = this.#ct.inner(newValue);
+               }
+            }
          }
          this.#render();
       }
@@ -1587,8 +1640,8 @@ class Marshmallow {
                   height: 100vh;
                   overflow: hidden auto;
                   box-sizing: border-box;
-                  background:${this.background};
-                  color: ${this.color};
+                  background:${this.#background};
+                  color: ${this.#color};
                }
             </style>
             <slot></slot>
@@ -1602,10 +1655,77 @@ class Marshmallow {
       #color;
       #ct;
       #size;
+      #ColorTools = class {
+         constructor() {
+            this.version = 'v0.00 Alpha'
+         }
+         test(color) {
+            if (color) {
+               if (/^@/.test(color)) {
+                  let elm = document.querySelector('m-app');
+                  let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+                  if (val !== '' && !val.includes('outline')) {
+                     return true
+                  } else {
+                     return false
+                  }
+               } else {
+                  return undefined;
+               }
+            }
+         }
+         bg(color) {
+            if (color) {
+               if (/^@/.test(color)) {
+                  let elm = document.querySelector('m-app');
+                  let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+                  if (val !== '' && !val.includes('outline')) {
+                     return `var(${color.toLowerCase().replace('@','--m-')})`;
+                  }
+               } else {
+                  return color.replaceAll(' ', '')
+               }
+            }
+         }
+         inner(color) {
+            let l2 = (x) => {
+               let a;
+               if (x >= 70) {
+                  a = x - 70;
+               } else if (x <= 30) {
+                  a = x + 70;
+               } else if (x > 30 && x < 70) {
+                  if (x <= 50) {
+                     a = x + 50;
+                  } else {
+                     a = x - 50;
+                  }
+               }
+               return a;
+            }
+            if (/^@[a-zA-Z0-9-]*-(\d{1,3})$/.test(color)) {
+               let elm = document.querySelector('m-app');
+               let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+               let name = color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[1].toLowerCase();
+               let num = Number(color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[2]);
+               if (val !== '') {
+                  return `var(--m-${name}-${l2(num)})`;
+               }
+            } else if (/^@/.test(color)) {
+               let elm = document.querySelector('m-app');
+               let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+               if (val !== '' && !val.includes('outline')) {
+                  return `var(${color.toLowerCase().replace('@','--m-on-')})`;
+               }
+            } else {
+               return undefined;
+            }
+         }
+      }
       constructor() {
          super();
          this.#shadow = this.attachShadow({ mode: 'open' });
-         this.#ct = new ColorTools();
+         this.#ct = new this.#ColorTools();
          this.#background = 'var(--m-primary)';
          this.#color = 'var(--m-on-primary)';
          this.#size = 'medium';
@@ -1616,11 +1736,13 @@ class Marshmallow {
       attributeChangedCallback(name, oldValue, newValue) {
          switch (name) {
             case 'color':
-               // this.#background = newValue;
-               // if (this.#ct.test(this.#background)) {
-               //    this.#color = this.#ct.inner(this.#background);
-               //    this.#background = this.#ct.bg(this.#background);
-               // }
+               this.#background = newValue.replaceAll(' ', '');
+               if (this.#ct.test(newValue)) {
+                  this.#background = this.#ct.bg(newValue);
+                  if (this.#color === undefined) {
+                     this.#color = this.#ct.inner(newValue);
+                  }
+               }
                break;
             case 'size':
                this.#size = newValue;
@@ -2078,10 +2200,83 @@ class Marshmallow {
       #outline;
       #full;
       #size;
+      #x;
+      #y;
+      #dx;
+      #dy;
+      #h;
+      #fs;
+      #ColorTools = class {
+         constructor() {
+            this.version = 'v0.00 Alpha'
+         }
+         test(color) {
+            if (color) {
+               if (/^@/.test(color)) {
+                  let elm = document.querySelector('m-app');
+                  let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+                  if (val !== '' && !val.includes('outline')) {
+                     return true
+                  } else {
+                     return false
+                  }
+               } else {
+                  return undefined;
+               }
+            }
+         }
+         bg(color) {
+            if (color) {
+               if (/^@/.test(color)) {
+                  let elm = document.querySelector('m-app');
+                  let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+                  if (val !== '' && !val.includes('outline')) {
+                     return `var(${color.toLowerCase().replace('@','--m-')})`;
+                  }
+               } else {
+                  return color.replaceAll(' ', '')
+               }
+            }
+         }
+         inner(color) {
+            let l2 = (x) => {
+               let a;
+               if (x >= 70) {
+                  a = x - 70;
+               } else if (x <= 30) {
+                  a = x + 70;
+               } else if (x > 30 && x < 70) {
+                  if (x <= 50) {
+                     a = x + 50;
+                  } else {
+                     a = x - 50;
+                  }
+               }
+               return a;
+            }
+            if (/^@[a-zA-Z0-9-]*-(\d{1,3})$/.test(color)) {
+               let elm = document.querySelector('m-app');
+               let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+               let name = color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[1].toLowerCase();
+               let num = Number(color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[2]);
+               if (val !== '') {
+                  return `var(--m-${name}-${l2(num)})`;
+               }
+            } else if (/^@/.test(color)) {
+               let elm = document.querySelector('m-app');
+               let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
+               if (val !== '' && !val.includes('outline')) {
+                  return `var(${color.toLowerCase().replace('@','--m-on-')})`;
+               }
+            } else {
+               return undefined;
+            }
+         }
+      }
       constructor() {
          super();
          this.#shadow = this.attachShadow({ mode: 'open' });
-         this.#ct = new ColorTools();
+         this.#ct = new this.#ColorTools();
          this.#background = undefined;
          this.#color = undefined;
          this.#badge = undefined;
@@ -2100,6 +2295,8 @@ class Marshmallow {
          this.#outline = undefined;
          this.#full = false;
          this.#size = 'medium';
+         [this.#x, this.#y, this.#dx, this.#dy] = ['right', 'top', 25, -25];
+         [this.#h, this.#fs] = [40, 2];
       }
       static get observedAttributes() {
          return [
@@ -2124,7 +2321,7 @@ class Marshmallow {
       attributeChangedCallback(name, oldValue, newValue) {
          switch (name) {
             case 'color':
-               this.#background = newValue.replaceAll(' ','');
+               this.#background = newValue.replaceAll(' ', '');
                if (this.#ct.test(newValue)) {
                   this.#background = this.#ct.bg(newValue);
                   if (this.#color === undefined) {
@@ -2149,6 +2346,32 @@ class Marshmallow {
                break;
             case 'badgeposition':
                this.#badgePosition = newValue;
+               switch (this.#badgePosition.toLocaleLowerCase().replaceAll(' ', '')) {
+                  case 'topright':
+                     [this.#x, this.#y, this.#dx, this.#dy] = ['right', 'top', 25, -25];
+                     break;
+                  case 'righttop':
+                     [this.#x, this.#y, this.#dx, this.#dy] = ['right', 'top', 25, -25];
+                     break;
+                  case 'bottomright':
+                     [this.#x, this.#y, this.#dx, this.#dy] = ['right', 'bottom', 25, 25];
+                     break;
+                  case 'rightbottom':
+                     [this.#x, this.#y, this.#dx, this.#dy] = ['right', 'bottom', 25, 25];
+                     break;
+                  case 'topleft':
+                     [this.#x, this.#y, this.#dx, this.#dy] = ['left', 'top', -25, -25];
+                     break;
+                  case 'lefttop':
+                     [this.#x, this.#y, this.#dx, this.#dy] = ['left', 'top', -25, -25];
+                     break;
+                  case 'bottomleft':
+                     [this.#x, this.#y, this.#dx, this.#dy] = ['left', 'bottom', -25, 25];
+                     break;
+                  case 'leftbottom':
+                     [this.#x, this.#y, this.#dx, this.#dy] = ['left', 'bottom', -25, 25];
+                     break;
+               }
                break;
             case 'progress':
                this.#progress = newValue;
@@ -2173,6 +2396,20 @@ class Marshmallow {
                break;
             case 'size':
                this.#size = newValue;
+               switch (this.#size.toLocaleLowerCase()) {
+                  case 'small':
+                     this.#h = 32;
+                     this.#fs = 0;
+                     break;
+                  case 'medium':
+                     this.#h = 40;
+                     this.#fs = 2;
+                     break;
+                  case 'large':
+                     this.#h = 56;
+                     this.#fs = 4;
+                     break;
+               }
                break;
          }
          this.#render();
@@ -2216,65 +2453,10 @@ class Marshmallow {
       get outline() { return this.hasAttribute('outline') }
       get full() { return this.hasAttribute('full') }
       #render() {
-         let outlin = this.hasAttribute('outline');
+         let outline = this.hasAttribute('outline');
          let full = this.hasAttribute('full');
-         let [x, y, dx, dy] = ['right', 'top', 25, -25];
-         let [h, fs] = [40, 2];
-         switch (this.#size.toLocaleLowerCase()) {
-            case 'small':
-               h = 32;
-               fs = 0;
-               break;
-            case 'medium':
-               h = 40;
-               fs = 2;
-               break;
-            case 'large':
-               h = 56;
-               fs = 4;
-               break;
-         }
-         switch (this.#badgePosition.toLocaleLowerCase().replaceAll(' ', '')) {
-            case 'topright':
-            [x, y, dx, dy] = ['right', 'top', 25, -25];
-               break;
-            case 'righttop':
-            [x, y, dx, dy] = ['right', 'top', 25, -25];
-               break;
-            case 'bottomright':
-            [x, y, dx, dy] = ['right', 'bottom', 25, 25];
-               break;
-            case 'rightbottom':
-            [x, y, dx, dy] = ['right', 'bottom', 25, 25];
-               break;
-            case 'topleft':
-            [x, y, dx, dy] = ['left', 'top', -25, -25];
-               break;
-            case 'lefttop':
-            [x, y, dx, dy] = ['left', 'top', -25, -25];
-               break;
-            case 'bottomleft':
-            [x, y, dx, dy] = ['left', 'bottom', -25, 25];
-               break;
-            case 'leftbottom':
-            [x, y, dx, dy] = ['left', 'bottom', -25, 25];
-               break;
-         }
-         
-         // if (this.#background && this.#ct.test(this.#background)) {
-         //    this.#color = this.#ct.inner(this.#background);
-         //    this.#background = this.#ct.bg(this.#background);
-         // } else if (this.#background && this.#ct.test(this.#background)){
-         //    this.#background = 'var(--m-primary)';
-         // } else {
-         //    this.#background = 'var(--m-primary)';
-         //    this.#color = 'var(--m-on-primary)';
-         // }
-         
-         
          this.#background = this.#background ?? 'var(--m-primary)';
          this.#color = this.#color ?? 'var(--m-on-primary)';
-
          this.#shadow.innerHTML = `
          <style>
             :host{
@@ -2283,14 +2465,14 @@ class Marshmallow {
                box-sizing: border-box;
                -webkit-tap-highlight-color: transparent;
                position: relative;
-               height: ${h}px;
+               height: ${this.#h}px;
                vertical-align: middle;
-               font-weight: ${outlin?700:500};
-               font-size: calc(var(--m-font-size) + ${fs}px);
+               font-weight: ${outline?700:500};
+               font-size: calc(var(--m-font-size) + ${this.#fs}px);
                user-select: none;
                transition-property: scale;
                transition-duration: 0.3s;
-               color: var(--m-button-color,${outlin?this.#background:this.#color});
+               color: var(--m-button-color,${outline?this.#background:this.#color});
                
             }
             :host::part(background) {
@@ -2299,11 +2481,11 @@ class Marshmallow {
                left: 0;
                z-index: 0;
                display: block;
-               ${outlin?'border: 2px solid var(--m-button-background,'+this.#background+')':'background: var(--m-button-background,'+this.#background+')'};
+               ${outline?'border: 2px solid var(--m-button-background,'+this.#background+')':'background: var(--m-button-background,'+this.#background+')'};
                box-sizing: border-box;
                width: 100%;
                height: 100%;
-               border-radius: var(--m-button-radius,calc(var(--m-radius) + ${h/4}px));
+               border-radius: var(--m-button-radius,calc(var(--m-radius) + ${this.#h/4}px));
                transition-property: border-radius;
                transition-duration: 0.3s;
                overflow: hidden;
@@ -2316,7 +2498,7 @@ class Marshmallow {
                flex-flow: row nowrap;
                justify-content: center;
                align-items: center;
-               padding: 0 ${h/2}px;
+               padding: 0 ${this.#h/2}px;
                gap: 8px;
                z-index: 3;
             }
@@ -2325,9 +2507,9 @@ class Marshmallow {
             }
             ::slotted(m-badge),m-badge{
                position: absolute;
-               ${x}: 0;
-               ${y}: 0;
-               transform: translate(${dx}%, ${dy}%);
+               ${this.#x}: 0;
+               ${this.#y}: 0;
+               transform: translate(${this.#dx}%, ${this.#dy}%);
             }
             ::slotted(m-linear-progress),m-linear-progress{
                position: absolute;
@@ -2344,7 +2526,7 @@ class Marshmallow {
                scale: 0.9;
             }
             :host(:active)::part(background){
-               border-radius: var(--m-button-radius-active,calc(var(--m-radius) + ${h/8}px));
+               border-radius: var(--m-button-radius-active,calc(var(--m-radius) + ${this.#h/8}px));
             }
          </style>
          <div part="background"></div>
