@@ -25,9 +25,9 @@ class Marshmallow {
             sharp: 'Marshmallow/symbol/symbols-sharp.woff2',
          },
       }
-      //Object.seal(this.#settings);
+      // Object.seal(this.#settings);
       Object.assign(this.#settings, primarySettings);
-      // return 
+      // values 
       this.version = 'Alpha';
       this.#mushroom;
       this.#color = this.#settings.color;
@@ -1726,8 +1726,8 @@ class Marshmallow {
          super();
          this.#shadow = this.attachShadow({ mode: 'open' });
          this.#ct = new this.#ColorTools();
-         this.#background = 'var(--m-primary)';
-         this.#color = 'var(--m-on-primary)';
+         this.#background = undefined;
+         this.#color = undefined;
          this.#size = 'medium';
       }
       static get observedAttributes() {
@@ -1774,6 +1774,8 @@ class Marshmallow {
                fs = 18;
                break;
          }
+         this.#background = this.#background ?? 'var(--m-primary)';
+         this.#color = this.#color ?? 'var(--m-on-primary)';
          this.#shadow.innerHTML = `
          <style>
             :host{
@@ -2665,73 +2667,5 @@ class Marshmallow {
       this.#mushroom.setColor(color);
       this.#color = this.#mushroom.color;
       this.#grow();
-   }
-}
-/*** Color Tools v0.00 Alpha ***/
-class ColorTools {
-   constructor() {
-      this.version = 'v0.00 Alpha'
-   }
-   test(color) {
-      if (color) {
-         if (/^@/.test(color)) {
-            let elm = document.querySelector('m-app');
-            let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
-            if (val !== '' && !val.includes('outline')) {
-               return true
-            } else {
-               return false
-            }
-         } else {
-            return undefined;
-         }
-      }
-   }
-   bg(color) {
-      if (color) {
-         if (/^@/.test(color)) {
-            let elm = document.querySelector('m-app');
-            let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
-            if (val !== '' && !val.includes('outline')) {
-               return `var(${color.toLowerCase().replace('@','--m-')})`;
-            }
-         } else {
-            return color.replaceAll(' ', '')
-         }
-      }
-   }
-   inner(color) {
-      let l2 = (x) => {
-         let a;
-         if (x >= 70) {
-            a = x - 70;
-         } else if (x <= 30) {
-            a = x + 70;
-         } else if (x > 30 && x < 70) {
-            if (x <= 50) {
-               a = x + 50;
-            } else {
-               a = x - 50;
-            }
-         }
-         return a;
-      }
-      if (/^@[a-zA-Z0-9-]*-(\d{1,3})$/.test(color)) {
-         let elm = document.querySelector('m-app');
-         let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
-         let name = color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[1].toLowerCase();
-         let num = Number(color.match(/^@([a-zA-Z0-9-]*)-(\d{1,3})$/)[2]);
-         if (val !== '') {
-            return `var(--m-${name}-${l2(num)})`;
-         }
-      } else if (/^@/.test(color)) {
-         let elm = document.querySelector('m-app');
-         let val = getComputedStyle(elm).getPropertyValue(color.toLowerCase().replace('@', '--m-'));
-         if (val !== '' && !val.includes('outline')) {
-            return `var(${color.toLowerCase().replace('@','--m-on-')})`;
-         }
-      } else {
-         return undefined;
-      }
    }
 }
