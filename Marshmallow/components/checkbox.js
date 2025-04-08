@@ -1,5 +1,5 @@
-/*** switch.js v1 ***/
-class Switch extends HTMLElement {
+/*** checkbox.js v1 ***/
+class checkbox extends HTMLElement {
    // private variable 
    #elm;
    #attr;
@@ -74,11 +74,11 @@ class Switch extends HTMLElement {
             if (this.#T.test(newValue)) {
                let color = this.#T.color(newValue);
                this.#attr.color = color;
-               this.style.setProperty('--m-switch-color', color);
+               this.style.setProperty('--m-checkbox-color', color);
                if (!this.hasAttribute('inner-color')) {
                   let innerColor = this.#T.innerColor(newValue);
                   this.#attr.innerColor = innerColor;
-                  this.style.setProperty('--m-switch-inner-color', innerColor);
+                  this.style.setProperty('--m-switch-checkbox-color', innerColor);
                }
             }
             break;
@@ -86,7 +86,7 @@ class Switch extends HTMLElement {
             if (this.#T.test(newValue)) {
                let innerColor = this.#T.innerColor(newValue);
                this.#attr.innerColor = innerColor;
-               this.style.setProperty('--m-switch-inner-color', innerColor);
+               this.style.setProperty('--m-checkbox-inner-color', innerColor);
             }
             break;
          case 'value':

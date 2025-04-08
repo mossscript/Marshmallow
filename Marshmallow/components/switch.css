@@ -1,3 +1,5 @@
+/*** switch.css v1 ***/
+
 :host{
    --m-switch-color: var(--m-primary);
    --m-switch-inner-color: var(--m-on-primary);

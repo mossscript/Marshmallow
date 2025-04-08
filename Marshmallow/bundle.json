@@ -9,12 +9,12 @@
       "Mushroom": "Marshmallow/lib/Mushroom.js"
    },
    "components": {
-      "App":{
+      "App": {
          "name": "m-app",
          "script": "Marshmallow/components/app.js",
          "style": "Marshmallow/components/app.css"
       },
-      "Button":{
+      "Button": {
          "name": "m-button",
          "script": "Marshmallow/components/button.js",
          "style": "Marshmallow/components/button.css"
@@ -28,6 +28,11 @@
          "name": "m-switch",
          "script": "Marshmallow/components/switch.js",
          "style": "Marshmallow/components/switch.css"
+      },
+      "Checkbox": {
+         "name": "m-checkbox",
+         "script": "Marshmallow/components/checkbox.js",
+         "style": "Marshmallow/components/checkbox.css"
       }
    }
 }
