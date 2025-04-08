@@ -18,6 +18,16 @@
          "name": "m-button",
          "script": "Marshmallow/components/button.js",
          "style": "Marshmallow/components/button.css"
+      },
+      "Hr": {
+         "name": "m-hr",
+         "script": "Marshmallow/components/hr.js",
+         "style": "Marshmallow/components/hr.css"
+      },
+      "Pattern": {
+         "name": "m-pattern",
+         "script": "Marshmallow/components/pattern.js",
+         "style": "Marshmallow/components/pattern.css"
       }
    }
 }

@@ -15,6 +15,7 @@
       <center>
          <h1>Marshmallow <span class="m-fixed" style="background: var(--m-primary); color: var(--m-on-primary); padding: 0 8px; border-radius: 8px"> 5.1 </span></h1>
       </center>
+      <m-hr></m-hr>
       <m-button>Button</m-button>
    </m-app>
    <!-- script -->
@@ -22,9 +23,7 @@
       let bundle = new Bundle('Marshmallow/bundle.json');
       bundle.onrender = () => {
          bundle.apply();
-         bundle.onapply = () => {
-            let M = new Marshmallow();
-         }
+         bundle.onapply = () => new Marshmallow();
       }
    </script>
 </body>

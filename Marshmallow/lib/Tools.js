@@ -33,7 +33,7 @@ class Tools {
             }
             break;
          case C.test(color):
-            return color;
+            return C.toHex(color);
             break;
          default:
             return undefined
