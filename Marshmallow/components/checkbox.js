@@ -145,4 +145,12 @@ class checkbox extends HTMLElement {
          val ? this.setAttribute('disabled', '') : this.removeAttribute('disabled')
       }
    }
+
+   // property 
+   toggleChecked() {
+      this.checked = !this.checked
+   }
+   toggleDisabled() {
+      this.disabled = !this.disabled
+   }
 }
