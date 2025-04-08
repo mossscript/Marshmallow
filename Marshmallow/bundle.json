@@ -33,6 +33,11 @@
          "name": "m-checkbox",
          "script": "Marshmallow/components/checkbox.js",
          "style": "Marshmallow/components/checkbox.css"
+      },
+      "Radio": {
+         "name": "m-radio",
+         "script": "Marshmallow/components/radio.js",
+         "style": "Marshmallow/components/radio.css"
       }
    }
 }

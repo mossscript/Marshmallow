@@ -1,5 +1,5 @@
-/*** <m-checkbox> v1 ***/
-class MCheckbox extends HTMLElement {
+/*** <m-radio> ***/
+class MRadio extends HTMLElement {
    #T;
    #elm;
    #attr;
@@ -10,12 +10,12 @@ class MCheckbox extends HTMLElement {
       this.#attr = {
          color: 'var(--m-primary)',
          innerColor: 'var(--m-on-primary)',
-         value: 'off',
          checked: false,
+         value: undefined,
          name: undefined,
          disabled: false,
       }
-      this.addEventListener('click', this.#toggle.bind(this));
+      this.addEventListener('click', this.#radio.bind(this))
       let form = this.closest('form');
       if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) }
    }
@@ -44,8 +44,8 @@ class MCheckbox extends HTMLElement {
             }
             break;
          case 'value':
-            this.#attr.value = newValue || 'off';
-            this.#render();
+            this.#attr.value = newValue;
+            this.#render()
             break;
          case 'checked':
             this.#attr.checked = this.hasAttribute('checked');
@@ -62,28 +62,33 @@ class MCheckbox extends HTMLElement {
       }
    }
    get color() { return this.#attr.color }
-   set color(val) { this.setAttribute('color', val) }
    get innerColor() { return this.#attr.innerColor }
-   set innerColor(val) { this.setAttribute('inner-color', val) }
    get value() { return this.#attr.value }
-   set value(val) { this.setAttribute('value', val) }
    get checked() { return this.#attr.checked }
-   set checked(val) { if (val == true || val == false) { val ? this.setAttribute('checked', '') : this.removeAttribute('checked') } }
    get name() { return this.#attr.name }
+   set color(val) { this.setAttribute('color', val) }
+   set innerColor(val) { this.setAttribute('inner-color', val) }
+   set value(val) { this.setAttribute('value', val) }
+   set checked(val) { if (val == true || val == false) { val ? this.setAttribute('checked', '') : this.removeAttribute('checked') } }
    set name(val) { this.setAttribute('name', val) }
    get disabled() { return this.#attr.disabled }
    set disabled(val) { if (val == true || val == false) { val ? this.setAttribute('disabled', '') : this.removeAttribute('disabled') } }
    toggleChecked() { this.checked = !this.checked }
    toggleDisabled() { this.disabled = !this.disabled }
-   #toggle() {
+   #radio() {
       if (this.disabled) {
          event.preventDefault();
          event.stopPropagation();
          return;
       }
-      let newValue = !this.#attr.checked;
-      this.checked = newValue;
-      this.value = this.#attr.value !== 'on' && this.#attr.value !== 'off' ? this.#attr.value : (newValue ? 'on' : 'off');
+      if (this.checked) return;
+      let radios = document.querySelectorAll(`m-radio[name="${this.name}"]`);
+      radios.forEach(radio => {
+         if (radio !== this) {
+            radio.checked = false;
+         }
+      });
+      this.checked = true;
       this.#input();
       this.dispatchEvent(new Event('change', { bubbles: true }));
       this.dispatchEvent(new Event('input', { bubbles: true }));
@@ -104,7 +109,7 @@ class MCheckbox extends HTMLElement {
             this.appendChild(hiddenInput);
          }
          hiddenInput.setAttribute('hidden', '');
-         hiddenInput.type = 'checkbox';
+         hiddenInput.type = 'radio';
          hiddenInput.name = this.name;
          this.checked ? hiddenInput.setAttribute('checked', '') : hiddenInput.removeAttribute('checked');
          hiddenInput.value = this.value;
@@ -118,33 +123,25 @@ class MCheckbox extends HTMLElement {
                background: ${this.checked?`var(--m-checkbox-color,${this.color})`:'var(--m-checkbox-color-checked,var(--m-surface-container-high))'};
                width: 30px;
                height: 30px;
-               border-radius: 10px;
+               border-radius: 15px;
                vertical-align: middle;
                position: relative;
                user-select: none;
                cursor: pointer;
                transition: 0.3s;
             }
-            :host::before,:host::after{
+            :host::before{
                content: '';
                display: block;
                position: absolute;
-               width: 4px;
-               border-radius: 5px;
+               width: ${!this.checked?'8px':'16px'};
+               height: ${!this.checked?'8px':'16px'};
+               border-radius: 15px;
                transition: 0.3s;
-               background: ${this.checked?`var(--m-checkbox-inner-color,${this.innerColor})`:'var(--m-checkbox-inner-color-checked,var(--m-on-surface-container-high))'};
-            }
-            :host::before{
-               top: ${this.#attr.checked?'13px':'5px'};
-               left: ${this.#attr.checked?'10px':'13px'};
-               height: ${this.#attr.checked?'10px':'20px'};
-               rotate: ${this.#attr.checked?'-30deg':'45deg'};
-            }
-            :host::after{
-               top: ${this.#attr.checked?'6.5px':'5px'};
-               left: ${this.#attr.checked?'15.5px':'13px'};
-               height: ${this.#attr.checked?'17px':'20px'};
-               rotate: ${this.#attr.checked?'30deg':'-45deg'};
+               border: 3px solid ${this.checked?`var(--m-checkbox-inner-color,${this.innerColor})`:'var(--m-checkbox-inner-color-checked,var(--m-on-surface-container-high))'};
+               top: 50%;
+               left: 50%;
+               translate: -50% -50%;
             }
             :host(:active){
                scale: 0.9;
