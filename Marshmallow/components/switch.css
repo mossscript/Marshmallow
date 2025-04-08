@@ -9,7 +9,7 @@
    vertical-align: middle;
    cursor: pointer;
    position: relative;
-   transition-property: background;
+   transition-property: background, scale, opacity;
    transition-duration: 0.3s;
 }
 
@@ -35,3 +35,13 @@
    left: 25px;
 }
 
+:host([disabled]) {
+   opacity: 0.5;
+   cursor: not-allowed;
+   pointer-events: none;
+}
+
+:host(:active){
+   scale: 0.9;
+   opacity: 0.5;
+}
