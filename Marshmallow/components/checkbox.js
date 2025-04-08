@@ -1,5 +1,5 @@
 /*** checkbox.js v1 ***/
-class checkbox extends HTMLElement {
+class Checkbox extends HTMLElement {
    // private variable 
    #elm;
    #attr;
@@ -78,7 +78,7 @@ class checkbox extends HTMLElement {
                if (!this.hasAttribute('inner-color')) {
                   let innerColor = this.#T.innerColor(newValue);
                   this.#attr.innerColor = innerColor;
-                  this.style.setProperty('--m-switch-checkbox-color', innerColor);
+                  this.style.setProperty('--m-checkbox-inner-color', innerColor);
                }
             }
             break;

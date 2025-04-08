@@ -38,6 +38,11 @@
          "name": "m-radio",
          "script": "Marshmallow/components/radio.js",
          "style": "Marshmallow/components/radio.css"
+      },
+      "Range": {
+         "name": "m-range",
+         "script": "Marshmallow/components/range.js",
+         "style": "Marshmallow/components/range.css"
       }
    }
 }

@@ -1,5 +1,5 @@
-/*** checkbox.js v1 ***/
-class checkbox extends HTMLElement {
+/*** radio.js v1 ***/
+class Radio extends HTMLElement {
    // private variable 
    #elm;
    #attr;
@@ -84,11 +84,11 @@ class checkbox extends HTMLElement {
             if (this.#T.test(newValue)) {
                let color = this.#T.color(newValue);
                this.#attr.color = color;
-               this.style.setProperty('--m-checkbox-color', color);
+               this.style.setProperty('--m-radio-color', color);
                if (!this.hasAttribute('inner-color')) {
                   let innerColor = this.#T.innerColor(newValue);
                   this.#attr.innerColor = innerColor;
-                  this.style.setProperty('--m-switch-checkbox-color', innerColor);
+                  this.style.setProperty('--m-switch-radio-color', innerColor);
                }
             }
             break;
@@ -96,7 +96,7 @@ class checkbox extends HTMLElement {
             if (this.#T.test(newValue)) {
                let innerColor = this.#T.innerColor(newValue);
                this.#attr.innerColor = innerColor;
-               this.style.setProperty('--m-checkbox-inner-color', innerColor);
+               this.style.setProperty('--m-radio-inner-color', innerColor);
             }
             break;
          case 'value':
