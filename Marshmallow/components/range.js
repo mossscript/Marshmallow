@@ -19,6 +19,7 @@ class Range extends HTMLElement {
          min: 0,
          max: 100,
          step: 0,
+         disabled: false,
       }
       this.#T = new Tools();
    }
@@ -124,7 +125,7 @@ class Range extends HTMLElement {
 
    // observed attributes
    static get observedAttributes() {
-      return ['color', 'inner-color', 'value', 'min', 'max', 'step', 'dir'];
+      return ['color', 'inner-color', 'value', 'min', 'max', 'step', 'dir', 'disabled'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -180,7 +181,9 @@ class Range extends HTMLElement {
                this.#attr.dir = newValue.toLowerCase();
             }
             break;
-
+         case 'disabled':
+this.#attr.disabled = this.hasAttribute('disabled');
+break;
       }
    }
 
@@ -197,38 +200,45 @@ class Range extends HTMLElement {
    set innerColor(val) {
       this.setAttribute('inner-color', val)
    }
-   set value(val) {
-      this.setAttribute('value', val)
-   }
    get value() {
       return this.#attr.value
    }
-   set name(val) {
-      this.setAttribute('name', val)
+   set value(val) {
+      this.setAttribute('value', val)
    }
    get name() {
       return this.#attr.name
    }
-   set min(val) {
-      this.setAttribute('min', val)
-   }
-   set min(val) {
-      this.setAttribute('min', val)
+   set name(val) {
+      this.setAttribute('name', val)
    }
    get min() {
       return this.#attr.min
    }
-   set max(val) {
-      this.setAttribute('max', val)
+   set min(val) {
+      this.setAttribute('min', val)
+   }
+   set min(val) {
+      this.setAttribute('min', val)
    }
    get max() {
       return this.#attr.max
    }
-   set dir(val) {
-      this.setAttribute('dir', val)
+   set max(val) {
+      this.setAttribute('max', val)
    }
    get dir() {
       return this.#attr.dir
    }
-
+   set dir(val) {
+      this.setAttribute('dir', val)
+   }
+get disabled() {
+      return this.#attr.disabled
+   }
+   set disabled(val) {
+      if (val == true || val == false) {
+         val ? this.setAttribute('disabled', '') : this.removeAttribute('disabled')
+      }
+   }
 }
