@@ -1,25 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
 
 <head>
    <title>Marshmallow</title>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <!-- Marshmallow Alpha -->
-   <script src="Marshmallow.bundle.js"></script>
-   <script>
-      let M = new Marshmallow({theme:'light'});
-   </script>
+   <script src="Marshmallow/bundle.now.js"></script>
 </head>
 
 <body>
-   <m-app style="padding: 16px">
-      
-      <m-button full symbol="dark_mode" onclick="M.toggleTheme(); this.symbol = M.theme == 'dark' ? 'light_mode' : 'dark_mode'"> Toggle Darkmode </m-button><br>
-      
-      <m-badge color="@surface"> 2 </m-badge>
-      
+   <!-- app -->
+   <m-app style="padding: 8px">
+      <center>
+         <h1>Marshmallow <span class="m-fixed" style="background: var(--m-primary); color: var(--m-on-primary); padding: 0 8px; border-radius: 8px"> 5.1 </span></h1>
+      </center>
+      <m-button>Button</m-button>
    </m-app>
+   <!-- script -->
+   <script>
+      let bundle = new Bundle('Marshmallow/bundle.json');
+      bundle.onrender = () => {
+         bundle.apply();
+         bundle.onapply = () => {
+            let M = new Marshmallow();
+            setInterval(()=> {
+               M.randomColor();
+               M.toggleTheme();
+            },3000);
+            
+         }
+      }
+   </script>
 </body>
+
 </html>

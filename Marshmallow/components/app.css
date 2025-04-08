@@ -1,0 +1,13 @@
+/*** app.css v1 ***/
+:host {
+   --m-app-color: var(--m-background);
+   --m-app-inner-color: var(--m-on-background);
+   display: block;
+   position: relative;
+   width: 100vw;
+   height: 100vh;
+   overflow: auto;
+   box-sizing: border-box;
+   background: var(--m-app-color);
+   color: var(--m-app-inner-color);
+}

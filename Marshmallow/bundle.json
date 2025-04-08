@@ -1,0 +1,23 @@
+{
+   "version": "ALPHA",
+   "template": "Marshmallow/template.js",
+   "libs": {
+      "Colors": "Marshmallow/lib/Colors.js",
+      "ImagePalette": "Marshmallow/lib/ImagePalette.js",
+      "Tools": "Marshmallow/lib/Tools.js",
+      "Validation": "Marshmallow/lib/Validation.js",
+      "Mushroom": "Marshmallow/lib/Mushroom.js"
+   },
+   "components": {
+      "App":{
+         "name": "m-app",
+         "script": "Marshmallow/components/app.js",
+         "style": "Marshmallow/components/app.css"
+      },
+      "Button":{
+         "name": "m-button",
+         "script": "Marshmallow/components/button.js",
+         "style": "Marshmallow/components/button.css"
+      }
+   }
+}
