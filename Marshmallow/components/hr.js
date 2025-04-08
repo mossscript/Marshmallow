@@ -10,7 +10,9 @@ class Hr extends HTMLElement {
       super();
       this.#elm = this.attachShadow({ mode: 'open' });
       this.#attr = {
-         color: 'var(--m-background)',
+         color: 'var(--m-primary)',
+         size: 2,
+         style: 'solid',
       }
       this.#T = new Tools();
    }
@@ -41,7 +43,7 @@ class Hr extends HTMLElement {
             if (!isNaN(parseInt(newValue))) {
                let size = parseInt(newValue);
                this.#attr.size = size;
-               this.style.setProperty('--m-hr-size', size);
+               this.style.setProperty('--m-hr-size', size + 'px');
             }
             break;
          case 'style':

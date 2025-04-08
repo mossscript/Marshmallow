@@ -23,6 +23,11 @@
          "name": "m-hr",
          "script": "Marshmallow/components/hr.js",
          "style": "Marshmallow/components/hr.css"
+      },
+      "Switch": {
+         "name": "m-switch",
+         "script": "Marshmallow/components/switch.js",
+         "style": "Marshmallow/components/switch.css"
       }
    }
 }
