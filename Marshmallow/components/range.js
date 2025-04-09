@@ -5,6 +5,7 @@ class Range extends HTMLElement {
    #attr;
    #T;
    #handle;
+   #truck;
    #progress;
 
    // constructor
@@ -20,6 +21,7 @@ class Range extends HTMLElement {
          step: 0,
          disabled: false,
          required: false,
+         type: 'fancy',
          name: '',
       };
       this.#T = new Tools();
@@ -33,11 +35,13 @@ class Range extends HTMLElement {
          <style>
          [[["STYLE"]]]
          </style>
-         <div part="progress">
+         <div part="truck">
+            <div part="progress"></div>
             <div part="handle"></div>
          </div>
       `;
       this.#handle = this.#elm.querySelector('[part="handle"]');
+      this.#truck = this.#elm.querySelector('[part="truck"]');
       this.#progress = this.#elm.querySelector('[part="progress"]');
 
       let move = (e) => this.#range(e);
@@ -49,7 +53,7 @@ class Range extends HTMLElement {
 
    // observed attributes
    static get observedAttributes() {
-      return ['color', 'inner-color', 'value', 'min', 'max', 'step', 'disabled', 'name', 'required'];
+      return ['color', 'inner-color', 'value', 'min', 'max', 'step', 'disabled', 'name', 'required', 'type'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -102,6 +106,10 @@ class Range extends HTMLElement {
          case 'required':
             this.#attr.required = this.hasAttribute('required');
             break;
+         case 'type':
+            if (/^(fancy|simple)$/i.test(newValue)) {
+               this.#attr.type = newValue.toLowerCase();
+            }
       }
    }
 
@@ -119,7 +127,7 @@ class Range extends HTMLElement {
    }
 
    #range(event) {
-      let rect = this.getBoundingClientRect();
+      let rect = this.#truck.getBoundingClientRect();
       let x = event.clientX - rect.left;
       let width = rect.width;
       let clampedX = Math.max(0, Math.min(x, width));
@@ -138,14 +146,15 @@ class Range extends HTMLElement {
    #rangeStyle(num) {
       let min = this.min;
       let max = this.max;
-      let width = this.getBoundingClientRect().width;
+      let width = this.#truck.getBoundingClientRect().width;
+      let height = this.#truck.getBoundingClientRect().height;
 
       let value = this.#clamp(min, max, num);
       let percent = this.#percent(min, max, value);
       let x = (percent / 100) * width;
 
       if (this.#progress && this.#handle) {
-         this.#progress.style.width = `${x}px`;
+         this.#progress.style.width = `${x + height/2}px`;
          this.#handle.style.left = `${x}px`;
       }
 
@@ -236,6 +245,12 @@ class Range extends HTMLElement {
       } else if (val === true) {
          this.setAttribute('required', '');
       }
+   }
+   get type() {
+      return this.#attr.name;
+   }
+   set type(val) {
+      this.setAttribute('name', val);
    }
    // property 
    toggleDisabled() {

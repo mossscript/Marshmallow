@@ -104,8 +104,8 @@ class Checkbox extends HTMLElement {
             this.#attr.name = newValue;
             break;
          case 'required':
-this.#attr.required = this.hasAttribute('required');
-break;
+            this.#attr.required = this.hasAttribute('required');
+            break;
       }
    }
 
