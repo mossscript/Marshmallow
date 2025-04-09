@@ -1,11 +1,12 @@
 /*** range.js v1 ***/
 class Range extends HTMLElement {
-   // private variable 
+   // private variables
    #elm;
    #attr;
    #T;
    #handle;
    #progress;
+
    // constructor
    constructor() {
       super();
@@ -13,119 +14,42 @@ class Range extends HTMLElement {
       this.#attr = {
          color: 'var(--m-primary)',
          innerColor: 'var(--m-on-primary)',
-         dir: 'ltr',
-         name: undefined,
          value: 0,
          min: 0,
          max: 100,
          step: 0,
          disabled: false,
-      }
+         required: false,
+         name: '',
+      };
       this.#T = new Tools();
+      let form = this.closest('form');
+      if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) };
    }
 
-   // connect element
+   // connect element 
    connectedCallback() {
       this.#elm.innerHTML = `
          <style>
-            [[["STYLE"]]]
+         [[["STYLE"]]]
          </style>
          <div part="progress">
             <div part="handle"></div>
          </div>
       `;
-      let percent = (min, max, num) => ((Math.max(min, Math.min(max, num)) - min) / (max - min)) * 100;
       this.#handle = this.#elm.querySelector('[part="handle"]');
       this.#progress = this.#elm.querySelector('[part="progress"]');
-      this.#progress.style[['rtl', 'ltr'].includes(this.dir) ? 'width' : 'height'] = percent(this.#attr.min, this.#attr.max, this.#attr.value) + '%';
-      this.addEventListener('pointerdown', this.#range.bind(this));
-      this.addEventListener('pointermove', this.#range.bind(this));
-      this.addEventListener('pointerup', () => { this.#progress.style.padding = '5px' });
-      this.addEventListener('change', () => { this.#progress.style.padding = '5px' });
-      let form = this.closest('form');
-      if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) }
-   }
 
-   // private function 
-   #range(event) {
-      let percent = (min, max, num) => ((Math.max(min, Math.min(max, num)) - min) / (max - min)) * 100;
-      let roundToStep = (num, step) => parseFloat((Math.round(num / step) * step).toFixed(3));
-      let { left, right, top, bottom, width, height } = this.getBoundingClientRect();
-      let [x, y] = [event.clientX, event.clientY];
-      let min = this.#attr.min;
-      let max = this.#attr.max;
-      let step = this.#attr.step;
-      let progress, value, stepCount, stepWidth, progressWidth;
+      let move = (e) => this.#range(e);
+      this.addEventListener('pointerdown', move);
+      this.addEventListener('pointermove', move);
 
-      switch (this.#attr.dir) {
-         case 'ltr':
-            progress = Math.round(percent(min, max, ((x - 30 - left) / (width - 30)) * (max - min) + min));
-            value = parseFloat(((progress / 100) * (max - min) + min).toFixed(3));
-            stepCount = step > 0 ? (max - min) / step : (max - min);
-            stepWidth = (width + 30) / stepCount;
-            progressWidth = step > 0 ? Math.round((this.#attr.value - min) / step) * stepWidth : x - left + 15;
-            break;
-         case 'rtl':
-            progress = Math.round(percent(min, max, ((right - x - 30) / (width - 30)) * (max - min) + min));
-            value = parseFloat(((progress / 100) * (max - min) + min).toFixed(3));
-            stepCount = step > 0 ? (max - min) / step : (max - min);
-            stepWidth = (width - 30) / stepCount;
-            progressWidth = step > 0 ? Math.round((this.#attr.value - min) / step) * stepWidth : right - x + 15;
-            break;
-         case 'utd':
-            progress = Math.round(percent(min, max, ((y - 30 - top) / (height - 30)) * (max - min) + min));
-            value = parseFloat(((progress / 100) * (max - min) + min).toFixed(3));
-            stepCount = step > 0 ? (max - min) / step : (max - min);
-            stepWidth = (height + 30) / stepCount;
-            progressWidth = step > 0 ? Math.round((this.#attr.value - min) / step) * stepWidth : y - top + 15;
-            break;
-         case 'dtu':
-            progress = Math.round(percent(min, max, ((bottom - y - 30) / (height - 30)) * (max - min) + min));
-            value = parseFloat(((progress / 100) * (max - min) + min).toFixed(3));
-            stepCount = step > 0 ? (max - min) / step : (max - min);
-            stepWidth = (height + 30) / stepCount;
-            progressWidth = step > 0 ? Math.round((this.#attr.value - min) / step) * stepWidth : bottom - y + 15;
-            break;
-      }
-
-      if (['rtl', 'ltr'].includes(this.dir)) {
-         this.#progress.style.width = progressWidth + 'px';
-      } else {
-         this.#progress.style.height = progressWidth + 'px';
-      }
-
-      this.#attr.value = step > 0 ? roundToStep(value, step) : value;
-      this.#progress.style.padding = '2px';
-      this.#input();
-      this.dispatchEvent(new Event('change', { bubbles: true }));
-      this.dispatchEvent(new Event('input', { bubbles: true }));
-   }
-   #input() {
-      let form = this.closest("form");
-      if (form) {
-         let formData = new FormData(form);
-         formData.set(this.name, this.value);
-         let hiddenInput = this.querySelector('input');
-         if (!hiddenInput) {
-            hiddenInput = document.createElement('input');
-            this.appendChild(hiddenInput);
-         }
-         hiddenInput.setAttribute('hidden', '');
-         hiddenInput.type = 'range';
-         hiddenInput.min = this.min;
-         hiddenInput.max = this.max;
-         hiddenInput.name = this.name;
-         hiddenInput.value = this.value;
-      }
-   }
-   #resetToDefault() {
-      hiddenInput.value = 0;
-      this.#input()
+      this.#rangeStyle(this.#step(this.value, this.step));
    }
 
    // observed attributes
    static get observedAttributes() {
-      return ['color', 'inner-color', 'value', 'min', 'max', 'step', 'dir', 'disabled'];
+      return ['color', 'inner-color', 'value', 'min', 'max', 'step', 'disabled', 'name', 'required'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -148,97 +72,171 @@ class Range extends HTMLElement {
                this.style.setProperty('--m-range-inner-color', innerColor);
             }
             break;
-         case 'min':
-            if (!isNaN(Number(newValue)) && Number(newValue)) {
-               this.#attr.min = Number(newValue);
+         case 'value':
+            if (!isNaN(parseFloat(newValue))) {
+               this.#attr.value = parseFloat(newValue);
+               if (this.isConnected) this.#rangeStyle(newValue);
             }
             break;
          case 'min':
-            if (!isNaN(Number(newValue)) && Number(newValue)) {
-               this.#attr.min = Number(newValue);
+            if (!isNaN(parseFloat(newValue))) {
+               this.#attr.min = parseFloat(newValue);
             }
             break;
          case 'max':
-            if (!isNaN(Number(newValue)) && Number(newValue)) {
-               this.#attr.max = Number(newValue);
+            if (!isNaN(parseFloat(newValue))) {
+               this.#attr.max = parseFloat(newValue);
             }
             break;
          case 'step':
-            if (!isNaN(Number(newValue)) && Number(newValue)) {
-               this.#attr.step = Number(newValue);
-            }
-            break;
-         case 'value':
-            if (!isNaN(Number(newValue)) && Number(newValue)) {
-               this.#attr.value = Number(newValue);
-            }
-            break;
-         case 'name':
-            this.#attr.name = newValue;
-            break;
-         case 'dir':
-            if (/^(rtl|ltr|utd|dtu)$/i.test(newValue)) {
-               this.#attr.dir = newValue.toLowerCase();
+            if (!isNaN(parseFloat(newValue)) && parseFloat(newValue) >= 0) {
+               this.#attr.step = parseFloat(newValue);
             }
             break;
          case 'disabled':
-this.#attr.disabled = this.hasAttribute('disabled');
-break;
+            this.#attr.disabled = this.hasAttribute('disabled');
+            break;
+         case 'name':
+            this.#attr.name = newValue ?? '';
+            break;
+         case 'required':
+            this.#attr.required = this.hasAttribute('required');
+            break;
       }
    }
 
-   // getter & setter 
+   // private function
+   #clamp(min, max, num) {
+      return Math.max(min, Math.min(max, num));
+   }
+   #percent(min, max, num) {
+      return ((Math.max(min, Math.min(max, num)) - min) / (max - min)) * 100;
+   }
+   #step(num, step) {
+      if (step === 0) return parseFloat(num.toFixed(0));
+      let decimals = (step.toString().split('.')[1] || '').length;
+      return parseFloat((Math.round(num / step) * step).toFixed(decimals));
+   }
+
+   #range(event) {
+      let rect = this.getBoundingClientRect();
+      let x = event.clientX - rect.left;
+      let width = rect.width;
+      let clampedX = Math.max(0, Math.min(x, width));
+      let min = this.min;
+      let max = this.max;
+      let step = this.step;
+
+      let progress = (this.#percent(min, max, (clampedX / width) * (max - min) + min));
+      let value = ((progress / 100) * (max - min) + min);
+
+      this.value = this.#step(value, step);
+      this.#form();
+   }
+   #rangeStyle(num) {
+      let min = this.min;
+      let max = this.max;
+      let width = this.getBoundingClientRect().width;
+
+      let value = this.#clamp(min, max, num);
+      let percent = this.#percent(min, max, value);
+      let x = (percent / 100) * width;
+
+      if (this.#progress && this.#handle) {
+         this.#progress.style.width = `${x}px`;
+         this.#handle.style.left = `${x}px`;
+      }
+
+   }
+   #form() {
+      let form = this.closest("form");
+      if (form) {
+         let formData = new FormData(form);
+         formData.set(this.name, this.value);
+         let hiddenInput = this.querySelector('input');
+         if (!hiddenInput) {
+            hiddenInput = document.createElement('input');
+            this.appendChild(hiddenInput);
+         }
+         hiddenInput.setAttribute('hidden', '');
+         hiddenInput.type = 'range';
+         hiddenInput.min = this.min;
+         hiddenInput.max = this.max;
+         hiddenInput.name = this.name;
+         hiddenInput.value = this.value;
+         hiddenInput.required = this.required;
+      }
+   }
+   #resetToDefault() {
+      this.value = 0;
+      this.#form()
+   }
+
+   // getter & setter
    get color() {
-      return this.#attr.color
+      return this.#attr.color;
    }
    set color(val) {
-      this.setAttribute('color', val)
+      this.setAttribute('color', val);
    }
    get innerColor() {
-      return this.#attr.innerColor
+      return this.#attr.innerColor;
    }
    set innerColor(val) {
-      this.setAttribute('inner-color', val)
+      this.setAttribute('inner-color', val);
    }
    get value() {
-      return this.#attr.value
+      return this.#attr.value;
    }
    set value(val) {
-      this.setAttribute('value', val)
-   }
-   get name() {
-      return this.#attr.name
-   }
-   set name(val) {
-      this.setAttribute('name', val)
+      this.setAttribute('value', val);
    }
    get min() {
-      return this.#attr.min
+      return this.#attr.min;
    }
    set min(val) {
-      this.setAttribute('min', val)
-   }
-   set min(val) {
-      this.setAttribute('min', val)
+      this.setAttribute('min', val);
    }
    get max() {
-      return this.#attr.max
+      return this.#attr.max;
    }
    set max(val) {
-      this.setAttribute('max', val)
+      this.setAttribute('max', val);
    }
-   get dir() {
-      return this.#attr.dir
+   get step() {
+      return this.#attr.step;
    }
-   set dir(val) {
-      this.setAttribute('dir', val)
+   set step(val) {
+      this.setAttribute('step', val);
    }
-get disabled() {
-      return this.#attr.disabled
+   get disabled() {
+      return this.#attr.disabled;
    }
    set disabled(val) {
-      if (val == true || val == false) {
-         val ? this.setAttribute('disabled', '') : this.removeAttribute('disabled')
+      if (val == false || val == null) {
+         this.removeAttribute('required');
+      } else if (val == true) {
+         this.setAttribute('required', '');
       }
+   }
+   get name() {
+      return this.#attr.name;
+   }
+   set name(val) {
+      this.setAttribute('name', val);
+   }
+   get required() {
+      return this.#attr.required;
+   }
+   set required(val) {
+      if (val === false || val === null) {
+         this.removeAttribute('required');
+      } else if (val == true) {
+         this.setAttribute('required', '');
+      }
+   }
+   // property 
+   toggleDisabled() {
+      this.disabled = !this.disabled;
    }
 }

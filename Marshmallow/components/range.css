@@ -1,101 +1,38 @@
+/*** range.css v1 ***/
 :host {
    --m-range-color: var(--m-primary);
    --m-range-inner-color: var(--m-on-primary);
+
    display: block;
    position: relative;
    width: 100%;
-   height: 30px;
-   background: var(--m-surface-container-high);
-   border-radius: 15px;
+   height: 4px;
+   background-color: var(--m-surface-container-high);
+   border-radius: 2px;
+   box-sizing: border-box;
    touch-action: none;
 }
 
-
-:host([dir="ltr"]),
-:host([dir="rtl"]) {
-   display: block;
-   width: 100%;
-   height: 30px;
-}
-
-:host([dir="utd"]),
-:host([dir="dtu"]) {
-   display: inline-block;
-   width: 30px;
-   height: 200px;
-}
-
-
-
 :host::part(progress) {
-   direction: ltr;
    position: absolute;
-   height: 30px !important;
-   min-width: 30px;
-   max-width: 100%;
-   border-radius: 15px;
-   background: var(--m-range-color);
-   box-sizing: border-box;
-   padding: 5px;
-   display: flex;
-   flex-direction: row;
-   justify-content: end;
-   transition: 0.1s;
-}
-
-
-:host([dir="ltr"])::part(progress),
-:host([dir="rtl"])::part(progress) {
-   height: 30px !important;
-   min-width: 30px;
-   max-width: 100%;
-   flex-direction: row;
-}
-
-:host([dir="utd"])::part(progress),
-:host([dir="dtu"])::part(progress) {
-   width: 30px !important;
-   min-height: 30px;
-   max-height: 100%;
-   flex-direction: column;
-}
-
-:host([dir="ltr"])::part(progress) {
+   height: 100%;
+   width: 0;
+   background-color: var(--m-range-color);
+   border-radius: 2px;
    left: 0;
-   justify-content: end;
-}
-
-:host([dir="rtl"])::part(progress) {
-   right: 0;
-   justify-content: start;
-}
-
-:host([dir="utd"])::part(progress) {
    top: 0;
-   justify-content: end;
 }
-
-:host([dir="dtu"])::part(progress) {
-   bottom: 0;
-   justify-content: start;
-}
-
 
 :host::part(handle) {
-   aspect-ratio: 1;
-   height: 100%;
-   background: var(--m-range-inner-color);
-   border-radius: 15px;
-}
-
-:host([dir="ltr"])::part(handle),
-:host([dir="rtl"])::part(handle) {
-   height: 100%;
-}
-
-:host([dir="utd"])::part(handle),
-:host([dir="dtu"])::part(handle) {
-   width: 100%;
+   position: absolute;
+   width: 20px;
+   height: 20px;
+   background-color: var(--m-range-color);
+   border-radius: 10px;
+   box-shadow: 0 0 5px #0004;
+   top: 0;
+   left: 0;
+   translate: -10px -8px;
 }
 
 :host([disabled]) {
