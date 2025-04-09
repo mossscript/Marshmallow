@@ -132,6 +132,8 @@ class Range extends HTMLElement {
 
       this.value = this.#step(value, step);
       this.#form();
+      this.dispatchEvent(new Event('change', { bubbles: true }));
+      this.dispatchEvent(new Event('input', { bubbles: true }));
    }
    #rangeStyle(num) {
       let min = this.min;
@@ -213,9 +215,9 @@ class Range extends HTMLElement {
       return this.#attr.disabled;
    }
    set disabled(val) {
-      if (val == false || val == null) {
+      if (val === false || val === null) {
          this.removeAttribute('required');
-      } else if (val == true) {
+      } else if (val === true) {
          this.setAttribute('required', '');
       }
    }
@@ -231,7 +233,7 @@ class Range extends HTMLElement {
    set required(val) {
       if (val === false || val === null) {
          this.removeAttribute('required');
-      } else if (val == true) {
+      } else if (val === true) {
          this.setAttribute('required', '');
       }
    }

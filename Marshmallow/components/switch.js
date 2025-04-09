@@ -16,6 +16,7 @@ class Switch extends HTMLElement {
          checked: false,
          name: undefined,
          disabled: false,
+         required: false,
       }
       this.#T = new Tools();
       this.addEventListener('click', this.#toggle.bind(this));
@@ -38,15 +39,15 @@ class Switch extends HTMLElement {
       let newValue = !this.checked;
       this.value = this.value !== 'on' && this.value !== 'off' ? this.value : (newValue ? 'on' : 'off');
       this.checked = newValue;
-      this.#input();
+      this.#form();
       this.dispatchEvent(new Event('change', { bubbles: true }));
       this.dispatchEvent(new Event('input', { bubbles: true }));
    }
    #resetToDefault() {
       this.checked = false;
-      this.#input();
+      this.#form();
    }
-   #input() {
+   #form() {
       let form = this.closest("form");
       if (form) {
          let formData = new FormData(form);
@@ -61,12 +62,13 @@ class Switch extends HTMLElement {
          hiddenInput.name = this.name;
          this.checked ? hiddenInput.setAttribute('checked', '') : hiddenInput.removeAttribute('checked');
          hiddenInput.value = this.value;
+         hiddenInput.required = this.required;
       }
    }
 
    // observed attributes
    static get observedAttributes() {
-      return ['color', 'inner-color', 'value', 'checked', 'name', 'disabled'];
+      return ['color', 'inner-color', 'value', 'checked', 'name', 'disabled', 'required'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -101,6 +103,9 @@ class Switch extends HTMLElement {
          case 'name':
             this.#attr.name = newValue;
             break;
+         case 'required':
+            this.#attr.required = this.hasAttribute('required');
+            break;
       }
    }
 
@@ -127,8 +132,10 @@ class Switch extends HTMLElement {
       return this.#attr.checked
    }
    set checked(val) {
-      if (val == true || val == false) {
-         val ? this.setAttribute('checked', '') : this.removeAttribute('checked')
+      if (val === false || val === null) {
+         this.removeAttribute('checked');
+      } else if (val === true) {
+         this.setAttribute('checked', '');
       }
    }
    get name() {
@@ -141,11 +148,23 @@ class Switch extends HTMLElement {
       return this.#attr.disabled
    }
    set disabled(val) {
-      if (val == true || val == false) {
-         val ? this.setAttribute('disabled', '') : this.removeAttribute('disabled')
+      if (val === false || val === null) {
+         this.removeAttribute('disabled');
+      } else if (val == true) {
+         this.setAttribute('disabled', '');
       }
    }
-   
+   get required() {
+      return this.#attr.required;
+   }
+   set required(val) {
+      if (val === false || val === null) {
+         this.removeAttribute('required');
+      } else if (val == true) {
+         this.setAttribute('required', '');
+      }
+   }
+
    // property 
    toggleChecked() {
       this.checked = !this.checked
