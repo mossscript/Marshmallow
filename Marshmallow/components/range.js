@@ -51,68 +51,6 @@ class Range extends HTMLElement {
       this.#rangeStyle(this.#step(this.value, this.step));
    }
 
-   // observed attributes
-   static get observedAttributes() {
-      return ['color', 'inner-color', 'value', 'min', 'max', 'step', 'disabled', 'name', 'required', 'type'];
-   }
-   attributeChangedCallback(name, oldValue, newValue) {
-      switch (name) {
-         case 'color':
-            if (this.#T.test(newValue)) {
-               let color = this.#T.color(newValue);
-               this.#attr.color = color;
-               this.style.setProperty('--m-range-color', color);
-               if (!this.hasAttribute('inner-color')) {
-                  let innerColor = this.#T.innerColor(newValue);
-                  this.#attr.innerColor = innerColor;
-                  this.style.setProperty('--m-range-inner-color', innerColor);
-               }
-            }
-            break;
-         case 'inner-color':
-            if (this.#T.test(newValue)) {
-               let innerColor = this.#T.innerColor(newValue);
-               this.#attr.innerColor = innerColor;
-               this.style.setProperty('--m-range-inner-color', innerColor);
-            }
-            break;
-         case 'value':
-            if (!isNaN(parseFloat(newValue))) {
-               this.#attr.value = parseFloat(newValue);
-               if (this.isConnected) this.#rangeStyle(newValue);
-            }
-            break;
-         case 'min':
-            if (!isNaN(parseFloat(newValue))) {
-               this.#attr.min = parseFloat(newValue);
-            }
-            break;
-         case 'max':
-            if (!isNaN(parseFloat(newValue))) {
-               this.#attr.max = parseFloat(newValue);
-            }
-            break;
-         case 'step':
-            if (!isNaN(parseFloat(newValue)) && parseFloat(newValue) >= 0) {
-               this.#attr.step = parseFloat(newValue);
-            }
-            break;
-         case 'disabled':
-            this.#attr.disabled = this.hasAttribute('disabled');
-            break;
-         case 'name':
-            this.#attr.name = newValue ?? '';
-            break;
-         case 'required':
-            this.#attr.required = this.hasAttribute('required');
-            break;
-         case 'type':
-            if (/^(fancy|simple)$/i.test(newValue)) {
-               this.#attr.type = newValue.toLowerCase();
-            }
-      }
-   }
-
    // private function
    #clamp(min, max, num) {
       return Math.max(min, Math.min(max, num));
@@ -175,12 +113,71 @@ class Range extends HTMLElement {
          hiddenInput.max = this.max;
          hiddenInput.name = this.name;
          hiddenInput.value = this.value;
-         hiddenInput.required = this.required;
       }
    }
    #resetToDefault() {
       this.value = 0;
       this.#form()
+   }
+
+
+   // observed attributes
+   static get observedAttributes() {
+      return ['color', 'inner-color', 'value', 'min', 'max', 'step', 'disabled', 'name', 'required', 'type'];
+   }
+   attributeChangedCallback(name, oldValue, newValue) {
+      switch (name) {
+         case 'color':
+            if (this.#T.test(newValue)) {
+               let color = this.#T.color(newValue);
+               this.#attr.color = color;
+               this.style.setProperty('--m-range-color', color);
+               if (!this.hasAttribute('inner-color')) {
+                  let innerColor = this.#T.innerColor(newValue);
+                  this.#attr.innerColor = innerColor;
+                  this.style.setProperty('--m-range-inner-color', innerColor);
+               }
+            }
+            break;
+         case 'inner-color':
+            if (this.#T.test(newValue)) {
+               let innerColor = this.#T.innerColor(newValue);
+               this.#attr.innerColor = innerColor;
+               this.style.setProperty('--m-range-inner-color', innerColor);
+            }
+            break;
+         case 'value':
+            if (!isNaN(parseFloat(newValue))) {
+               this.#attr.value = parseFloat(newValue);
+               if (this.isConnected) this.#rangeStyle(newValue);
+            }
+            break;
+         case 'min':
+            if (!isNaN(parseFloat(newValue))) {
+               this.#attr.min = parseFloat(newValue);
+            }
+            break;
+         case 'max':
+            if (!isNaN(parseFloat(newValue))) {
+               this.#attr.max = parseFloat(newValue);
+            }
+            break;
+         case 'step':
+            if (!isNaN(parseFloat(newValue)) && parseFloat(newValue) >= 0) {
+               this.#attr.step = parseFloat(newValue);
+            }
+            break;
+         case 'disabled':
+            this.#attr.disabled = this.hasAttribute('disabled');
+            break;
+         case 'name':
+            this.#attr.name = newValue ?? '';
+            break;
+         case 'type':
+            if (/^(fancy|simple)$/i.test(newValue)) {
+               this.#attr.type = newValue.toLowerCase();
+            }
+      }
    }
 
    // getter & setter
@@ -235,16 +232,6 @@ class Range extends HTMLElement {
    }
    set name(val) {
       this.setAttribute('name', val);
-   }
-   get required() {
-      return this.#attr.required;
-   }
-   set required(val) {
-      if (val === false || val === null) {
-         this.removeAttribute('required');
-      } else if (val === true) {
-         this.setAttribute('required', '');
-      }
    }
    get type() {
       return this.#attr.name;

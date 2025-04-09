@@ -16,7 +16,6 @@ class Radio extends HTMLElement {
          checked: false,
          name: undefined,
          disabled: false,
-         required: false,
       }
       this.#T = new Tools();
       this.addEventListener('click', this.#radio.bind(this));
@@ -72,13 +71,12 @@ class Radio extends HTMLElement {
          hiddenInput.name = this.name;
          this.checked ? hiddenInput.setAttribute('checked', '') : hiddenInput.removeAttribute('checked');
          hiddenInput.value = this.value;
-         hiddenInput.required = this.required;
       }
    }
 
    // observed attributes
    static get observedAttributes() {
-      return ['color', 'inner-color', 'value', 'checked', 'name', 'disabled', 'required'];
+      return ['color', 'inner-color', 'value', 'checked', 'name', 'disabled'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -113,9 +111,6 @@ class Radio extends HTMLElement {
          case 'name':
             this.#attr.name = newValue;
             break;
-         case 'required':
-this.#attr.required = this.hasAttribute('required');
-break;
       }
    }
 
@@ -164,17 +159,7 @@ break;
          this.setAttribute('disabled', '');
       }
    }
-   get required() {
-      return this.#attr.required;
-   }
-   set required(val) {
-      if (val === false || val === null) {
-         this.removeAttribute('required');
-      } else if (val == true) {
-         this.setAttribute('required', '');
-      }
-   }
-
+   
    // property 
    toggleChecked() {
       this.checked = !this.checked

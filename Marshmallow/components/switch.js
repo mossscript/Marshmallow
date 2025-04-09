@@ -22,6 +22,7 @@ class Switch extends HTMLElement {
       this.addEventListener('click', this.#toggle.bind(this));
       let form = this.closest('form');
       if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) }
+      this.#form();
    }
 
    // connect element
@@ -62,13 +63,12 @@ class Switch extends HTMLElement {
          hiddenInput.name = this.name;
          this.checked ? hiddenInput.setAttribute('checked', '') : hiddenInput.removeAttribute('checked');
          hiddenInput.value = this.value;
-         hiddenInput.required = this.required;
       }
    }
 
    // observed attributes
    static get observedAttributes() {
-      return ['color', 'inner-color', 'value', 'checked', 'name', 'disabled', 'required'];
+      return ['color', 'inner-color', 'value', 'checked', 'name', 'disabled'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -102,9 +102,6 @@ class Switch extends HTMLElement {
             break;
          case 'name':
             this.#attr.name = newValue;
-            break;
-         case 'required':
-            this.#attr.required = this.hasAttribute('required');
             break;
       }
    }
@@ -152,16 +149,6 @@ class Switch extends HTMLElement {
          this.removeAttribute('disabled');
       } else if (val == true) {
          this.setAttribute('disabled', '');
-      }
-   }
-   get required() {
-      return this.#attr.required;
-   }
-   set required(val) {
-      if (val === false || val === null) {
-         this.removeAttribute('required');
-      } else if (val == true) {
-         this.setAttribute('required', '');
       }
    }
 

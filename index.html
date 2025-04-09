@@ -17,18 +17,15 @@
       </center>
       <m-hr></m-hr>
       <div style="padding: 24px">
-         <m-button> Button </m-button>
-         <m-switch></m-switch>
-         <m-switch></m-switch>
-         <m-checkbox></m-checkbox>
-         <m-checkbox></m-checkbox>
-         <m-radio name="a"></m-radio>
-         <m-radio name="a"></m-radio> 
-         <br> <br>
-         <m-range></m-range> <br>
-         <m-range type="fancy"></m-range> <br>
-         <m-range type="simple"></m-range> <br>
-         <input type="range" style="width: 100%"/>
+         <form method="dialog">
+            <m-switch name="agree" oninput="alert(this.checkValidity())" required></m-switch>
+            <m-radio name="a" required></m-radio>
+            <m-radio name="a" required></m-radio>
+            <m-radio name="a" required></m-radio>
+            <button type="submit"> Submit </button>
+         </form>
+
+         <input type="range" style="width: 100%" />
       </div>
    </m-app>
 
