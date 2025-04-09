@@ -10,7 +10,7 @@ class Hr extends HTMLElement {
       super();
       this.#elm = this.attachShadow({ mode: 'open' });
       this.#attr = {
-         color: 'var(--m-primary)',
+         color: 'var(--m-surface-container-high)',
          size: 2,
          style: 'solid',
       }
