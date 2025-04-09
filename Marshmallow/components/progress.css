@@ -1,0 +1,36 @@
+:host {
+   --m-progress-color: var(--m-primary);
+   display: block;
+   width: 100%;
+   height: 4px;
+   background: var(--m-surface-container-high);
+   border-radius: 2px;
+   overflow: hidden;
+   position: relative;
+}
+
+:host::part(progress) {
+   position: absolute;
+   left: 0;
+   height: 100%;
+   background: var(--m-progress-color);
+   border-radius: 2px;
+   animation: loop 1s linear infinite;
+}
+
+@keyframes loop {
+   0% {
+      width: 20%;
+      left: -20%;
+   }
+
+   50% {
+      width: 60%;
+      left: 0%;
+   }
+
+   100% {
+      width: 20%;
+      left: 100%;
+   }
+}

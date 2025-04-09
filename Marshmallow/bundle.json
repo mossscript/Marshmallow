@@ -43,6 +43,11 @@
          "name": "m-range",
          "script": "Marshmallow/components/range.js",
          "style": "Marshmallow/components/range.css"
+      },
+      "Progress": {
+         "name": "m-progress",
+         "script": "Marshmallow/components/progress.js",
+         "style": "Marshmallow/components/progress.css"
       }
    }
 }

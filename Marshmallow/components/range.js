@@ -90,10 +90,10 @@ class Range extends HTMLElement {
       let value = this.#clamp(min, max, num);
       let percent = this.#percent(min, max, value);
       let x = (percent / 100) * width;
-
+      
       if (this.#progress && this.#handle) {
          this.#progress.style.width = `${x + height/2}px`;
-         this.#handle.style.left = `${x}px`;
+         this.#handle.style.left = `${x - height/2}px`;
       }
 
    }
