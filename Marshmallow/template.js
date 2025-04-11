@@ -18,7 +18,7 @@
          this.version = '[[["VERSION"]]]';
          this.#eventTarget = new EventTarget();
          this.configs = {
-            color: 'Woodland',
+            color: 'hsl(224, 33, 50)',
             theme: 'dark',
             contrast: 0,
          };

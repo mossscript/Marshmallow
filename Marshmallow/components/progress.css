@@ -15,7 +15,6 @@
    height: 100%;
    background: var(--m-progress-color);
    border-radius: 2px;
-   animation: loop 1s linear infinite;
 }
 
 @keyframes loop {
