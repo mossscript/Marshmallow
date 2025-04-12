@@ -4,7 +4,7 @@ class Progress extends HTMLElement {
    #elm;
    #attr;
    #T;
-   #progress
+   #progressElm
 
    // constructor
    constructor() {
@@ -25,9 +25,8 @@ class Progress extends HTMLElement {
          </style>
          <div part="progress"></div>
       `;
-      this.#progress = this.#elm.querySelector('[part="progress"]');
+      this.#progressElm = this.#elm.querySelector('[part="progress"]');
    }
-
 
    // private function
    #clamp(min, max, num) {
@@ -36,17 +35,17 @@ class Progress extends HTMLElement {
    #percent(min, max, num) {
       return ((Math.max(min, Math.min(max, num)) - min) / (max - min)) * 100;
    }
-   #progresst(num) {
+   #progress(num) {
       let { min, max } = this;
       if (num != undefined) {
          let clamp = this.#clamp(min, max, num);
          let percent = this.#percent(min, max, clamp);
          this.#attr.value = clamp;
-         this.#progress.style.width = percent + '%';
-         this.#progress.style.animation = 'none';
+         this.#progressElm.style.width = percent + '%';
+         this.#progressElm.style.animation = 'none';
       } else {
          this.#attr.value = undefined;
-         this.#progress.style.animation = 'loop 1s linear infinite';
+         this.#progressElm.style.animation = 'loop 1s linear infinite';
       }
    }
 
@@ -66,7 +65,7 @@ class Progress extends HTMLElement {
          case 'value':
             if (!isNaN(parseFloat(newValue))) {
                this.#attr.value = parseFloat(newValue);
-               this.#progresst(newValue);
+               this.#progress(newValue);
             }
             break;
          case 'min':
@@ -85,35 +84,48 @@ class Progress extends HTMLElement {
       }
    }
 
-   // getter & setter 
+   // setter & getter
+   set color(val) {
+      this.setAttribute('color', val)
+   }
    get color() {
       return this.#attr.color
    }
-   set color(val) {
-      this.setAttribute('color', val)
+
+   set min(val) {
+      this.setAttribute('min', val)
    }
    get min() {
       return this.#attr.min
    }
-   set min(val) {
-      this.setAttribute('min', val)
+
+   set max(val) {
+      this.setAttribute('max', val)
    }
    get max() {
       return this.#attr.max
    }
-   set max(val) {
-      this.setAttribute('max', val)
+
+   set value(val) {
+      this.setAttribute('value', val)
    }
    get value() {
       return this.#attr.value
    }
-   set value(val) {
-      this.setAttribute('value', val)
+
+   set sharp(val) {
+      if (val === false || val === null) {
+         this.removeAttribute('sharp');
+      } else if (val === true) {
+         this.setAttribute('sharp', '');
+      }
    }
    get sharp() {
       return this.#attr.value
    }
-   set sharp(val) {
-      this.setAttribute('sharp', val)
+
+   // property 
+   increase(num) {
+      this.value = this.value + parseFloat(num);
    }
 }

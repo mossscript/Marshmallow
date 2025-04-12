@@ -16,6 +16,7 @@
    background: var(--m-progress-color);
    border-radius: 2px;
    animation: loop 1s linear infinite;
+   transition: width, 0.3s;
 }
 
 :host([sharp]){

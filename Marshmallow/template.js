@@ -19,7 +19,7 @@
          this.#eventTarget = new EventTarget();
          this.configs = {
             color: 'Persian indigo',
-            theme: 'light',
+            theme: 'dark',
             surfaceColor: 'gray',
             contrast: 100,
          };

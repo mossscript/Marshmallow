@@ -18,19 +18,17 @@ class Checkbox extends HTMLElement {
          disabled: false,
       }
       this.#T = new Tools();
-      this.addEventListener('click', this.#toggle.bind(this));
-      let form = this.closest('form');
-      if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) }
-   }
 
-   // connect element
-   connectedCallback() {
+      // template 
       this.#elm.innerHTML = `
          <style>
             [[["STYLE"]]]
          </style>
          <div id="handle"></div>
       `;
+      this.addEventListener('click', this.#toggle.bind(this));
+      let form = this.closest('form');
+      if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) }
    }
 
    // private function 
@@ -93,10 +91,10 @@ class Checkbox extends HTMLElement {
             this.#attr.value = newValue || 'off';
             break;
          case 'checked':
-            this.#attr.checked = this.hasAttribute('checked');
+            this.#attr.checked = this.hasAttribute(name);
             break;
          case 'disabled':
-            this.#attr.disabled = this.hasAttribute('disabled');
+            this.#attr.disabled = this.hasAttribute(name);
             break;
          case 'name':
             this.#attr.name = newValue;
@@ -104,28 +102,28 @@ class Checkbox extends HTMLElement {
       }
    }
 
-   // getter & setter 
+   // setter & getter 
+   set color(val) {
+      this.setAttribute('color', val)
+   }
    get color() {
       return this.#attr.color
    }
-   set color(val) {
-      this.setAttribute('color', val)
+
+   set innerColor(val) {
+      this.setAttribute('inner-color', val)
    }
    get innerColor() {
       return this.#attr.innerColor
    }
-   set innerColor(val) {
-      this.setAttribute('inner-color', val)
+
+   set value(val) {
+      this.setAttribute('value', val)
    }
    get value() {
       return this.#attr.value
    }
-   set value(val) {
-      this.setAttribute('value', val)
-   }
-   get checked() {
-      return this.#attr.checked
-   }
+
    set checked(val) {
       if (val === false || val === null) {
          this.removeAttribute('checked');
@@ -133,25 +131,30 @@ class Checkbox extends HTMLElement {
          this.setAttribute('checked', '');
       }
    }
+   get checked() {
+      return this.#attr.checked
+   }
+
+   set name(val) {
+      this.setAttribute('name', val)
+   }
    get name() {
       return this.#attr.name
    }
-   set name(val) {
-      this.setAttribute('name', val)
+
+   set disabled(val) {
+      if (val === false || val === null) {
+         this.removeAttribute('disabled');
+      } else if (val === true) {
+         this.setAttribute('disabled', '');
+      }
    }
    get disabled() {
       return this.#attr.disabled
    }
-   set disabled(val) {
-      if (val === false || val === null) {
-         this.removeAttribute('disabled');
-      } else if (val == true) {
-         this.setAttribute('disabled', '');
-      }
-   }
 
    // property 
-   toggleChecked() {
+   toggle() {
       this.checked = !this.checked
    }
    toggleDisabled() {

@@ -20,17 +20,15 @@ class Button extends HTMLElement {
          shadow: 0,
       }
       this.#T = new Tools();
-      this.addEventListener('click', this.#handleClick.bind(this));
-   }
 
-   // connect element 
-   connectedCallback() {
+      // template 
       this.#elm.innerHTML = `
          <style>
             [[["STYLE"]]]
          </style>
          <slot></slot>
       `;
+      this.addEventListener('click', this.#handleClick.bind(this));
    }
 
    // observed attributes
@@ -59,13 +57,13 @@ class Button extends HTMLElement {
             }
             break;
          case 'full':
-            this.#attr.full = this.hasAttribute('full');
+            this.#attr.full = this.hasAttribute(name);
             break;
          case 'disabled':
-            this.#attr.disabled = this.hasAttribute('disabled');
+            this.#attr.disabled = this.hasAttribute(name);
             break;
          case 'outline':
-            this.#attr.outline = this.hasAttribute('outline');
+            this.#attr.outline = this.hasAttribute(name);
             break;
          case 'size':
             if (/^(small|medium|large)$/i.test(newValue)) {
@@ -85,7 +83,7 @@ class Button extends HTMLElement {
             this.style.setProperty('--m-button-shadow', `0 ${shadow}px ${shadow*3}px #0004`);
             break;
          case 'text':
-            this.#attr.text = this.hasAttribute('text');
+            this.#attr.text = this.hasAttribute(name);
             break;
       }
    }
@@ -108,60 +106,84 @@ class Button extends HTMLElement {
       }
    }
 
-   // getter & setter 
+   // setter & getter
+   set color(val) {
+      this.setAttribute('color', val)
+   }
    get color() {
       return this.#attr.color
    }
-   set color(val) {
-      this.setAttribute('color', val)
+
+   set innerColor(val) {
+      this.setAttribute('inner-color', val)
    }
    get innerColor() {
       return this.#attr.innerColor
    }
-   set innerColor(val) {
-      this.setAttribute('inner-color', val)
+
+   set full(val) {
+      if (val === true) {
+         this.setAttribute('full', '');
+      } else if (val === null || val === false) {
+         this.removeAttribute('full')
+      }
    }
    get full() {
       return this.#attr.full
    }
-   set full(val) {
-      if (val == true || val == false) { val ? this.setAttribute('full', '') : this.removeAttribute('full') }
+
+   set disabled(val) {
+      if (val === true) {
+         this.setAttribute('disabled', '');
+      } else if (val === null || val === false) {
+         this.removeAttribute('disabled')
+      }
    }
    get disabled() {
       return this.#attr.disabled
    }
-   set disabled(val) {
-      if (val == true || val == false) { val ? this.setAttribute('disabled', '') : this.removeAttribute('disabled') }
+
+   set outline(val) {
+      if (val === true) {
+         this.setAttribute('outline', '');
+      } else if (val === null || val === false) {
+         this.removeAttribute('outline')
+      }
    }
    get outline() {
       return this.#attr.outline
    }
-   set outline(val) {
-      if (val == true || val == false) { val ? this.setAttribute('outline', '') : this.removeAttribute('outline') }
+
+   set text(val) {
+      if (val === true) {
+         this.setAttribute('text', '');
+      } else if (val === null || val === false) {
+         this.removeAttribute('text')
+      }
    }
    get text() {
       return this.#attr.text
    }
-   set text(val) {
-      if (val == true || val == false) { val ? this.setAttribute('text', '') : this.removeAttribute('text') }
+
+   set size(val) {
+      this.setAttribute('size', val)
    }
    get size() {
       return this.#attr.size
    }
-   set size(val) {
-      this.setAttribute('size', val)
+
+   set shadow(val) {
+      this.setAttribute('shadow', val)
    }
    get shadow() {
       return this.#attr.shadow
    }
-   set shadow(val) {
-      this.setAttribute('shadow', val)
+
+   set type(val) {
+      this.setAttribute('type', val)
    }
    get type() {
       return this.getAttribute('type')
-   }
-   set type(val) {
-      this.setAttribute('type', val)
    }
 
    // property 

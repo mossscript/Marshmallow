@@ -59,6 +59,7 @@ class App extends HTMLElement {
    get color() {
       return this.#attr.color
    }
+
    set innerColor(val) {
       this.setAttribute('inner-color', val)
    }

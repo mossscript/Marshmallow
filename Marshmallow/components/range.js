@@ -15,7 +15,7 @@ class Range extends HTMLElement {
       this.#attr = {
          color: 'var(--m-primary)',
          innerColor: 'var(--m-on-primary)',
-         value: 0,
+         value: 22,
          min: 0,
          max: 100,
          step: 0,
@@ -25,12 +25,8 @@ class Range extends HTMLElement {
          name: '',
       };
       this.#T = new Tools();
-      let form = this.closest('form');
-      if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) };
-   }
 
-   // connect element 
-   connectedCallback() {
+      // template 
       this.#elm.innerHTML = `
          <style>
          [[["STYLE"]]]
@@ -43,12 +39,14 @@ class Range extends HTMLElement {
       this.#handle = this.#elm.querySelector('[part="handle"]');
       this.#truck = this.#elm.querySelector('[part="truck"]');
       this.#progress = this.#elm.querySelector('[part="progress"]');
+      this.#rangeStyle(this.value)
 
       let move = (e) => this.#range(e);
       this.addEventListener('pointerdown', move);
       this.addEventListener('pointermove', move);
 
-      this.#rangeStyle(this.#step(this.value, this.step));
+      let form = this.closest('form');
+      if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) };
    }
 
    // private function
@@ -69,33 +67,29 @@ class Range extends HTMLElement {
       let x = event.clientX - rect.left;
       let width = rect.width;
       let clampedX = Math.max(0, Math.min(x, width));
-      let min = this.min;
-      let max = this.max;
-      let step = this.step;
+      let { min, max, step } = this;
 
       let progress = (this.#percent(min, max, (clampedX / width) * (max - min) + min));
       let value = ((progress / 100) * (max - min) + min);
 
-      this.value = this.#step(value, step);
+      this.value = this.#clamp(min, max, this.#step(value, step));
       this.#form();
       this.dispatchEvent(new Event('change', { bubbles: true }));
       this.dispatchEvent(new Event('input', { bubbles: true }));
    }
    #rangeStyle(num) {
-      let min = this.min;
-      let max = this.max;
-      let width = this.#truck.getBoundingClientRect().width;
-      let height = this.#truck.getBoundingClientRect().height;
+      console.log(num)
+      let { min, max } = this;
+      let truck = this.#truck.getBoundingClientRect();
+      let handle = this.#handle.getBoundingClientRect();
 
       let value = this.#clamp(min, max, num);
       let percent = this.#percent(min, max, value);
-      let x = (percent / 100) * width;
-      
-      if (this.#progress && this.#handle) {
-         this.#progress.style.width = `${x + height/2}px`;
-         this.#handle.style.left = `${x - height/2}px`;
-      }
+      let x = (percent / 100) * truck.width;
 
+      this.#progress.style.width = `${x+handle.width/2}px`;
+      this.#progress.style.left = `${-handle.width/2}px`;
+      this.#handle.style.left = `${x}px`;
    }
    #form() {
       let form = this.closest("form");
@@ -119,7 +113,6 @@ class Range extends HTMLElement {
       this.value = 0;
       this.#form()
    }
-
 
    // observed attributes
    static get observedAttributes() {
@@ -147,9 +140,10 @@ class Range extends HTMLElement {
             }
             break;
          case 'value':
+            console.log(newValue)
             if (!isNaN(parseFloat(newValue))) {
                this.#attr.value = parseFloat(newValue);
-               if (this.isConnected) this.#rangeStyle(newValue);
+               this.#rangeStyle(parseFloat(newValue));
             }
             break;
          case 'min':
@@ -168,7 +162,7 @@ class Range extends HTMLElement {
             }
             break;
          case 'disabled':
-            this.#attr.disabled = this.hasAttribute('disabled');
+            this.#attr.disabled = this.hasAttribute(name);
             break;
          case 'name':
             this.#attr.name = newValue ?? '';
@@ -180,46 +174,49 @@ class Range extends HTMLElement {
       }
    }
 
-   // getter & setter
+   // setter & getter 
+   set color(val) {
+      this.setAttribute('color', val);
+   }
    get color() {
       return this.#attr.color;
    }
-   set color(val) {
-      this.setAttribute('color', val);
+
+   set innerColor(val) {
+      this.setAttribute('inner-color', val);
    }
    get innerColor() {
       return this.#attr.innerColor;
    }
-   set innerColor(val) {
-      this.setAttribute('inner-color', val);
+
+   set value(val) {
+      this.setAttribute('value', val);
    }
    get value() {
       return this.#attr.value;
    }
-   set value(val) {
-      this.setAttribute('value', val);
+
+   set min(val) {
+      this.setAttribute('min', val);
    }
    get min() {
       return this.#attr.min;
    }
-   set min(val) {
-      this.setAttribute('min', val);
+
+   set max(val) {
+      this.setAttribute('max', val);
    }
    get max() {
       return this.#attr.max;
    }
-   set max(val) {
-      this.setAttribute('max', val);
+
+   set step(val) {
+      this.setAttribute('step', val);
    }
    get step() {
       return this.#attr.step;
    }
-   set step(val) {
-      this.setAttribute('step', val);
-   }
-   get disabled() {
-      return this.#attr.disabled;
-   }
+
    set disabled(val) {
       if (val === false || val === null) {
          this.removeAttribute('required');
@@ -227,18 +224,24 @@ class Range extends HTMLElement {
          this.setAttribute('required', '');
       }
    }
+   get disabled() {
+      return this.#attr.disabled;
+   }
+
+   set name(val) {
+      this.setAttribute('name', val);
+   }
    get name() {
       return this.#attr.name;
    }
-   set name(val) {
+
+   set type(val) {
       this.setAttribute('name', val);
    }
    get type() {
       return this.#attr.name;
    }
-   set type(val) {
-      this.setAttribute('name', val);
-   }
+
    // property 
    toggleDisabled() {
       this.disabled = !this.disabled;

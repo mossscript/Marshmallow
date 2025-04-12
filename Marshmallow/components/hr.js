@@ -15,10 +15,8 @@ class Hr extends HTMLElement {
          type: 'solid',
       }
       this.#T = new Tools();
-   }
 
-   // connect element
-   connectedCallback() {
+      // template 
       this.#elm.innerHTML = `
          <style>
             [[["STYLE"]]]
@@ -53,28 +51,28 @@ class Hr extends HTMLElement {
                this.style.setProperty('--m-hr-type', type);
             }
             break;
-         
       }
    }
 
-   // getter & setter 
+   // setter & getter
+   set color(val) {
+      this.setAttribute('color', val)
+   }
    get color() {
       return this.#attr.color
    }
-   set color(val) {
-      this.setAttribute('color', val)
+
+   set type(val) {
+      this.setAttribute('type', val)
    }
    get type() {
       return this.#attr.type
    }
-   set type(val) {
-      this.setAttribute('type', val)
+
+   set size(val) {
+      this.setAttribute('size', val)
    }
    get size() {
       return this.#attr.size
    }
-   set size(val) {
-      this.setAttribute('size', val)
-   }
-   
 }

@@ -19,20 +19,18 @@ class Switch extends HTMLElement {
          required: false,
       }
       this.#T = new Tools();
-      this.addEventListener('click', this.#toggle.bind(this));
-      let form = this.closest('form');
-      if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) }
-      this.#form();
-   }
 
-   // connect element
-   connectedCallback() {
+      // template 
       this.#elm.innerHTML = `
          <style>
             [[["STYLE"]]]
          </style>
          <div id="handle"></div>
       `;
+      this.addEventListener('click', this.#toggle.bind(this));
+      let form = this.closest('form');
+      if (form) { form.addEventListener('reset', this.#resetToDefault.bind(this)) }
+      this.#form();
    }
 
    // private function 
@@ -95,10 +93,10 @@ class Switch extends HTMLElement {
             this.#attr.value = newValue || 'off';
             break;
          case 'checked':
-            this.#attr.checked = this.hasAttribute('checked');
+            this.#attr.checked = this.hasAttribute(name);
             break;
          case 'disabled':
-            this.#attr.disabled = this.hasAttribute('disabled');
+            this.#attr.disabled = this.hasAttribute(name);
             break;
          case 'name':
             this.#attr.name = newValue;
@@ -106,28 +104,28 @@ class Switch extends HTMLElement {
       }
    }
 
-   // getter & setter 
+   //  setter & getter
+   set color(val) {
+      this.setAttribute('color', val)
+   }
    get color() {
       return this.#attr.color
    }
-   set color(val) {
-      this.setAttribute('color', val)
+
+   set innerColor(val) {
+      this.setAttribute('inner-color', val)
    }
    get innerColor() {
       return this.#attr.innerColor
    }
-   set innerColor(val) {
-      this.setAttribute('inner-color', val)
+
+   set value(val) {
+      this.setAttribute('value', val)
    }
    get value() {
       return this.#attr.value
    }
-   set value(val) {
-      this.setAttribute('value', val)
-   }
-   get checked() {
-      return this.#attr.checked
-   }
+
    set checked(val) {
       if (val === false || val === null) {
          this.removeAttribute('checked');
@@ -135,21 +133,26 @@ class Switch extends HTMLElement {
          this.setAttribute('checked', '');
       }
    }
-   get name() {
-      return this.#attr.name
+   get checked() {
+      return this.#attr.checked
    }
+
    set name(val) {
       this.setAttribute('name', val)
    }
-   get disabled() {
-      return this.#attr.disabled
+   get name() {
+      return this.#attr.name
    }
+
    set disabled(val) {
       if (val === false || val === null) {
          this.removeAttribute('disabled');
       } else if (val == true) {
          this.setAttribute('disabled', '');
       }
+   }
+   get disabled() {
+      return this.#attr.disabled
    }
 
    // property 
