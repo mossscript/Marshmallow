@@ -4,7 +4,7 @@ class App extends HTMLElement {
    #elm;
    #attr;
    #T;
-   
+
    // constructor
    constructor() {
       super();
@@ -14,10 +14,8 @@ class App extends HTMLElement {
          innerColor: 'var(--m-on-background)',
       }
       this.#T = new Tools();
-   }
-   
-   // connect element
-   connectedCallback() {
+
+      // template 
       this.#elm.innerHTML = `
          <style>
             [[["STYLE"]]]
@@ -25,7 +23,7 @@ class App extends HTMLElement {
          <slot></slot>
       `;
    }
-   
+
    // observed attributes
    static get observedAttributes() {
       return ['color', 'inner-color'];
@@ -53,18 +51,18 @@ class App extends HTMLElement {
             break;
       }
    }
-   
-   // getter & setter 
-   get color() {
-      return this.#attr.color
-   }
+
+   // setter & getter
    set color(val) {
       this.setAttribute('color', val)
    }
-   get innerColor() {
-      return this.#attr.innerColor
+   get color() {
+      return this.#attr.color
    }
    set innerColor(val) {
       this.setAttribute('inner-color', val)
+   }
+   get innerColor() {
+      return this.#attr.innerColor
    }
 }
