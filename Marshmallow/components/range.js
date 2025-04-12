@@ -78,7 +78,6 @@ class Range extends HTMLElement {
       this.dispatchEvent(new Event('input', { bubbles: true }));
    }
    #rangeStyle(num) {
-      console.log(num)
       let { min, max } = this;
       let truck = this.#truck.getBoundingClientRect();
       let handle = this.#handle.getBoundingClientRect();
@@ -140,7 +139,6 @@ class Range extends HTMLElement {
             }
             break;
          case 'value':
-            console.log(newValue)
             if (!isNaN(parseFloat(newValue))) {
                this.#attr.value = parseFloat(newValue);
                this.#rangeStyle(parseFloat(newValue));

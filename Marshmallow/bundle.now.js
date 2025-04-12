@@ -61,25 +61,42 @@
       }
 
       // private property 
+      #retryFetch(url, retries = 10) {
+         return fetch(url).then(res => {
+            if (!res.ok && res.status !== 404) {
+               if (retries > 0) return this.#retryFetch(url, retries - 1);
+               else throw new Error(`Failed to fetch ${url} after retries`);
+            }
+            return res;
+         }).catch(err => {
+            if (retries > 0) return this.#retryFetch(url, retries - 1);
+            else throw err;
+         });
+      }
       #getPath() {
          let promiseArr = [];
-         promiseArr.push(fetch(this.configs.template)
+
+         promiseArr.push(this.#retryFetch(this.configs.template)
             .then(response => response.text())
-            .then(data => this.configs.template = data))
+            .then(data => this.configs.template = data));
+
          for (let i in this.configs.libs) {
-            promiseArr.push(fetch(this.configs.libs[i])
+            promiseArr.push(this.#retryFetch(this.configs.libs[i])
                .then(response => response.text())
-               .then(y => this.configs.libs[i] = y))
+               .then(y => this.configs.libs[i] = y));
          }
+
          for (let i in this.configs.components) {
-            promiseArr.push(fetch(this.configs.components[i].script)
+            promiseArr.push(this.#retryFetch(this.configs.components[i].script)
                .then(response => response.text())
-               .then(y => this.configs.components[i].script = y))
-            promiseArr.push(fetch(this.configs.components[i].style)
+               .then(y => this.configs.components[i].script = y));
+
+            promiseArr.push(this.#retryFetch(this.configs.components[i].style)
                .then(response => response.text())
-               .then(y => this.configs.components[i].style = y))
+               .then(y => this.configs.components[i].style = y));
          }
-         Promise.all(promiseArr).then(() => this.#insert())
+
+         Promise.all(promiseArr).then(() => this.#insert());
       }
       #insert() {
          let template = this.configs.template;

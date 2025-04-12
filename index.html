@@ -38,6 +38,7 @@
    <script>
       let bundle = new Bundle('Marshmallow/bundle.json');
       bundle.onrender = () => {
+         bundle.download();
          bundle.apply();
          bundle.onapply = () => new Marshmallow();
       }
