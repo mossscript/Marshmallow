@@ -15,7 +15,7 @@ class Range extends HTMLElement {
       this.#attr = {
          color: 'var(--m-primary)',
          innerColor: 'var(--m-on-primary)',
-         value: 22,
+         value: 50,
          min: 0,
          max: 100,
          step: 0,
@@ -39,7 +39,6 @@ class Range extends HTMLElement {
       this.#handle = this.#elm.querySelector('[part="handle"]');
       this.#truck = this.#elm.querySelector('[part="truck"]');
       this.#progress = this.#elm.querySelector('[part="progress"]');
-      this.#rangeStyle(this.value)
 
       let move = (e) => this.#range(e);
       this.addEventListener('pointerdown', move);

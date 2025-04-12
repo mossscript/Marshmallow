@@ -91,6 +91,7 @@ class Switch extends HTMLElement {
             break;
          case 'value':
             this.#attr.value = newValue || 'off';
+            this.checked = newValue === 'on';
             break;
          case 'checked':
             this.#attr.checked = this.hasAttribute(name);
