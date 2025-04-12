@@ -18,9 +18,10 @@
          this.version = '[[["VERSION"]]]';
          this.#eventTarget = new EventTarget();
          this.configs = {
-            color: 'hsl(224, 33, 50)',
-            theme: 'dark',
-            contrast: 0,
+            color: 'Persian indigo',
+            theme: 'light',
+            surfaceColor: 'gray',
+            contrast: 100,
          };
          Object.assign(this.configs, configs)
          
@@ -29,6 +30,7 @@
             color: this.configs.color,
             theme: this.configs.theme,
             contrast: this.configs.contrast,
+            surfaceColor: this.configs.surfaceColor,
             sprout: false,
             prefix: 'm',
             hasSubPalette: true,
@@ -76,6 +78,18 @@
       get darkmode() {
          return this.#M.darkmode;
       }
+      set surfaceColor(val) {
+         this.setSurfaceColor(val);
+      }
+      get surfaceColor() {
+         return this.#M.surfaceColor;
+      }
+      set contrast(val) {
+         this.setContrast(val);
+      }
+      get contrast() {
+         return this.#M.contrast;
+      }
 
       // property
       setColor(val) {
@@ -86,6 +100,12 @@
       }
       setDarkmode(val) {
          this.#M.setDarkmode(val);
+      }
+      setSurfaceColor(val) {
+         this.#M.setSurfaceColor(val);
+      }
+      setContrast(val) {
+         this.#M.setContrast(val);
       }
       toggleTheme(){
          this.#M.toggleTheme();
