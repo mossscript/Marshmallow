@@ -12,7 +12,7 @@ class Hr extends HTMLElement {
       this.#attr = {
          color: 'var(--m-surface-container-high)',
          size: 2,
-         style: 'solid',
+         type: 'solid',
       }
       this.#T = new Tools();
    }
@@ -46,11 +46,11 @@ class Hr extends HTMLElement {
                this.style.setProperty('--m-hr-size', size + 'px');
             }
             break;
-         case 'style':
+         case 'type':
             if (/^(dashed|dotted|solid)$/i.test(newValue)) {
-               let style = newValue.toLowerCase();
-               this.#attr.style = style;
-               this.style.setProperty('--m-hr-style', style);
+               let type = newValue.toLowerCase();
+               this.#attr.type = type;
+               this.style.setProperty('--m-hr-type', type);
             }
             break;
          
@@ -64,11 +64,11 @@ class Hr extends HTMLElement {
    set color(val) {
       this.setAttribute('color', val)
    }
-   get style() {
-      return this.#attr.style
+   get type() {
+      return this.#attr.type
    }
-   set style(val) {
-      this.setAttribute('style', val)
+   set type(val) {
+      this.setAttribute('type', val)
    }
    get size() {
       return this.#attr.size

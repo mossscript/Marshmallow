@@ -12,15 +12,13 @@ class Progress extends HTMLElement {
       this.#elm = this.attachShadow({ mode: 'open' });
       this.#attr = {
          color: 'var(--m-primary)',
-         value: 2,
+         value: undefined,
          min: 0,
          max: 100,
+         sharp: false,
       }
       this.#T = new Tools();
-   }
-
-   // connect element
-   connectedCallback() {
+      // template 
       this.#elm.innerHTML = `
          <style>
             [[["STYLE"]]]
@@ -28,8 +26,8 @@ class Progress extends HTMLElement {
          <div part="progress"></div>
       `;
       this.#progress = this.#elm.querySelector('[part="progress"]');
-      this.#progressStyle(this.value);
    }
+
 
    // private function
    #clamp(min, max, num) {
@@ -39,13 +37,18 @@ class Progress extends HTMLElement {
       return ((Math.max(min, Math.min(max, num)) - min) / (max - min)) * 100;
    }
    #progresst(num) {
-
+      let { min, max } = this;
+      if (num != undefined) {
+         let clamp = this.#clamp(min, max, num);
+         let percent = this.#percent(min, max, clamp);
+         this.#attr.value = clamp;
+         this.#progress.style.width = percent + '%';
+         this.#progress.style.animation = 'none';
+      } else {
+         this.#attr.value = undefined;
+         this.#progress.style.animation = 'loop 1s linear infinite';
+      }
    }
-   #progressStyle(val) {
-      console.log(this.#progress)
-   ll
-   }
-
 
    // observed attributes
    static get observedAttributes() {
@@ -63,7 +66,7 @@ class Progress extends HTMLElement {
          case 'value':
             if (!isNaN(parseFloat(newValue))) {
                this.#attr.value = parseFloat(newValue);
-               if (this.isConnected) this.#progressStyle(newValue);
+               this.#progresst(newValue);
             }
             break;
          case 'min':
@@ -76,6 +79,9 @@ class Progress extends HTMLElement {
                this.#attr.max = parseFloat(newValue);
             }
             break;
+         case 'sharp':
+            this.#attr.sharp = this.hasAttributes(name);
+            break;
       }
    }
 
@@ -85,5 +91,29 @@ class Progress extends HTMLElement {
    }
    set color(val) {
       this.setAttribute('color', val)
+   }
+   get min() {
+      return this.#attr.min
+   }
+   set min(val) {
+      this.setAttribute('min', val)
+   }
+   get max() {
+      return this.#attr.max
+   }
+   set max(val) {
+      this.setAttribute('max', val)
+   }
+   get value() {
+      return this.#attr.value
+   }
+   set value(val) {
+      this.setAttribute('value', val)
+   }
+   get sharp() {
+      return this.#attr.value
+   }
+   set sharp(val) {
+      this.setAttribute('sharp', val)
    }
 }
