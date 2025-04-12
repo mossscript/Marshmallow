@@ -1,7 +1,7 @@
 /*** hr.css v1 ***/
 :host{
    --m-hr-color: var(--m-surface-container-high);
-   --m-hr-style: solid;
+   --m-hr-type: solid;
    --m-hr-size: 2px;
    display: block;
    width: 100%;
