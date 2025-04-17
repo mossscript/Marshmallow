@@ -18,10 +18,11 @@
          this.version = '[[["VERSION"]]]';
          this.#eventTarget = new EventTarget();
          this.configs = {
-            color: 'Persian indigo',
+            color: 'woodland',
             theme: 'dark',
-            surfaceColor: 'gray',
-            contrast: 100,
+            colorScheme: 'analogous',
+            surfaceColor: 'primary',
+            contrast: 0,
          };
          Object.assign(this.configs, configs)
          
@@ -31,6 +32,7 @@
             theme: this.configs.theme,
             contrast: this.configs.contrast,
             surfaceColor: this.configs.surfaceColor,
+            colorScheme: this.configs.colorScheme,
             sprout: false,
             prefix: 'm',
             hasSubPalette: true,

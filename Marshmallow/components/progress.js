@@ -1,5 +1,5 @@
-/*** progress.js v1 ***/
-class Progress extends HTMLElement {
+/*** circular-progress.js v1 ***/
+class CircularProgress extends HTMLElement {
    // private variable 
    #elm;
    #attr;
@@ -66,7 +66,7 @@ class Progress extends HTMLElement {
          case 'value':
             if (!isNaN(parseFloat(newValue))) {
                this.#attr.value = parseFloat(newValue);
-               this.#progress(newValue);
+               this.#progress(parseFloat(newValue));
             }
             break;
          case 'min':

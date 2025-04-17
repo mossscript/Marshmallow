@@ -206,7 +206,7 @@ class Mushroom {
       }
    }
    setSurfaceColor(val, root = this.#configs.root) {
-      let valid = this.#Validation.setSurfaceColor(val);
+      let valid = this.#Validation.surfaceColor(val);
       if (valid) {
          this.#setting('surfaceColor', val, root);
       } else {
@@ -223,6 +223,7 @@ class Mushroom {
    }
    setColorScheme(val, root = this.#configs.root) {
       let valid = this.#Validation.colorScheme(val);
+      console.log(valid,val)
       if (valid) {
          this.#setting('colorScheme', val, root);
       } else {
@@ -613,7 +614,7 @@ class Mushroom {
          }
       }
       setSurfaceColor(val) {
-         let valid = this.#Validation.setSurfaceColor(val);
+         let valid = this.#Validation.surfaceColor(val);
          if (valid) {
             this.configs.surfaceColor = val;
             this.#success();
