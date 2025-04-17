@@ -46,7 +46,7 @@ class Hr extends HTMLElement {
             break;
          case 'type':
             if (/^(dashed|dotted|solid)$/i.test(newValue)) {
-               let type = newValue.toLowerCase();
+               let type = newValue.replace(/\s+/g, '').toLowerCase();
                this.#attr.type = type;
                this.style.setProperty('--m-hr-type', type);
             }

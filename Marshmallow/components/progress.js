@@ -18,6 +18,7 @@ class Progress extends HTMLElement {
          sharp: false,
       }
       this.#T = new Tools();
+      
       // template 
       this.#elm.innerHTML = `
          <style>
@@ -51,7 +52,7 @@ class Progress extends HTMLElement {
 
    // observed attributes
    static get observedAttributes() {
-      return ['color', 'value', 'min', 'max'];
+      return ['color', 'value', 'min', 'max','sharp'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -111,6 +112,13 @@ class Progress extends HTMLElement {
    }
    get value() {
       return this.#attr.value
+   }
+   
+   set type(val) {
+      this.setAttribute('type', val)
+   }
+   get type() {
+      return this.#attr.type
    }
 
    set sharp(val) {

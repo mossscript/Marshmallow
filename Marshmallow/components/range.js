@@ -166,7 +166,7 @@ class Range extends HTMLElement {
             break;
          case 'type':
             if (/^(fancy|simple)$/i.test(newValue)) {
-               this.#attr.type = newValue.toLowerCase();
+               this.#attr.type = newValue.replace(/\s+/g, '').toLowerCase();
             }
       }
    }

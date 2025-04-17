@@ -67,7 +67,7 @@ class Button extends HTMLElement {
             break;
          case 'size':
             if (/^(small|medium|large)$/i.test(newValue)) {
-               this.#attr.outline = newValue.toLowerCase();
+               this.#attr.outline = newValue.replace(/\s+/g, '').toLowerCase();
             }
             break;
          case 'shadow':
