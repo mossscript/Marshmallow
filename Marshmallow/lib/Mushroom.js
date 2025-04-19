@@ -1015,7 +1015,7 @@ class Mushroom {
                background: [90 + sl / 10, 20 - sl / 10],
                outline: [60, 80],
                inverse: [70, 10],
-               inverseSurface: [15 + sl / 10, 80 - sl / 10]
+               inverseSurface: [15 - sl / 10, 65 + sl / 10]
             },
             dark: {
                accent: [
@@ -1036,7 +1036,7 @@ class Mushroom {
                background: [10 - sl / 10, 70 + sl / 10],
                outline: [40, 20],
                inverse: [35, 100],
-               inverseSurface: [85 - sl / 10, 25 + sl / 10]
+               inverseSurface: [87 + sl / 10, 30 - sl / 10]
             },
          },
          alpha: {
