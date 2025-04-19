@@ -1,0 +1,7 @@
+/*** icon.css v1 ***/
+:host {
+   --m-icon-color: currentColor;
+   display:inline-block;
+   width:2em;
+   height:2em
+}

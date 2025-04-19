@@ -1,3 +1,4 @@
+/*** progress.css v1 ***/
 :host {
    --m-progress-color: var(--m-primary);
    display: block;

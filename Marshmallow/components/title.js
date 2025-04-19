@@ -10,7 +10,7 @@ class Title extends HTMLElement {
       super();
       this.#elm = this.attachShadow({ mode: 'open' });
       this.#attr = {
-         color: 'var(--m-on-background)',
+         color: 'currentColor',
          align: 'auto',
          wight: 700,
          size: '28px'
@@ -72,10 +72,10 @@ class Title extends HTMLElement {
    }
 
    set align(val) {
-      this.setAttribute('type', val)
+      this.setAttribute('align', val)
    }
    get align() {
-      return this.#attr.type
+      return this.#attr.align
    }
    
    set weight(val) {

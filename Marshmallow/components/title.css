@@ -1,5 +1,7 @@
+/*** title.css v1 ***/
+
 :host {
-   --m-title-color: var(--m-on-background);
+   --m-title-color: currentColor;
    --m-title-align: auto;
    --m-title-weight: 700;
    --m-title-size: 28px;

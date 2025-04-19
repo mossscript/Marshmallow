@@ -53,6 +53,11 @@
          "name": "m-title",
          "script": "Marshmallow/components/title.js",
          "style": "Marshmallow/components/title.css"
+      },
+      "Icon": {
+         "name": "m-icon",
+         "script": "Marshmallow/components/icon.js",
+         "style": "Marshmallow/components/icon.css"
       }
    }
 }
