@@ -1,0 +1,17 @@
+:host {
+   --m-title-color: var(--m-on-background);
+   --m-title-align: auto;
+   --m-title-weight: 700;
+   --m-title-size: 28px;
+}
+
+:host slot {
+   display: block;
+   color: var(--m-title-color);
+   font-size: var(--m-title-size);
+   font-weight: var(--m-title-weight);
+   text-align: var(--m-title-align);
+   margin: 0;
+   padding: 14px;
+   box-sizing: border-box;
+}

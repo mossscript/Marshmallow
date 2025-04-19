@@ -48,6 +48,11 @@
          "name": "m-progress",
          "script": "Marshmallow/components/progress.js",
          "style": "Marshmallow/components/progress.css"
+      },
+      "Title": {
+         "name": "m-title",
+         "script": "Marshmallow/components/title.js",
+         "style": "Marshmallow/components/title.css"
       }
    }
 }
