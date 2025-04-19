@@ -54,6 +54,11 @@
          "script": "Marshmallow/components/title.js",
          "style": "Marshmallow/components/title.css"
       },
+      "Badge": {
+         "name": "m-badge",
+         "script": "Marshmallow/components/badge.js",
+         "style": "Marshmallow/components/badge.css"
+      },
       "Icon": {
          "name": "m-icon",
          "script": "Marshmallow/components/icon.js",
