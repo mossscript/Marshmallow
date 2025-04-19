@@ -19,11 +19,47 @@
    transition: width, 0.3s;
 }
 
-:host([sharp]){
+:host([sharp]) {
    border-radius: 0;
 }
-:host([sharp])::part(progress){
+
+:host([sharp])::part(progress) {
    border-radius: 0;
+}
+
+
+:host([type="circular"]) {
+   display: inline-block;
+   width: 50px;
+   height: 50px;
+   background: none;
+}
+
+:host([type="circular"]) svg {
+   position: absolute;
+   width: 100%;
+   left: 50%;
+   top: 50%;
+   translate: -50% -50%;
+}
+
+:host([type="circular"])::part(progress-background) {
+   fill: none;
+   stroke: var(--m-surface-container-high);
+   stroke-width: 5px;
+}
+
+:host([type="circular"])::part(progress) {
+   fill: none;
+   stroke: var(--m-progress-color);
+   stroke-width: 5px;
+   stroke-linecap: round;
+   transform-origin: center;
+   rotate: -90deg;
+   transition: stroke-dashoffset, 0.3s;
+}
+:host([type="circular"][sharp])::part(progress) {
+   stroke-linecap: square;
 }
 
 @keyframes loop {
@@ -31,12 +67,31 @@
       width: 20%;
       left: -20%;
    }
+
    50% {
       width: 60%;
       left: 0%;
    }
+
    100% {
       width: 20%;
       left: 100%;
+   }
+}
+
+@keyframes loop2 {
+   0% {
+      stroke-dashoffset: var(--m-progress-circumference);
+      rotate: 0deg;
+   }
+
+   50% {
+      stroke-dashoffset: var(--m-progress-circumference-5);
+      rotate: 180deg;
+   }
+
+   100% {
+      stroke-dashoffset: var(--m-progress-circumference);
+      rotate: 720deg;
    }
 }

@@ -1,5 +1,5 @@
 /*** Marshmallow [[["VERSION"]]] ***/
-(() => {
+((global) => {
    /*** lib ***/
    [[["LIBS"]]]
 
@@ -25,7 +25,7 @@
             contrast: 0,
          };
          Object.assign(this.configs, configs)
-         
+
          this.#M = new Mushroom({
             clearConsole: true,
             color: this.configs.color,
@@ -46,7 +46,7 @@
                },
             },
          });
-         
+
          this.#M.ongrow = () => this.#grow();
          this.#M.onerror = (e) => this.#error(e.detail.wrong);
          this.#defineElements();
@@ -109,10 +109,10 @@
       setContrast(val) {
          this.#M.setContrast(val);
       }
-      toggleTheme(){
+      toggleTheme() {
          this.#M.toggleTheme();
       }
-      randomColor(){
+      randomColor() {
          this.#M.randomColor();
       }
 
@@ -163,5 +163,5 @@
       }
    }
 
-   window.Marshmallow = Marshmallow;
-})();
+   global.Marshmallow = Marshmallow;
+})(this);

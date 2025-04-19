@@ -1,10 +1,12 @@
-/*** circular-progress.js v1 ***/
-class CircularProgress extends HTMLElement {
+/*** progress.js v1 ***/
+class Progress extends HTMLElement {
    // private variable 
    #elm;
    #attr;
    #T;
-   #progressElm
+   #styleElm;
+   #progressElm;
+   #progressBg;
 
    // constructor
    constructor() {
@@ -16,14 +18,18 @@ class CircularProgress extends HTMLElement {
          min: 0,
          max: 100,
          sharp: false,
+         type: 'linear',
       }
       this.#T = new Tools();
-      
+
       // template 
-      this.#elm.innerHTML = `
+      this.#styleElm = `
          <style>
             [[["STYLE"]]]
          </style>
+      `;
+      this.#elm.innerHTML = `
+         ${this.#styleElm}
          <div part="progress"></div>
       `;
       this.#progressElm = this.#elm.querySelector('[part="progress"]');
@@ -37,22 +43,61 @@ class CircularProgress extends HTMLElement {
       return ((Math.max(min, Math.min(max, num)) - min) / (max - min)) * 100;
    }
    #progress(num) {
-      let { min, max } = this;
-      if (num != undefined) {
-         let clamp = this.#clamp(min, max, num);
-         let percent = this.#percent(min, max, clamp);
-         this.#attr.value = clamp;
-         this.#progressElm.style.width = percent + '%';
-         this.#progressElm.style.animation = 'none';
-      } else {
-         this.#attr.value = undefined;
-         this.#progressElm.style.animation = 'loop 1s linear infinite';
+      let { min, max, type } = this;
+      let clamp = this.#clamp(min, max, num);
+      let percent = this.#percent(min, max, clamp);
+      if (type == 'linear') {
+         if (num != undefined) {
+            this.#attr.value = clamp;
+            this.#progressElm.style.width = percent + '%';
+            this.#progressElm.style.animation = 'none';
+         } else {
+            this.#attr.value = undefined;
+            this.#progressElm.style.animation = 'loop 1s linear infinite';
+         }
+      } else if (type == 'circular') {
+         let size = 50;
+         let weight = 5;
+         let radius = size / 2 - weight / 2;
+         let circumference = 2 * Math.PI * radius;
+         let offset = circumference * ((100 - percent) / 100) || 0;
+
+         this.#progressElm.style.strokeDasharray = circumference;
+         this.#progressElm.style.strokeDashoffset = offset;
+         this.#progressElm.style.setProperty('--m-progress-circumference', circumference);
+         this.#progressElm.style.setProperty('--m-progress-circumference-5', circumference/5);
+         
+         if (num != undefined) {
+            this.#progressElm.style.animation = 'none';
+         } else {
+            this.#progressElm.style.animation = 'loop2 1.5s linear infinite';
+         }
+      }
+   }
+   #changeType(type) {
+      if (type == 'linear') {
+         this.#elm.innerHTML = `
+            ${this.#styleElm}
+            <div part="progress"></div>
+         `;
+         this.#progressBg = undefined;
+         this.#progressElm = this.#elm.querySelector('[part="progress"]');
+      } else if (type == 'circular') {
+         this.#elm.innerHTML = `
+            ${this.#styleElm}
+            <svg part="svg" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+               <circle part="progress-background" cx="25" cy="25" r="22.5"/>
+               <circle part="progress" cx="25" cy="25" r="22.5"/>
+            </svg>
+         `;
+         this.#progressBg = this.#elm.querySelector('[part="progress-background"]');
+         this.#progressElm = this.#elm.querySelector('[part="progress"]');
       }
    }
 
    // observed attributes
    static get observedAttributes() {
-      return ['color', 'value', 'min', 'max','sharp'];
+      return ['color', 'value', 'min', 'max', 'sharp', 'type'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -61,12 +106,6 @@ class CircularProgress extends HTMLElement {
                let color = this.#T.color(newValue);
                this.#attr.color = color;
                this.style.setProperty('--m-progress-color', color);
-            }
-            break;
-         case 'value':
-            if (!isNaN(parseFloat(newValue))) {
-               this.#attr.value = parseFloat(newValue);
-               this.#progress(parseFloat(newValue));
             }
             break;
          case 'min':
@@ -81,6 +120,20 @@ class CircularProgress extends HTMLElement {
             break;
          case 'sharp':
             this.#attr.sharp = this.hasAttributes(name);
+            break;
+         case 'type':
+            if (/^(linear|circular)$/i.test(newValue)) {
+               let type = newValue.replace(/\s+/g, '').toLowerCase();
+               this.#attr.type = type;
+               this.#changeType(type);
+               this.#progress(this.value);
+            }
+            break;
+         case 'value':
+            if (!isNaN(parseFloat(newValue))) {
+               this.#attr.value = parseFloat(newValue);
+               this.#progress(newValue);
+            }
             break;
       }
    }
@@ -113,7 +166,7 @@ class CircularProgress extends HTMLElement {
    get value() {
       return this.#attr.value
    }
-   
+
    set type(val) {
       this.setAttribute('type', val)
    }
@@ -134,6 +187,7 @@ class CircularProgress extends HTMLElement {
 
    // property 
    increase(num) {
-      this.value = this.value + parseFloat(num);
+      if (this.value == undefined) this.value = 0;
+      this.value += parseFloat(num);
    }
 }
