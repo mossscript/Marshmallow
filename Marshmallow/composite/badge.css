@@ -1,0 +1,27 @@
+/*** badge.css v1 ***/
+
+:host {
+   --color: var(--m-badge-color, var(--m-primary));
+   --inner-color: var(--m-badge-inner-color, var(--m-on-primary));
+   
+   display: inline-block;
+   background: var(--color); 
+   color: var(--inner-color); 
+   padding: 4px 8px; 
+   border-radius: 8px;
+   vertical-align: middle;
+   font-size: 16px;
+   font-weight: 600;
+   margin: 0 8px;
+}
+
+:host([size="small"]){
+   font-size: 12px;
+   padding: 2px 6px; 
+   border-radius: 6px;
+}
+:host([size="large"]){
+   font-size: 18px;
+   padding: 6px 10px;
+   border-radius: 10px;
+}

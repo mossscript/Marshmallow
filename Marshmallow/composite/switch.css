@@ -1,0 +1,50 @@
+/*** switch.css v1 ***/
+
+:host{
+   --color: var(--m-switch-color, var(--m-primary));
+   --inner-color: var(--m-switch-inner-color, var(--m-on-primary));
+   
+   display: inline-block;
+   width: 50px;
+   height: 30px;
+   border-radius: 15px;
+   background: var(--m-surface-container-high);
+   vertical-align: middle;
+   cursor: pointer;
+   position: relative;
+   transition-property: background, scale, opacity;
+   transition-duration: 0.3s;
+}
+
+#handle{
+   display: block;
+   width: 20px;
+   height: 20px;
+   border-radius: 10px;
+   background: var(--m-on-surface-container-high);
+   position: absolute;
+   top: 5px;
+   left: 5px;
+   transition-property: left, background;
+   transition-duration: 0.3s;
+}
+
+:host([checked]){
+   background: var(--color);
+}
+
+:host([checked]) #handle {
+   background: var(--inner-color);
+   left: 25px;
+}
+
+:host([disabled]) {
+   opacity: 0.5;
+   cursor: not-allowed;
+   pointer-events: none;
+}
+
+:host(:active){
+   scale: 0.9;
+   opacity: 0.5;
+}
