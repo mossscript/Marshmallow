@@ -7,7 +7,7 @@
    --m-animation-timing: ease;
    --m-animation-fill: forwards;
    --m-animation-state: running;
-   display: inline-block;
+   display: inline-block; 
 }
 
 :host slot {
