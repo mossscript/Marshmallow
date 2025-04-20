@@ -105,7 +105,7 @@ class Progress extends HTMLElement {
             if (this.#T.test(newValue)) {
                let color = this.#T.color(newValue);
                this.#attr.color = color;
-               this.style.setProperty('--m-progress-color', color);
+               this.style.setProperty('--color', color);
             }
             break;
          case 'min':
