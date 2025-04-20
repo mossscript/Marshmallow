@@ -20,7 +20,7 @@ class Mushroom {
       this.#PCS = window.matchMedia("(prefers-color-scheme:dark)");
       this.#configs = {
          sprout: true,
-         color: 'Woodland',
+         color: 'Medium Red Violet',
          surfaceColor: 'primary',
          root: ':root',
          prefix: '',

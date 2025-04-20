@@ -18,8 +18,8 @@
          this.version = '[[["VERSION"]]]';
          this.#eventTarget = new EventTarget();
          this.configs = {
-            color: 'woodland',
-            theme: 'light',
+            color: 'Medium Red Violet',
+            theme: 'auto',
             colorScheme: 'analogous',
             surfaceColor: 'primary',
             contrast: 0,
