@@ -1,7 +1,7 @@
 /*** app.css v1 ***/
 :host {
-   --color: var(--m-app-color, var(--m-primary));
-   --ineer-color: var(--m-app-ineer-color, var(--m-on-primary));
+   --color: var(--m-app-color, var(--m-background));
+   --inner-color: var(--m-app-inner-color, var(--m-on-background));
    
    display: block;
    position: relative;
@@ -10,5 +10,5 @@
    overflow: auto;
    box-sizing: border-box;
    background: var(--color);
-   color: var(--color);
+   color: var(--inner-color);
 }

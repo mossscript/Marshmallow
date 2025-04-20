@@ -737,7 +737,7 @@ class Colors {
          "empress": "#817377",
          "endeavour": "#0056a7",
          "energyyellow": "#f8dd5c",
-         "engineeringinternationalorange": "#ba160c",
+         "enginneringinternationalorange": "#ba160c",
          "englishholly": "#022d15",
          "englishlavender": "#b48395",
          "englishred": "#ab4b52",

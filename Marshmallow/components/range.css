@@ -1,7 +1,7 @@
 /*** range.css v1 ***/
 :host {
    --color: var(--m-range-color, var(--m-primary));
-   --inner-color: var(--m-range-ineer-color, var(--m-on-primary));
+   --inner-color: var(--m-range-inner-color, var(--m-on-primary));
    
    display: block;
    position: relative;

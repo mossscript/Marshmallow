@@ -2,7 +2,7 @@
 
 :host {
    --color: var(--m-radio-color, var(--m-primary));
-   --inner-color: var(--m-radio-ineer-color, var(--m-on-primary));
+   --inner-color: var(--m-radio-inner-color, var(--m-on-primary));
 
    display: inline-block;
    border: 4px solid var(--m-surface-container-high);
