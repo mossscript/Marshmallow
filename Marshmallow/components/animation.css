@@ -1,0 +1,52 @@
+:host {
+   --m-animation-name: fade;
+   --m-animation-dur: 1s;
+   --m-animation-count: 1;
+   --m-animation-delay: 0s;
+   --m-animation-dir: normal;
+   --m-animation-timing: ease;
+   --m-animation-fill: forwards;
+   --m-animation-state: running;
+   display: inline-block;
+}
+
+:host slot {
+   display: inline-block;
+
+   animation-name: var(--m-animation-name);
+   animation-duration: var(--m-animation-dur);
+   animation-iteration-count: var(--m-animation-count);
+   animation-delay: var(--m-animation-delay);
+   animation-direction: var(--m-animation-dir);
+   animation-fill-mode: var(--m-animation-fill);
+   animation-play-state: var(--m-animation-state);
+   animation-timing-function: var(--m-animation-timing);
+}
+
+/*** Animations ***/
+@keyframes fade {
+   from {
+      opacity: 0;
+   }
+
+   to {
+      opacity: 1;
+   }
+}
+@keyframes slide-in {
+   from {
+      transform: translateX(-100%);
+   }
+   to {
+      transform: translateX(0);
+   }
+}
+@keyframes zoom {
+   from {
+      transform: scale(0);
+   }
+
+   to {
+      transform: scale(1);
+   }
+}
