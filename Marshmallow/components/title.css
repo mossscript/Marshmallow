@@ -1,18 +1,18 @@
 /*** title.css v1 ***/
 
 :host {
-   --m-title-color: currentColor;
-   --m-title-align: auto;
-   --m-title-weight: 700;
-   --m-title-size: 28px;
+   --color: var(--m-title-color, currentColor);
+   --align: var(--m-title-align, auto);
+   --size: var(--m-title-size, 28px);
+   --weight: var(--m-title-weight, 700);
 }
 
 :host slot {
    display: block;
-   color: var(--m-title-color);
-   font-size: var(--m-title-size);
-   font-weight: var(--m-title-weight);
-   text-align: var(--m-title-align);
+   color: var(--color);
+   font-size: var(--size);
+   font-weight: var(--weight);
+   text-align: var(--align);
    margin: 0;
    padding: 14px;
    box-sizing: border-box;

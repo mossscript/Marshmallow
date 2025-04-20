@@ -64,8 +64,8 @@ class Progress extends HTMLElement {
 
          this.#progressElm.style.strokeDasharray = circumference;
          this.#progressElm.style.strokeDashoffset = offset;
-         this.#progressElm.style.setProperty('--m-progress-circumference', circumference);
-         this.#progressElm.style.setProperty('--m-progress-circumference-5', circumference/5);
+         this.#progressElm.style.setProperty('--circumference', circumference);
+         this.#progressElm.style.setProperty('--circumference2', circumference/5);
          
          if (num != undefined) {
             this.#progressElm.style.animation = 'none';

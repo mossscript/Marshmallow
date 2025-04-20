@@ -82,11 +82,11 @@ class Radio extends HTMLElement {
             if (this.#T.test(newValue)) {
                let color = this.#T.color(newValue);
                this.#attr.color = color;
-               this.style.setProperty('--m-radio-color', color);
+               this.style.setProperty('--color', color);
                if (!this.hasAttribute('inner-color')) {
                   let innerColor = this.#T.innerColor(newValue);
                   this.#attr.innerColor = innerColor;
-                  this.style.setProperty('--m-switch-radio-color', innerColor);
+                  this.style.setProperty('--inner-color', innerColor);
                }
             }
             break;
@@ -94,7 +94,7 @@ class Radio extends HTMLElement {
             if (this.#T.test(newValue)) {
                let innerColor = this.#T.innerColor(newValue);
                this.#attr.innerColor = innerColor;
-               this.style.setProperty('--m-radio-inner-color', innerColor);
+               this.style.setProperty('--inner-color', innerColor);
             }
             break;
          case 'value':

@@ -1,52 +1,112 @@
 :host {
-   --m-animation-name: fade;
-   --m-animation-dur: 1s;
-   --m-animation-count: 1;
-   --m-animation-delay: 0s;
-   --m-animation-dir: normal;
-   --m-animation-timing: ease;
-   --m-animation-fill: forwards;
-   --m-animation-state: running;
-   display: inline-block; 
+   --name: var(--m-animation-name, fade);
+   --dur: var(--m-animation-dur, 1s);
+   --count: var(--m-animation-count, 1);
+   --delay: var(--m-animation-delay, 0s);
+   --dir: var(--m-animation-dir, normal);
+   --timing: var(--m-animation-timing, ease);
+   --fill: var(--m-animation-fill, forwards);
+   --state: var(--m-animation-state, running);
+   
+   display: inline-block;
 }
-
 :host slot {
    display: inline-block;
 
-   animation-name: var(--m-animation-name);
-   animation-duration: var(--m-animation-dur);
-   animation-iteration-count: var(--m-animation-count);
-   animation-delay: var(--m-animation-delay);
-   animation-direction: var(--m-animation-dir);
-   animation-fill-mode: var(--m-animation-fill);
-   animation-play-state: var(--m-animation-state);
-   animation-timing-function: var(--m-animation-timing);
+   animation-name: var(--name);
+   animation-duration: var(--dur);
+   animation-iteration-count: var(--count);
+   animation-delay: var(--delay);
+   animation-direction: var(--dir);
+   animation-fill-mode: var(--fill);
+   animation-play-state: var(--state);
+   animation-timing-function: var(--timing);
 }
 
 /*** Animations ***/
+/* fade */
 @keyframes fade {
    from {
       opacity: 0;
    }
-
    to {
       opacity: 1;
    }
 }
-@keyframes slide-in {
+@keyframes fade-in {
    from {
-      transform: translateX(-100%);
+      opacity: 0;
    }
    to {
-      transform: translateX(0);
+      opacity: 1;
    }
 }
+@keyframes fade-out {
+   from {
+      opacity: 1;
+   }
+   to {
+      opacity: 0;
+   }
+}
+@keyframes fade-in-out {
+   0%,100% {
+      opacity: 1;
+   }
+   50% {
+      opacity: 0;
+   }
+}
+
+/* heart-beat */
+@keyframes heart-beat {
+   0% {
+      transform: scale(1);
+   }
+   14% {
+      transform: scale(1.3);
+   }
+   28% {
+      transform: scale(1);
+   }
+   42% {
+      transform: scale(1.3);
+   }
+   70% {
+      transform: scale(1);
+   }
+}
+
+/* zoom */
 @keyframes zoom {
    from {
-      transform: scale(0);
+      scale: 0.5;
    }
-
    to {
-      transform: scale(1);
+      scale: 1;
+   }
+}
+@keyframes zoom-in {
+   from {
+      scale: 0.5;
+   }
+   to {
+      scale: 1;
+   }
+}
+@keyframes zoom-out {
+   from {
+      scale: 1;
+   }
+   to {
+      scale: 0.5;
+   }
+}
+@keyframes zoom-in-out {
+   0%,100% {
+      scale: 1;
+   }
+   50% {
+      scale: 0.5;
    }
 }

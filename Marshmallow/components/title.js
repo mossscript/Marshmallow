@@ -36,28 +36,28 @@ class Title extends HTMLElement {
             if (this.#T.test(newValue)) {
                let color = this.#T.color(newValue);
                this.#attr.color = color;
-               this.style.setProperty('--m-title-color', color);
+               this.style.setProperty('--color', color);
             }
             break;
          case 'align':
             if (/^(right|center|left|auto)$/i.test(newValue)) {
                let align = newValue.replace(/\s+/g, '').toLowerCase();
                this.#attr.align = align;
-               this.style.setProperty('--m-title-align', align);
+               this.style.setProperty('--align', align);
             }
             break;
          case 'wight':
             if(!isNaN(parseFloat(newValue))){
                let wight = parseFloat(newValue);
                this.#attr.wight = wight;
-               this.style.setProperty('--m-title-wight', wight);
+               this.style.setProperty('--wight', wight);
             }
             break;
          case 'size':
             if(!isNaN(parseFloat(newValue))){
                let size = parseFloat(newValue);
                this.#attr.size = size;
-               this.style.setProperty('--m-title-size', size);
+               this.style.setProperty('--size', size);
             }
             break;
       }

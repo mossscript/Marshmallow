@@ -1,8 +1,9 @@
 /*** switch.css v1 ***/
 
 :host{
-   --m-switch-color: var(--m-primary);
-   --m-switch-inner-color: var(--m-on-primary);
+   --color: var(--m-switch-color, var(--m-primary));
+   --inner-color: var(--m-switch-inner-color, var(--m-on-primary));
+   
    display: inline-block;
    width: 50px;
    height: 30px;
@@ -29,11 +30,11 @@
 }
 
 :host([checked]){
-   background: var(--m-switch-color);
+   background: var(--color);
 }
 
 :host([checked]) #handle {
-   background: var(--m-switch-inner-color);
+   background: var(--inner-color);
    left: 25px;
 }
 

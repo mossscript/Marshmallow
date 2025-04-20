@@ -76,15 +76,15 @@ class Animation extends HTMLElement {
             break;
          case 'dir':
             this.#attr.dir = newValue;
-            this.#slot.style.setProperty('--m-animation-dir', newValue);
+            this.#slot.style.setProperty('--dir', newValue);
             break;
          case 'state':
             this.#attr.state = newValue;
-            this.#slot.style.setProperty('--m-animation-state', newValue);
+            this.#slot.style.setProperty('--state', newValue);
             break;
          case 'timing':
             this.#attr.timing = newValue;
-            this.#slot.style.setProperty('--m-animation-timing', newValue);
+            this.#slot.style.setProperty('--timing', newValue);
             break;
          case 'onstart':
             this.#attr.start = new Function(newValue);

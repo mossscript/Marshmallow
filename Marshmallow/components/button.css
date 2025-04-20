@@ -1,19 +1,20 @@
 /*** button.css v1 ***/
 :host {
-   --m-button-color: var(--m-primary);
-   --m-button-inner-color: var(--m-on-primary);
-   --m-button-shadow: none;
-   --m-button-radius: 16px;
+   --color: var(--m-button-color, var(--m-primary));
+   --inner-color: var(--m-button-inner-color, var(--m-on-primary));
+   --m-shadow: var(--m-button-shadow, none);
+   --m-radius: var(--m-button-radius, 16px);
+   
    display: inline-flex;
    justify-content: center;
    align-items: center;
    padding: 8px 20px;
    gap: 8px;
-   background: var(--m-button-color);
-   color: var(--m-button-inner-color);
+   background: var(-color);
+   color: var(--inner-color);
    height: 40px;
    box-sizing: border-box;
-   border-radius: var(--m-button-radius);
+   border-radius: var(--radius);
    border: none;
    user-select: none;
    cursor: pointer;
@@ -21,26 +22,26 @@
    font-size: 16px;
    font-weight: 700;
    white-space: normal;
-   box-shadow: var(--m-button-shadow);
+   box-shadow: var(--shadow);
    transition-property: scale, opacity;
    transition-duration: 0.3s;
 }
 
 :host([outline]) {
    background: transparent;
-   border: 2px solid var(--m-button-color);
-   color: var(--m-button-color);
+   border: 2px solid var(--color);
+   color: var(--color);
 }
 
 :host([text]) {
    background: transparent;
-   color: var(--m-button-color);
+   color: var(--color);
 }
 
 :host([size="small"]) {
    padding: 0 15px;
    gap: 6px;
-   --m-button-radius: 12px;
+   --radius: 12px;
    font-size: 14px;
    height: 30px;
 }
@@ -48,7 +49,7 @@
 :host([size="large"]) {
    padding: 0 30px;
    gap: 12px;
-   --m-button-radius: 24px;
+   --radius: 24px;
    font-size: 20px;
    height: 60px
 }

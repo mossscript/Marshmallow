@@ -1,7 +1,7 @@
 /*** checkbox.css v1 ***/
 :host {
-   --m-checkbox-color: var(--m-primary);
-   --m-checkbox-inner-color: var(--m-on-primary);
+   --color: var(--m-checkbox-color, var(--m-primary));
+   --inner-color: var(--m-checkbox-inner-color, var(--m-on-primary));
 
    display: inline-block;
    background: var(--m-surface-container-high);
@@ -43,12 +43,12 @@
 }
 
 :host([checked]) {
-   background: var(--m-checkbox-color);
+   background: var(--color);
 }
 
 :host([checked])::before,
 :host([checked])::after {
-   background: var(--m-checkbox-inner-color);
+   background: var(--inner-color);
 }
 
 :host([checked])::before {

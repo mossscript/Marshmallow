@@ -34,21 +34,21 @@ class Hr extends HTMLElement {
             if (this.#T.test(newValue)) {
                let color = this.#T.color(newValue);
                this.#attr.color = color;
-               this.style.setProperty('--m-hr-color', color);
+               this.style.setProperty('--color', color);
             }
             break;
          case 'size':
             if (!isNaN(parseInt(newValue))) {
                let size = parseInt(newValue);
                this.#attr.size = size;
-               this.style.setProperty('--m-hr-size', size + 'px');
+               this.style.setProperty('--size', size + 'px');
             }
             break;
          case 'type':
             if (/^(dashed|dotted|solid)$/i.test(newValue)) {
                let type = newValue.replace(/\s+/g, '').toLowerCase();
                this.#attr.type = type;
-               this.style.setProperty('--m-hr-type', type);
+               this.style.setProperty('--type', type);
             }
             break;
       }
