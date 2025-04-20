@@ -1,7 +1,13 @@
 /*** icon.css v1 ***/
 :host {
+   --m-icon-size: 2em;
    --m-icon-color: currentColor;
    display:inline-block;
-   width:2em;
-   height:2em
+   width: var(--m-icon-size);
+   height: var(--m-icon-size);
+}
+
+:host svg{
+   width: 100%;
+   height: 100%;
 }

@@ -112,6 +112,7 @@
             }
          }
          for (let i in this.configs.components) {
+            
             let { name, script, style } = this.configs.components[i];
             if (name && script && style) {
                let raw = String.raw`${this.#extractBlock(script)}`

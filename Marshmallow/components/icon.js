@@ -14,6 +14,7 @@ class Icon extends HTMLElement {
       this.#attr = {
          color: 'currentColor',
          type: 'bold',
+         size: '2em',
          name: '',
       }
       this.#T = new Tools();
@@ -2516,7 +2517,7 @@ class Icon extends HTMLElement {
 
    // observed attributes
    static get observedAttributes() {
-      return ['name', 'color', 'type'];
+      return ['name', 'color', 'type', 'size'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -2538,6 +2539,10 @@ class Icon extends HTMLElement {
                let type = newValue.replace(/\s+/g, '').toLowerCase();
                this.#attr.type = type;
             }
+            break;
+         case 'size':
+            this.#attr.size = newValue;
+            this.style.setProperty('--m-icon-size', newValue);
             break;
       }
    }
@@ -2563,6 +2568,13 @@ class Icon extends HTMLElement {
    }
    get name() {
       return this.#attr.name
+   }
+   
+   set size(val) {
+      this.setAttribute('size', val)
+   }
+   get size() {
+      return this.#attr.size
    }
    
    // property 

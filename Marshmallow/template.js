@@ -19,7 +19,7 @@
          this.#eventTarget = new EventTarget();
          this.configs = {
             color: 'woodland',
-            theme: 'dark',
+            theme: 'light',
             colorScheme: 'analogous',
             surfaceColor: 'primary',
             contrast: 0,
