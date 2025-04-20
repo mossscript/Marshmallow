@@ -56,23 +56,23 @@ class Animation extends HTMLElement {
       switch (name) {
          case 'name':
             this.#attr.name = newValue;
-            this.#slot.style.setProperty('--m-animation-name', newValue);
+            this.#slot.style.setProperty('--name', newValue);
             break;
          case 'dur':
             this.#attr.dur = newValue;
-            this.#slot.style.setProperty('--m-animation-dur', newValue);
+            this.#slot.style.setProperty('--dur', newValue);
             break;
          case 'count':
             this.#attr.count = newValue;
-            this.#slot.style.setProperty('--m-animation-count', newValue);
+            this.#slot.style.setProperty('--count', newValue);
             break;
          case 'delay':
             this.#attr.delay = newValue;
-            this.#slot.style.setProperty('--m-animation-delay', newValue);
+            this.#slot.style.setProperty('--delay', newValue);
             break;
          case 'fill':
             this.#attr.fill = newValue;
-            this.#slot.style.setProperty('--m-animation-fill', newValue);
+            this.#slot.style.setProperty('--fill', newValue);
             break;
          case 'dir':
             this.#attr.dir = newValue;
