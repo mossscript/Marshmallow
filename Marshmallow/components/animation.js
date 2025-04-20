@@ -4,7 +4,7 @@ class Animation extends HTMLElement {
    #elm;
    #attr;
    #slot;
-
+   
    // constructor
    constructor() {
       super();
