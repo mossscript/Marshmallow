@@ -4,7 +4,7 @@ class Animation extends HTMLElement {
    #elm;
    #attr;
    #slot;
-   
+
    // constructor
    constructor() {
       super();
@@ -184,5 +184,9 @@ class Animation extends HTMLElement {
    pause() {
       this.state = 'paused';
    }
-
+   restart() {
+      this.#slot.style.animation = 'none';
+      this.#slot.offsetWidth;
+      this.#slot.style.animation = 'var(--name) var(--dur) var(--timing) var(--delay) var(--count) var(--dir) var(--fill)';
+   }
 }
