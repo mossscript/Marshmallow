@@ -64,11 +64,6 @@
          "script": "Marshmallow/components/animation.js",
          "style": "Marshmallow/components/animation.css"
       },
-"Pad": {
-   "name": "m-pad",
-   "script": "Marshmallow/components/pad.js",
-   "style": "Marshmallow/components/pad.css"
-},
       "Icon": {
          "name": "m-icon",
          "script": "Marshmallow/components/icon.js",

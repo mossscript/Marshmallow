@@ -29,11 +29,7 @@
       let bundle = new Bundle('Marshmallow/bundle.json');
       bundle.onrender = () => {
          bundle.apply();
-         bundle.onapply = () => {
-            let M = new Marshmallow();
-            document.body.querySelector('m-app').innerHTML += `<m-hr></m-hr> <center> Darkmode <m-switch ${M.darkmode ? 'checked' : ''}></m-switch> </center>`
-            document.body.querySelector('m-app center m-switch').onclick = ()=> M.toggleTheme();
-         }
+         bundle.onapply = () => new Marshmallow();
       }
    </script>
 </body>
