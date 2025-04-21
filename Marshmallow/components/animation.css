@@ -1,3 +1,4 @@
+/*** animation.css v1 ***/
 :host {
    --name: var(--m-animation-name, fade);
    --dur: var(--m-animation-dur, 1s);
@@ -12,7 +13,6 @@
 }
 :host slot {
    display: inline-block;
-
    animation-name: var(--name);
    animation-duration: var(--dur);
    animation-iteration-count: var(--count);

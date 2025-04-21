@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
    <title>Test</title>
    <meta charset="UTF-8">
@@ -7,6 +8,7 @@
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <script src="Marshmallow/bundle.now.js"></script>
 </head>
+
 <body>
    <!-- app -->
    <m-app>
@@ -14,20 +16,24 @@
          <m-title> Marshmallow <m-badge size="large"> ALPHA </m-badge> </m-title>
       </center>
       <m-hr></m-hr>
-      <div style="padding: 24px">
-         
+      <m-pad>
+
          <m-animation name="heart-beat">
             <m-icon size="100px" name="heart"></m-icon>
          </m-animation>
-         
-      </div>
+
+      </m-pad>
    </m-app>
 
-<script>
+   <script>
       let bundle = new Bundle('Marshmallow/bundle.json');
       bundle.onrender = () => {
          bundle.apply();
-         bundle.onapply = () => new Marshmallow();
+         bundle.onapply = () => {
+            let M = new Marshmallow();
+            document.body.querySelector('m-app').innerHTML += `<m-hr></m-hr> <center> Darkmode <m-switch ${M.darkmode ? 'checked' : ''}></m-switch> </center>`
+            document.body.querySelector('m-app center m-switch').onclick = ()=> M.toggleTheme();
+         }
       }
    </script>
 </body>

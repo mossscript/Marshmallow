@@ -86,7 +86,7 @@ class Title extends HTMLElement {
    }
    
    set size(val) {
-      this.setAttribute('size', size)
+      this.setAttribute('size', val)
    }
    get size() {
       return this.#attr.size

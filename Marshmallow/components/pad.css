@@ -1,0 +1,7 @@
+:host{
+   --padding: var(--m-pad, 16px);
+   display: block;
+   box-sizing: border-box;
+   padding: var(--padding);
+   max-width: 100%;
+}
