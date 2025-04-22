@@ -17,10 +17,9 @@
       </center>
       <m-hr></m-hr>
       <div style="padding: 16px; text-align: center">
+         
          <m-animation name="jello-y" dur="1s" count="infinite" onclick="this.toggleStartPause()">
-            
             <m-icon color="@primary" size="100px" name="tv"></m-icon>
-            
          </m-animation>
 
       </div>
@@ -29,6 +28,7 @@
    <script>
       let bundle = new Bundle('Marshmallow/bundle.json');
       bundle.onrender = () => {
+         // bundle.download();
          bundle.apply();
          bundle.onapply = () => new Marshmallow();
       }
