@@ -184,6 +184,9 @@ class Animation extends HTMLElement {
    pause() {
       this.state = 'paused';
    }
+   toggleStartPause() {
+      this.state = this.state == 'paused' ? 'running' : 'paused';
+   }
    restart() {
       this.#slot.style.animation = 'none';
       this.#slot.offsetWidth;

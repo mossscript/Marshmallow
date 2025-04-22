@@ -8,7 +8,7 @@
    --timing: var(--m-animation-timing, ease);
    --fill: var(--m-animation-fill, forwards);
    --state: var(--m-animation-state, running);
-   
+
    display: inline-block;
 }
 :host slot {
@@ -110,3 +110,245 @@
       scale: 0.5;
    }
 }
+
+/* shake */
+@keyframes shake {
+   from,to {
+      transform: translate3d(0, 0, 0);
+   }
+   10%,30%,50%,70%,90% {
+      transform: translate3d(0, 0, -10px);
+   }
+   20%,40%,60%,80% {
+      transform: translate3d(0, 0, 10px);
+   }
+}
+@keyframes shake-x {
+   from,to {
+      transform: translate3d(0, 0, 0);
+   }
+   10%,30%,50%,70%,90% {
+      transform: translate3d(-10px, 0, 0);
+   }
+   20%,40%,60%,80% {
+      transform: translate3d(10px, 0, 0);
+   }
+}
+@keyframes shake-y {
+   from,to {
+      transform: translate3d(0, 0, 0);
+   }
+   10%,30%,50%,70%,90% {
+      transform: translate3d(0, -10px, 0);
+   }
+   20%,40%,60%,80% {
+      transform: translate3d(0, 10px, 0);
+   }
+}
+@keyframes shake-z {
+   from,to {
+      transform: rotate(0, 0, 1, 0);
+   }
+   10%,30%,50%,70%,90% {
+      transform: rotate3d(0, 0, 1, -10deg);
+   }
+   20%,40%,60%,80% {
+      transform: rotate3d(0 ,0 ,1 , 10deg);
+   }
+}
+
+/* tada */
+@keyframes tada {
+   from {
+     transform: scale3d(1, 1, 1);
+   }
+   10%,20% {
+      transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+   }
+   30%,50%,70%,90% {
+      transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+   }
+   40%,60%,80% {
+     transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+   }
+   to {
+     transform: scale3d(1, 1, 1);
+   }
+}
+
+/* rotate */
+@keyframes rotate {
+   0%{
+      transform: rotate3d(0, 0, 1, 0);
+   }
+   100% {
+      transform: rotate3d(0, 0, 1, 360deg);
+   }
+}
+@keyframes rotate-x {
+   0%{
+      transform: rotate3d(1, 0, 0, 0);
+   }
+   100% {
+      transform: rotate3d(1, 0, 0, 360deg);
+   }
+}
+@keyframes rotate-y {
+   0%{
+      transform: rotate3d(0, 1, 0, 0);
+   }
+   100% {
+      transform: rotate3d(0, 1, 0, 360deg);
+   }
+}
+@keyframes rotate-z {
+   0%{
+      transform: rotate3d(0, 0, 1, 0);
+   }
+   100% {
+      transform: rotate3d(0, 0, 1, 360deg);
+   }
+}
+@keyframes rotate-in-x {
+   from {
+      transform: rotate3d(1, 0, 0, 90deg);
+   }
+   to {
+      transform: rotate3d(1, 0, 0, 0);
+   }
+}
+@keyframes rotate-in-y {
+   from {
+      transform: rotate3d(0, 1, 0, 90deg);
+   }
+   to {
+      transform: rotate3d(0, 1, 0, 0);
+   }
+}
+@keyframes rotate-in-z {
+   from {
+      transform: rotate3d(0, 0, 1, 90deg);
+   }
+   to {
+      transform: rotate3d(0, 0, 1, 0);
+   }
+}
+@keyframes rotate-out-x {
+   from {
+      transform: rotate3d(1, 0, 0, 0);
+   }
+   to {
+      transform: rotate3d(1, 0, 0, 90deg);
+   }
+}
+@keyframes rotate-out-y {
+   from {
+      transform: rotate3d(0, 1, 0, 0);
+   }
+   to {
+      transform: rotate3d(0, 1, 0, 90deg);
+   }
+}
+@keyframes rotate-out-z {
+   from {
+      transform: rotate3d(0, 0, 1, 0);
+   }
+   to {
+      transform: rotate3d(0, 0, 1, 90deg);
+   }
+}
+
+/* jello */
+@keyframes jello {
+   0% {
+      transform: scale3d(1, 1, 1);
+   }
+   30% {
+      transform: scale3d(1.25, 0.75, 1);
+   }
+   40% {
+      transform: scale3d(0.75, 1.25, 1);
+   }
+   50% {
+      transform: scale3d(1.15, 0.85, 1);
+   }
+   65% {
+      transform: scale3d(0.95, 1.05, 1);
+   }
+   75% {
+      transform: scale3d(1.05, 0.95, 1);
+   }
+   100% {
+      transform: scale3d(1, 1, 1);
+   }
+}
+@keyframes jello-x {
+   0% {
+      transform: scale3d(1, 1, 1);
+   }
+   30% {
+      transform: scale3d(0.75, 1.25, 1);
+   }
+   40% {
+      transform: scale3d(1.25, 0.75, 1);
+   }
+   50% {
+      transform: scale3d(0.85, 1.15, 1);
+   }
+   65% {
+      transform: scale3d(1.05, 0.95, 1);
+   }
+   75% {
+      transform: scale3d(0.95, 1.05, 1);
+   }
+   100% {
+      transform: scale3d(1, 1, 1);
+   }
+}
+@keyframes jello-y {
+   0% {
+      transform: scale3d(1, 1, 1);
+   }
+   30% {
+      transform: scale3d(1.25, 0.75, 1);
+   }
+   40% {
+      transform: scale3d(0.75, 1.25, 1);
+   }
+   50% {
+      transform: scale3d(1.15, 0.85, 1);
+   }
+   65% {
+      transform: scale3d(0.95, 1.05, 1);
+   }
+   75% {
+      transform: scale3d(1.05, 0.95, 1);
+   }
+   100% {
+      transform: scale3d(1, 1, 1);
+   }
+}
+@keyframes jello-z {
+   0% {
+      transform: scale(1);
+   }
+   30% {
+      transform: scale(0.75);
+   }
+   40% {
+      transform: scale(1.25);
+   }
+   50% {
+      transform: scale(0.85);
+   }
+   65% {
+      transform: scale(1.05);
+   }
+   75% {
+      transform: scale(0.95);
+   }
+   100% {
+      transform: scale(1);
+   }
+}
+
