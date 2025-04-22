@@ -114,13 +114,13 @@
 /* shake */
 @keyframes shake {
    from,to {
-      transform: translate3d(0, 0, 0);
+      transform: rotate(0, 0, 1, 0);
    }
    10%,30%,50%,70%,90% {
-      transform: translate3d(0, 0, -10px);
+      transform: rotate3d(0, 0, 1, -10deg);
    }
    20%,40%,60%,80% {
-      transform: translate3d(0, 0, 10px);
+      transform: rotate3d(0 ,0 ,1 , 10deg);
    }
 }
 @keyframes shake-x {
