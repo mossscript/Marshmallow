@@ -10,7 +10,7 @@
    align-items: center;
    padding: 8px 20px;
    gap: 8px;
-   background: var(-color);
+   background: var(--color);
    color: var(--inner-color);
    height: 40px;
    box-sizing: border-box;
