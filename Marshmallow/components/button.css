@@ -2,8 +2,8 @@
 :host {
    --color: var(--m-button-color, var(--m-primary));
    --inner-color: var(--m-button-inner-color, var(--m-on-primary));
-   --m-shadow: var(--m-button-shadow, none);
-   --m-radius: var(--m-button-radius, 16px);
+   --shadow: var(--m-button-shadow, none);
+   --radius: var(--m-button-radius, 16px);
    
    display: inline-flex;
    justify-content: center;
