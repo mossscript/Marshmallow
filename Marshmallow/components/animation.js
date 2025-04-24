@@ -4,14 +4,11 @@ class Animation extends HTMLElement {
    #elm;
    #attr;
    #slot;
-   #RAF;
-   #event;
 
    // constructor
    constructor() {
       super();
       this.#elm = this.attachShadow({ mode: 'open' });
-      this.#event = new EventTarget();
       this.#attr = {
          name: 'fade',
          dur: '1s',
@@ -21,7 +18,6 @@ class Animation extends HTMLElement {
          timing: 'ease',
          fill: 'forwards',
          state: 'running',
-         progress: 0,
          start: undefined,
          end: undefined,
          iteration: undefined,
@@ -38,7 +34,6 @@ class Animation extends HTMLElement {
 
       // event
       this.#slot.addEventListener('animationstart', (callback) => {
-         this.#startProgressTracking();
          if (typeof this.#attr.start === 'function') this.#attr.start(callback);
          this.dispatchEvent(new Event('start'));
       });
@@ -47,59 +42,14 @@ class Animation extends HTMLElement {
          this.dispatchEvent(new Event('end'));
       });
       this.#slot.addEventListener('animationiteration', (callback) => {
-         this.#startProgressTracking();
          if (typeof this.#attr.iteration === 'function') this.#attr.iteration(callback);
          this.dispatchEvent(new Event('iteration'));
       });
    }
 
-   // disconnect element 
-   disconnectedCallback() {
-      this.#stopProgressTracking();
-   }
-
-   // privet function 
-   #dispatchProgressEvent() {
-      this.#event.dispatchEvent(new CustomEvent('progress', {}));
-   }
-   #parseTimeToMs(time) {
-      if (!time) return 0;
-      if (time.endsWith('ms')) {
-         return parseFloat(time);
-      } else if (time.endsWith('s')) {
-         return parseFloat(time) * 1000;
-      }
-      return parseFloat(time) || 0;
-   }
-   #stopProgressTracking() {
-      if (this.#RAF) {
-         cancelAnimationFrame(this.#RAF);
-         this.#RAF = null;
-      }
-   }
-   #startProgressTracking(startValue = 0) {
-      if (this.#RAF) {
-         cancelAnimationFrame(this.#RAF);
-      }
-      let st = performance.now();
-      let duration = this.#parseTimeToMs(this.#attr.dur);
-
-      let updateProgress = () => {
-         let elapsed = performance.now() - st;
-         let newProgress = startValue + (elapsed / this.#parseTimeToMs(this.#attr.dur));
-         this.#attr.progress = !isFinite(Number(this.#attr.count)) ? newProgress % 1 : Math.min(1, newProgress);
-         this.#dispatchProgressEvent();
-         if (this.#attr.state === 'running') {
-            this.#RAF = requestAnimationFrame(updateProgress);
-         }
-      };
-      this.#RAF = requestAnimationFrame(updateProgress);
-   }
-
    // observed attributes
    static get observedAttributes() {
-      return ['name', 'dur', 'count', 'delay', 'fill', 'dir', 'state', 'timing', 'progress', 'onstart', 'onend',
-         'oniteration', 'onprogress'];
+      return ['name', 'dur', 'count', 'delay', 'fill', 'dir', 'state', 'timing', 'onstart', 'onend','oniteration'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -129,11 +79,10 @@ class Animation extends HTMLElement {
             break;
          case 'state':
             this.#attr.state = newValue;
-            this.#slot.style.setProperty('--state', newValue);
             if (newValue == 'running') {
-               this.#startProgressTracking(this.#attr.progress);
+               this.#slot.style.animationPlayState = 'running';
             } else if (newValue == 'paused') {
-               this.#stopProgressTracking();
+               this.#slot.style.animationPlayState = 'paused';
             }
             break;
          case 'timing':
@@ -172,23 +121,6 @@ class Animation extends HTMLElement {
    }
    get onIteration() {
       return this.#attr.iteration;
-   }
-
-   set progress(val) {
-      val = Math.max(0, Math.min(1, parseFloat(val) || 0));
-      this.state = 'paused';
-      this.#attr.progress = val;
-
-      this.#stopProgressTracking();
-
-      let duration = this.#parseTimeToMs(this.#attr.dur);
-      let newDelay = -(duration * val);
-      this.delay = `${newDelay}ms`;
-
-      this.#dispatchProgressEvent();
-   }
-   get progress() {
-      return this.#attr.progress;
    }
 
    // setter & getter
@@ -251,11 +183,9 @@ class Animation extends HTMLElement {
    // property 
    start() {
       this.state = 'running';
-      this.#startProgressTracking(this.progress);
    }
    pause() {
       this.state = 'paused';
-      this.#stopProgressTracking();
    }
    toggleStartPause() {
       this.state = this.state == 'paused' ? 'running' : 'paused';
@@ -263,9 +193,6 @@ class Animation extends HTMLElement {
    restart() {
       this.#slot.style.animation = 'none';
       this.#slot.offsetWidth;
-      this.#slot.style.animation =
-         'var(--name) var(--dur) var(--timing) var(--delay) var(--count) var(--dir) var(--fill)';
-      this.#attr.progress = 0;
-      this.#dispatchProgressEvent();
+      this.#slot.style.animation = 'var(--name) var(--dur) var(--timing) var(--delay) var(--count) var(--dir) var(--fill)';
    }
 }
