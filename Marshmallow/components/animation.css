@@ -23,7 +23,7 @@
    animation-timing-function: var(--timing);
 }
 
-/*** Animations ***/
+/*** Simple Animations ***/
 /* fade */
 @keyframes fade {
    from {
@@ -352,3 +352,12 @@
    }
 }
 
+/* up */
+
+/* down */
+
+/* left */
+
+/* right */
+
+/*** Special Animations ***/
