@@ -19,7 +19,7 @@
          this.#eventTarget = new EventTarget();
          this.configs = {
             color: 'Medium Red Violet',
-            theme: 'auto',
+            theme: 'dark',
             colorScheme: 'analogous',
             surfaceColor: 'primary',
             contrast: 0,
@@ -165,5 +165,3 @@
 
    global.Marshmallow = Marshmallow;
 })(this);
-
-
