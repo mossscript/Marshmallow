@@ -19,7 +19,7 @@
          this.#eventTarget = new EventTarget();
          this.configs = {
             color: 'Medium Red Violet',
-            theme: 'dark',
+            theme: 'light',
             colorScheme: 'analogous',
             surfaceColor: 'primary',
             contrast: 0,
@@ -27,7 +27,7 @@
          Object.assign(this.configs, configs)
 
          this.#M = new Mushroom({
-            clearConsole: true,
+            clearConsole: false,
             color: this.configs.color,
             theme: this.configs.theme,
             contrast: this.configs.contrast,
@@ -46,8 +46,13 @@
                },
             },
          });
+         
+         console.log(this.#M.toggleTheme())
 
-         this.#M.ongrow = () => this.#grow();
+         this.#M.ongrow = () => {
+            console.log('Grow')
+            this.#grow();
+         }
          this.#M.onerror = (e) => this.#error(e.detail.wrong);
          this.#defineElements();
       }
