@@ -13,20 +13,17 @@
    <!-- app -->
    <m-app>
       <center>
-         <m-title> Marshmallow <m-badge size="large"> ALPHA </m-badge> </m-title>
+         <m-animation name="tracking-in-contract">
+            <m-title> Marshmallow <m-badge size="large"> ALPHA </m-badge> </m-title>
+         </m-animation>
       </center>
       <m-hr></m-hr>
       <div style="padding: 16px; text-align: center">
          
-         <m-animation name="jello-y" dur="5s" count="infinite" onclick="this.toggleStartPause()">
+         <m-animation name="bounce" dur="1s" onclick="this.restart()">
             <m-icon size="100px" name="tv"></m-icon>
          </m-animation>
          
-         <br>
-         
-         <m-button id="toggle"> Toggle Start Pause </m-button>
-         <m-button color="@primary-container" id="restart"> Restart </m-button>
-
       </div>
    </m-app>
 
@@ -35,15 +32,7 @@
       bundle.onrender = () => {
          // bundle.download();
          bundle.apply();
-         bundle.onapply = () => {
-            let M = new Marshmallow();
-            
-            let [animation, toggle, restart] = document.body.querySelectorAll('m-animation, #toggle, #restart');
-            
-            toggle.onclick = ()=> animation.toggleStartPause();
-            restart.onclick = ()=> animation.restart();
-            
-         }
+         bundle.onapply = () => new Marshmallow();
       }
    </script>
 </body>

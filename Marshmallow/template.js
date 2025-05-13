@@ -18,8 +18,8 @@
          this.version = '[[["VERSION"]]]';
          this.#eventTarget = new EventTarget();
          this.configs = {
-            color: 'Medium Red Violet',
-            theme: 'light',
+            color: 'Royal Blue',
+            theme: 'auto',
             colorScheme: 'analogous',
             surfaceColor: 'primary',
             contrast: 0,
@@ -47,10 +47,7 @@
             },
          });
          
-         console.log(this.#M.toggleTheme())
-
          this.#M.ongrow = () => {
-            console.log('Grow')
             this.#grow();
          }
          this.#M.onerror = (e) => this.#error(e.detail.wrong);

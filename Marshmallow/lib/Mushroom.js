@@ -21,7 +21,7 @@ class Mushroom {
       this.#clearConsole = false;
       this.#configs = {
          sprout: true,
-         color: 'Medium Red Violet',
+         color: 'Royal Blue',
          surfaceColor: 'primary',
          root: ':root',
          prefix: '',
