@@ -11,26 +11,18 @@
 
 <body>
    <!-- app -->
-   <m-app>
-      <center>
-         <m-title> Marshmallow <m-badge size="large"> ALPHA </m-badge> </m-title>
-      </center>
-      <m-hr></m-hr>
-      <div style="padding: 16px; text-align: center">
-         
-         <m-animation name="bounce" dur="1s" onclick="this.restart()">
-            <m-icon size="100px" name="tv"></m-icon>
-         </m-animation>
-         
-      </div>
-   </m-app>
+   <m-app></m-app>
 
    <script>
       let bundle = new Bundle('Marshmallow/bundle.json');
       bundle.onrender = () => {
          // bundle.download();
          bundle.apply();
-         bundle.onapply = () => new Marshmallow();
+         bundle.onapply = () =>{
+            let M = new Marshmallow({theme: 'dark'});
+            let app = document.body.querySelector('m-app');
+         
+         }
       }
    </script>
 </body>

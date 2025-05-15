@@ -164,6 +164,7 @@
          this.#eventTarget.dispatchEvent(event);
       }
    }
-
+   
    global.Marshmallow = Marshmallow;
-})(this);
+   
+})(globalThis);

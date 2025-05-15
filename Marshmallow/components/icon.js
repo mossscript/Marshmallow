@@ -2578,8 +2578,8 @@ class Icon extends HTMLElement {
    }
    
    // property 
-   hasIcon(name) {
-      return !!this.#data[this.type][name]
+   hasIcon(name,type = this.type) {
+      return !!this.#data[type][name]
    }
    iconList() {
       return this.#data[this.type][name]
