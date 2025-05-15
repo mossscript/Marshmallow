@@ -4,7 +4,7 @@ class Animation extends HTMLElement {
    #elm;
    #attr;
    #slot;
-
+   
    // constructor
    constructor() {
       super();
@@ -22,7 +22,7 @@ class Animation extends HTMLElement {
          end: undefined,
          iteration: undefined,
       }
-
+      
       // template 
       this.#elm.innerHTML = `
          <style>
@@ -31,7 +31,7 @@ class Animation extends HTMLElement {
          <slot></slot>
       `;
       this.#slot = this.#elm.querySelector('slot');
-
+      
       // event
       this.#slot.addEventListener('animationstart', (callback) => {
          if (typeof this.#attr.start === 'function') this.#attr.start(callback);
@@ -46,10 +46,10 @@ class Animation extends HTMLElement {
          this.dispatchEvent(new Event('iteration'));
       });
    }
-
+   
    // observed attributes
    static get observedAttributes() {
-      return ['name', 'dur', 'count', 'delay', 'fill', 'dir', 'state', 'timing', 'onstart', 'onend','oniteration'];
+      return ['name', 'dur', 'count', 'delay', 'fill', 'dir', 'state', 'timing', 'onstart', 'onend', 'oniteration'];
    }
    attributeChangedCallback(name, oldValue, newValue) {
       switch (name) {
@@ -100,7 +100,7 @@ class Animation extends HTMLElement {
             break;
       }
    }
-
+   
    // event
    set onStart(fn) {
       if (typeof fn === 'function') this.#attr.start = fn;
@@ -108,21 +108,21 @@ class Animation extends HTMLElement {
    get onStart() {
       return this.#attr.start;
    }
-
+   
    set onEnd(fn) {
       if (typeof fn === 'function') this.#attr.end = fn;
    }
    get onEnd() {
       return this.#attr.end;
    }
-
+   
    set onIteration(fn) {
       if (typeof fn === 'function') this.#attr.iteration = fn;
    }
    get onIteration() {
       return this.#attr.iteration;
    }
-
+   
    // setter & getter
    set name(val) {
       this.setAttribute('name', val)
@@ -130,56 +130,56 @@ class Animation extends HTMLElement {
    get name() {
       return this.#attr.name
    }
-
+   
    set dur(val) {
       this.setAttribute('dur', val)
    }
    get dur() {
       return this.#attr.dur
    }
-
+   
    set count(val) {
       this.setAttribute('count', val)
    }
    get count() {
       return this.#attr.count
    }
-
+   
    set delay(val) {
       this.setAttribute('delay', val)
    }
    get delay() {
       return this.#attr.delay
    }
-
+   
    set fill(val) {
       this.setAttribute('fill', val)
    }
    get fill() {
       return this.#attr.fill
    }
-
+   
    set dir(val) {
       this.setAttribute('dir', val)
    }
    get dir() {
       return this.#attr.dir
    }
-
+   
    set state(val) {
       this.setAttribute('state', val)
    }
    get state() {
       return this.#attr.state
    }
-
+   
    set timing(val) {
       this.setAttribute('timing', val)
    }
    get timing() {
       return this.#attr.timing
    }
-
+   
    // property 
    start() {
       this.state = 'running';

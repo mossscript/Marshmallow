@@ -18,11 +18,7 @@
       bundle.onrender = () => {
          // bundle.download();
          bundle.apply();
-         bundle.onapply = () =>{
-            let M = new Marshmallow({theme: 'dark'});
-            let app = document.body.querySelector('m-app');
-         
-         }
+         bundle.onapply = () => new Marshmallow({theme: 'dark'})
       }
    </script>
 </body>
