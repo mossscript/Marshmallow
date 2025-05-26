@@ -59,6 +59,11 @@
          "script": "Marshmallow/components/badge.js",
          "style": "Marshmallow/components/badge.css"
       },
+      "Input": {
+         "name": "m-input",
+         "script": "Marshmallow/components/input.js",
+         "style": "Marshmallow/components/input.css"
+      },
       "Animation": {
          "name": "m-animation",
          "script": "Marshmallow/components/animation.js",

@@ -99,7 +99,7 @@ class Button extends HTMLElement {
       let type = this.getAttribute('type');
       if (parentForm) {
          if (type == 'submit') {
-            parentForm.submit();
+            parentForm.requestSubmit();
          } else if (type == 'reset') {
             parentForm.reset();
          }

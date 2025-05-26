@@ -1,8 +1,8 @@
-/*** Colors.js v1.2 ***/
-class Colors {
+/*** ColorTransform v1.3 ***/
+class ColorTransform {
    #colors;
    constructor() {
-      this.version = "1.2";
+      this.version = "1.3";
       this.#colors = {
          "abbey": "#4c4f56",
          "absolutezero": "#0048ba",
@@ -737,7 +737,7 @@ class Colors {
          "empress": "#817377",
          "endeavour": "#0056a7",
          "energyyellow": "#f8dd5c",
-         "enginneringinternationalorange": "#ba160c",
+         "engineeringinternationalorange": "#ba160c",
          "englishholly": "#022d15",
          "englishlavender": "#b48395",
          "englishred": "#ab4b52",

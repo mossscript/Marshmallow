@@ -11,14 +11,25 @@
 
 <body>
    <!-- app -->
-   <m-app></m-app>
+   <m-app style="padding: 24px;">
+      
+      <h1>
+         <m-icon name="lightbulb"></m-icon>
+      </h1>
+      
+   </m-app>
+   
+   
+   
+   
 
    <script>
       let bundle = new Bundle('Marshmallow/bundle.json');
       bundle.onrender = () => {
-         // bundle.download();
          bundle.apply();
-         bundle.onapply = () => new Marshmallow({theme: 'dark'})
+         bundle.onapply = () => new Marshmallow({
+            color: 'hsl(165 80 50)',
+         });
       }
    </script>
 </body>
