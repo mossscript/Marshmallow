@@ -61,7 +61,7 @@
       }
 
       // private property 
-      #retryFetch(url, retries = 10) {
+      #retryFetch(url, retries = 20) {
          return fetch(url).then(res => {
             if (!res.ok && res.status !== 404) {
                if (retries > 0) return this.#retryFetch(url, retries - 1);
