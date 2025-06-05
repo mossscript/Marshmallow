@@ -1,5 +1,5 @@
 /*** fa-st.js v1 ***/
-class Fast extends HTMLElement {
+class Fasr extends HTMLElement {
   // private variable 
   #elm;
   #styleElm;

@@ -6,48 +6,27 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <!-- <script src="Marshmallow/bundle.now.js"></script> -->
-   <script src="Marshmallow.ALPHA.js"></script>
-   <script>
-      let M = new Marshmallow();
-   </script>
+   <script src="Marshmallow/bundle.now.js"></script>
+   <script src="Marshmallow/fa.bundle.now.js"></script>
 </head>
 
 <body>
    <!-- app -->
    <m-app style="padding: 24px;">
       
-      <fa-s name="candle-holder"></fa-s> 
-      <fa-ss name="candle-holder"></fa-ss> 
-      <fa-ds name="candle-holder"></fa-ds> 
-      <fa-sds name="candle-holder"></fa-sds> 
-      <br>
-      <fa-r name="candle-holder"></fa-r>
-      <fa-sr name="candle-holder"></fa-sr>
-      <fa-dr name="candle-holder"></fa-dr>
-      <fa-sdr name="candle-holder"></fa-sdr>
-      <br>
-      <fa-sl name="candle-holder"></fa-sl>
-      <fa-sl name="candle-holder"></fa-sl>
-      <fa-dl name="candle-holder"></fa-dl>
-      <fa-sdl name="candle-holder"></fa-sdl>
-      <br>
-      <fa-st name="candle-holder"></fa-st>
-      <fa-st name="candle-holder"></fa-st>
-      <fa-dt name="candle-holder"></fa-dt>
-      <fa-sdt name="candle-holder"></fa-sdt>
-      
    </m-app>
-   <!-- <script>
+   <script>
+      let FA = new FontAwesome();
+      FA.load('Marshmallow/fa.bundle.json');
       let bundle = new Bundle('Marshmallow/bundle.json');
       bundle.onrender = () => {
-         bundle.download();
          bundle.apply();
-         bundle.onapply = () => new Marshmallow({
-            theme: 'dark'
-         });
+         bundle.onapply = () => {
+            let M = new Marshmallow({theme: 'dark'});
+            let progressElm = document.querySelector('m-progress');
+         }
       }
-   </script> -->
+   </script>
 </body>
 
 </html>
